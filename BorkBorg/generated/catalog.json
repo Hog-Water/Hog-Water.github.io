@@ -1,0 +1,4247 @@
+{
+  "format": "bork-borg.make-a-fool.catalog.v1",
+  "sources": [
+    {
+      "path": "manuscript/content/tables/mens-first-names.md",
+      "sha256": "6c8c0f8867b2742ba4813130f38cac4e4856787c2eb7a01f8dce321ab94369e7"
+    },
+    {
+      "path": "manuscript/content/tables/womens-first-names.md",
+      "sha256": "8afeb8ab1c81b4d5125539d8678b096837e853c0dabfd1814b8fdefd85dde6a5"
+    },
+    {
+      "path": "manuscript/content/tables/last-names.md",
+      "sha256": "f939c716b476e2f1cb472dae16736ccfd35767d6e3b26c7d28a2c77957542e43"
+    },
+    {
+      "path": "manuscript/content/tables/background.md",
+      "sha256": "d1d2a305074688f77d6faabb2f41e5524dead55d1b3165dd50c3ce651554096e"
+    },
+    {
+      "path": "manuscript/content/tables/whats-wrong-with-you.md",
+      "sha256": "cb9795d4d5ea6698159f98eaa1fccb432877b695daafbfe8208c4e2297784c5f"
+    },
+    {
+      "path": "manuscript/content/tables/one-good-thing.md",
+      "sha256": "2a64881028e51c477a686251f05b8a1109acdaeb11454d79c89e101c2326f653"
+    },
+    {
+      "path": "manuscript/content/tables/debt.md",
+      "sha256": "e8962a9b2e9e978febda99b2b87dfd224efbb945f5220305a98b1de8d83fd480"
+    },
+    {
+      "path": "manuscript/content/tables/companion.md",
+      "sha256": "c603f995f3677c727257fa675eb2c5ab86cd4c6516b1266b4e631ecd411dd147"
+    },
+    {
+      "path": "manuscript/content/tables/weapons-of-regret.md",
+      "sha256": "f5e142675c63e13365bc0b3872b8037acfd7da65ab0c53f3ff6225f703b72bec"
+    },
+    {
+      "path": "manuscript/content/tables/weapon-defects.md",
+      "sha256": "543070e48d4530e57a897f02887faf4a1ba20a197bb2a3d387c22514f6d8350e"
+    },
+    {
+      "path": "manuscript/content/tables/who-or-what-fixed-this.md",
+      "sha256": "fa610faf3a74423d7bd1332f4c76b5845ae156ae82fa8fc0749e6a938c2acf1f"
+    },
+    {
+      "path": "manuscript/content/references/weapon-repair-appearance.md",
+      "sha256": "4af863d2d68aab6bc1c12ba1d1415a970f0faace57bae234f7e1d4ab2402d340"
+    },
+    {
+      "path": "manuscript/content/tables/questionably-functional-possessions.md",
+      "sha256": "0337110248afd693f80432d540faa6e6f8ee0271834cb17d9ee186aef4d5f4d5"
+    },
+    {
+      "path": "manuscript/content/tables/useless-keepsake.md",
+      "sha256": "27fd288f9ce5db62845848523ce2d18946b830c0d48c0d01f5c91c33f8e3f87f"
+    },
+    {
+      "path": "manuscript/content/make-a-fool/content/name-the-fool.md",
+      "sha256": "c80a765fb12adc2c43cc5f861a9a60bf073aa6f6ed0cb8eeac7340be691c3339"
+    },
+    {
+      "path": "manuscript/content/make-a-fool/content/abilities.md",
+      "sha256": "78ac2e1bb27877db8087fbf51ee8471d01b9708e19a00501835dd60d1b61957c"
+    },
+    {
+      "path": "manuscript/content/make-a-fool/content/hp.md",
+      "sha256": "25fb09cf0410b829e9042132da88c23944b186d7a8677eca3162b82e40a7410c"
+    },
+    {
+      "path": "manuscript/content/make-a-fool/make-a-fool.md",
+      "sha256": "d11c5fa2bb7c58cfce71d8cda9bc150eeea4017363fb213cb50a701bbcaf6bd0"
+    },
+    {
+      "path": "manuscript/content/what-you-own/content/starting-junk.md",
+      "sha256": "809d972758e0c8fa270fe6e3ba77574f4919184ce63fcbe890e8dad121715c5f"
+    },
+    {
+      "path": "manuscript/content/weapons-of-regret/weapons-of-regret.md",
+      "sha256": "503ee0f110e3bcb505ff4371d0908fcebfce86ce8d5658eb4079ad4e5d6b9665"
+    },
+    {
+      "path": "manuscript/content/what-you-own/content/questionably-functional-possessions.md",
+      "sha256": "90c10658c6f24d04f8abd52373836194faef47a1cd5363ac61fec2eaf7a32fad"
+    },
+    {
+      "path": "manuscript/content/what-you-own/content/useless-keepsake.md",
+      "sha256": "0e50b6f2a3eeee40f1646f4bfb42e43de2d01b942823fab6630b92a1dfedad37"
+    },
+    {
+      "path": "manuscript/content/make-a-fool/content/no-two-fools-alike.md",
+      "sha256": "e327eb1b9b44965fe2aab00d6a12a79d0c2dacb419d09f907b86cda6e23b5491"
+    },
+    {
+      "path": "manuscript/content/what-you-own/content/inventory-slots.md",
+      "sha256": "821cec3719129e0747f306eba6e36d84c872b3885614b27a979221bcfbd1074f"
+    },
+    {
+      "path": "manuscript/content/weapons-of-regret/content/weapon-of-regret.md",
+      "sha256": "f97c9fb5b9c998f37535fd11f7129ba1d9b369a05fd5c7cc847b759a59a8266f"
+    },
+    {
+      "path": "manuscript/content/weapons-of-regret/content/whats-wrong-with-it.md",
+      "sha256": "336b9f7495ca6b79606a703971c984f3d6e09ab05f5bf55fea05cddd834f6563"
+    },
+    {
+      "path": "manuscript/content/weapons-of-regret/content/who-or-what-fixed-this.md",
+      "sha256": "febdd44a4b9684009f74335cd5a810b57d19e385e4886c1182df3e250572e2d9"
+    },
+    {
+      "path": "manuscript/content/weapons-of-regret/content/matching-rolls.md",
+      "sha256": "3458c780e1d934e4af5bf4fd432dfbe0d6748d790ea1eb0a71e3eeddac82c960"
+    }
+  ],
+  "tables": {
+    "background": {
+      "columns": 3,
+      "die": "d66",
+      "results": [
+        {
+          "key": 11,
+          "values": [
+            "GRAVE-ROBBER",
+            "Dig, hide, appraise the dead.",
+            "Shovel + corpse map."
+          ]
+        },
+        {
+          "key": 12,
+          "values": [
+            "FAILED LAWMAN",
+            "Read trouble, question people, navigate the law.",
+            "Pistol + bad reputation."
+          ]
+        },
+        {
+          "key": 13,
+          "values": [
+            "TINKER BASTARD",
+            "Diagnose, repair, improvise machinery.",
+            "Repair tools + 2 Useful Parts."
+          ]
+        },
+        {
+          "key": 14,
+          "values": [
+            "ROAD PREACHER",
+            "Preach, read a crowd, conduct rites.",
+            "Bell + booklet of condemnations."
+          ]
+        },
+        {
+          "key": 15,
+          "values": [
+            "BUTCHER-SAWBONES",
+            "Cut flesh, stop bleeding, know anatomy.",
+            "Knives + bandages."
+          ]
+        },
+        {
+          "key": 16,
+          "values": [
+            "RAT CATCHER",
+            "Trap vermin, crawl tight spaces, follow infestations.",
+            "Sack + wire + bundle of rat traps."
+          ]
+        },
+        {
+          "key": 21,
+          "values": [
+            "ASH PROSPECTOR",
+            "Find ore, read bad ground, survive dust and ruin.",
+            "Magnet hook + smoked goggles."
+          ]
+        },
+        {
+          "key": 22,
+          "values": [
+            "UNDERTAKER COURIER",
+            "Prepare bodies, navigate roads, deal with grieving people.",
+            "Cart tag + burial cloth + sealed package."
+          ]
+        },
+        {
+          "key": 23,
+          "values": [
+            "FAILED SURVEYOR",
+            "Read maps, measure distance, spot bad ground and property lies.",
+            "Measuring chain + obsolete county map."
+          ]
+        },
+        {
+          "key": 24,
+          "values": [
+            "BOILER HAND",
+            "Understand steam, pressure, pipes, and dangerous heat.",
+            "Heavy wrench + scorched gloves."
+          ]
+        },
+        {
+          "key": 25,
+          "values": [
+            "ITINERANT PEDDLER",
+            "Barter, read roads, spot counterfeit goods and easy marks.",
+            "Sample case + hand bell."
+          ]
+        },
+        {
+          "key": 26,
+          "values": [
+            "EXTERMINATOR OF SOMETHING LARGER",
+            "Set traps, bait things, track them, know when something entered a building.",
+            "Iron trap + jar labeled BAIT."
+          ]
+        },
+        {
+          "key": 31,
+          "values": [
+            "FAILED BRIDGE INSPECTOR",
+            "Judge structures, spot dangerous loads, recognize shoddy repairs.",
+            "Plumb bob + condemned bridge tags."
+          ]
+        },
+        {
+          "key": 32,
+          "values": [
+            "NIGHT SOIL MAN",
+            "Navigate alleys, handle filth, know who is awake before dawn.",
+            "Shovel + sealed bucket nobody wants opened."
+          ]
+        },
+        {
+          "key": 33,
+          "values": [
+            "RAILBED VAGRANT",
+            "Follow old lines, read abandoned infrastructure, sleep rough.",
+            "Track hammer + stolen mile marker."
+          ]
+        },
+        {
+          "key": 34,
+          "values": [
+            "LOCKSMITH'S DISAPPOINTMENT",
+            "Understand locks, doors, hinges, and how people defeat them.",
+            "Picks + ring of useless keys."
+          ]
+        },
+        {
+          "key": 35,
+          "values": [
+            "FIRE WATCHMAN",
+            "Spot fire hazards, organize bucket lines, read smoke.",
+            "Brass whistle + scorched blanket."
+          ]
+        },
+        {
+          "key": 36,
+          "values": [
+            "WELL DREDGER",
+            "Work ropes, recover things underwater, judge bad wells.",
+            "Grappling hook + weighted line."
+          ]
+        },
+        {
+          "key": 41,
+          "values": [
+            "PESTHOUSE ATTENDANT",
+            "Quarantine, recognize sickness, handle terrified patients.",
+            "Waxed apron + long-handled tongs."
+          ]
+        },
+        {
+          "key": 42,
+          "values": [
+            "FAILED SCHOOLMASTER",
+            "Read handwriting, keep records, explain things to hostile idiots.",
+            "Chalk + attendance ledger full of false names."
+          ]
+        },
+        {
+          "key": 43,
+          "values": [
+            "RAG-AND-BOTTLE COLLECTOR",
+            "Scavenge towns, judge discarded goods, know back entrances.",
+            "Handcart + sack of bottles."
+          ]
+        },
+        {
+          "key": 44,
+          "values": [
+            "LAMP-LIGHTER",
+            "Maintain lamps, climb poles, know streets after dark.",
+            "Pole hook + tin of lamp oil."
+          ]
+        },
+        {
+          "key": 45,
+          "values": [
+            "CLOCK TOWER KEEPER",
+            "Understand gears, schedules, heights, and public machinery.",
+            "Winding key + pocket full of brass teeth."
+          ]
+        },
+        {
+          "key": 46,
+          "values": [
+            "CISTERN KEEPER",
+            "Judge water quality, manage valves, understand storage and pressure.",
+            "Valve key + water-testing cup."
+          ]
+        },
+        {
+          "key": 51,
+          "values": [
+            "DYNAMITE PORTER",
+            "Handle unstable cargo, judge safe distances, recognize blasting preparations.",
+            "Spool of firing wire + empty padded blasting case."
+          ]
+        },
+        {
+          "key": 52,
+          "values": [
+            "HOUSE MOVER",
+            "Use rollers, jacks, and leverage; recognize load-bearing walls.",
+            "Bottle jack + timber wedges."
+          ]
+        },
+        {
+          "key": 53,
+          "values": [
+            "SIGN PAINTER",
+            "Letter neatly, mix paint, recognize businesses and old signage.",
+            "Brushes + half-used tin of red paint."
+          ]
+        },
+        {
+          "key": 54,
+          "values": [
+            "PHOTOGRAPHER'S ASSISTANT",
+            "Handle photographic chemicals, compose images, recognize retouching, staging, and photographic inconsistencies.",
+            "Folding tripod + box of ruined plates."
+          ]
+        },
+        {
+          "key": 55,
+          "values": [
+            "PRINTSHOP DEVIL",
+            "Set type, read proofs, copy documents, know who prints what.",
+            "Composing stick + reversed metal letters."
+          ]
+        },
+        {
+          "key": 56,
+          "values": [
+            "TELEGRAPH LINEMAN",
+            "Trace wires, climb poles, recognize signals and electrical faults.",
+            "Lineman's pliers + ceramic insulators."
+          ]
+        },
+        {
+          "key": 61,
+          "values": [
+            "MULE SKINNER",
+            "Handle stubborn animals, pack loads, read trail exhaustion.",
+            "Lead rope + bag of feed."
+          ]
+        },
+        {
+          "key": 62,
+          "values": [
+            "CARNIVAL RIGGER",
+            "Raise tents, work ropes and pulleys, spot rigged games.",
+            "Mallet + bundle of guy lines."
+          ]
+        },
+        {
+          "key": 63,
+          "values": [
+            "PRIZEFIGHT CORNER MAN",
+            "Stop bleeding, judge fighters, cheat subtly with towels and stools.",
+            "Bucket + battered mouthguard."
+          ]
+        },
+        {
+          "key": 64,
+          "values": [
+            "BEEKEEPER",
+            "Handle swarms, find nests, use smoke and patience.",
+            "Veil + smoker."
+          ]
+        },
+        {
+          "key": 65,
+          "values": [
+            "FORMER CULTIST",
+            "Read cult marks, recognize deliberate isolation, know how adherents think.",
+            "Wire cutters + doctrine booklet with your name scratched out."
+          ]
+        },
+        {
+          "key": 66,
+          "values": [
+            "RUIN CARETAKER",
+            "Maintain old buildings, spot trespass, remember what used to work.",
+            "Ring of mostly obsolete institutional keys + maintenance ledger."
+          ]
+        }
+      ],
+      "source": "manuscript/content/tables/background.md",
+      "sourceSha256": "d1d2a305074688f77d6faabb2f41e5524dead55d1b3165dd50c3ce651554096e"
+    },
+    "companion": {
+      "columns": 1,
+      "die": "d12",
+      "results": [
+        {
+          "key": 1,
+          "values": [
+            "Rat. HP 1, bite d2, understands tone."
+          ]
+        },
+        {
+          "key": 2,
+          "values": [
+            "Mule that despises slopes. Can haul one bulky or heavy thing a Fool could not reasonably carry alone."
+          ]
+        },
+        {
+          "key": 3,
+          "values": [
+            "Dog. Each morning it chooses one piece of junk and growls at it. The GM chooses which. If it growls, something about that junk is useful, dangerous, or weird."
+          ]
+        },
+        {
+          "key": 4,
+          "values": [
+            "Crow that steals screws, nails, and eyes. Send it after one unattended object small enough to carry; if it can reach it, it brings it back."
+          ]
+        },
+        {
+          "key": 5,
+          "values": [
+            "Child-sized scarecrow. Nobody has ever seen it move. If any creature passes nearby while nobody is watching it, the scarecrow turns to face the direction that creature went."
+          ]
+        },
+        {
+          "key": 6,
+          "values": [
+            "It's you. Even this feels personal. +1 FORTUNE, to a maximum of +3. If your FORTUNE is already +3, apparently something likes you after all. Roll again."
+          ]
+        },
+        {
+          "key": 7,
+          "values": [
+            "One-eyed goat. It eats paper before food. It can destroy any paper it can reach in moments."
+          ]
+        },
+        {
+          "key": 8,
+          "values": [
+            "Two chickens. They hate each other but unite instantly against strangers. Turn them loose to create an immediate distraction. While doing so, they are at the world's mercy."
+          ]
+        },
+        {
+          "key": 9,
+          "values": [
+            "Someone else's dog. Its collar gives a name and a town that are not yours. Give it something scented and it can follow where that smell leads. Mixed scents may lead somewhere you didn't mean to go."
+          ]
+        },
+        {
+          "key": 10,
+          "values": [
+            "Goose. It attacks anyone carrying a clipboard. While it does, that person is distracted until they deal with the goose or ditch the clipboard."
+          ]
+        },
+        {
+          "key": 11,
+          "values": [
+            "A huge moth that appears whenever your lantern is lit. It drifts toward the nearest draft, vent, or opening. Nobody has seen where it goes by day."
+          ]
+        },
+        {
+          "key": 12,
+          "values": [
+            "Small pig. It recognizes lawfolk before you do and reacts before they identify themselves."
+          ]
+        }
+      ],
+      "source": "manuscript/content/tables/companion.md",
+      "sourceSha256": "c603f995f3677c727257fa675eb2c5ab86cd4c6516b1266b4e631ecd411dd147"
+    },
+    "debt": {
+      "columns": 1,
+      "die": "d12",
+      "results": [
+        {
+          "key": 1,
+          "values": [
+            "40 silver and a tooth. Same creditor wants both."
+          ]
+        },
+        {
+          "key": 2,
+          "values": [
+            "A horse. You sold it twice."
+          ]
+        },
+        {
+          "key": 3,
+          "values": [
+            "Funeral costs for someone not fully dead. They are also unhappy about it."
+          ]
+        },
+        {
+          "key": 4,
+          "values": [
+            "A crate you accidentally opened. You no longer have what was inside."
+          ]
+        },
+        {
+          "key": 5,
+          "values": [
+            "A favor to a machine. It has not forgotten."
+          ]
+        },
+        {
+          "key": 6,
+          "values": [
+            "Nothing. Clearly a bookkeeping error. Someone will eventually correct it."
+          ]
+        },
+        {
+          "key": 7,
+          "values": [
+            "One organ. The creditor was unclear whether it had to be yours."
+          ]
+        },
+        {
+          "key": 8,
+          "values": [
+            "Delivery of a letter you lost before learning the recipient's name. You remember the town."
+          ]
+        },
+        {
+          "key": 9,
+          "values": [
+            "Three days of labor to a business that keeps changing locations."
+          ]
+        },
+        {
+          "key": 10,
+          "values": [
+            "An apology to an entire family. None of them agree what you did."
+          ]
+        },
+        {
+          "key": 11,
+          "values": [
+            "A replacement funeral suit. You returned the original with someone still in it."
+          ]
+        },
+        {
+          "key": 12,
+          "values": [
+            "Your signature is on a contract you have never seen. Someone else has it."
+          ]
+        }
+      ],
+      "source": "manuscript/content/tables/debt.md",
+      "sourceSha256": "e8962a9b2e9e978febda99b2b87dfd224efbb945f5220305a98b1de8d83fd480"
+    },
+    "defect": {
+      "columns": 2,
+      "die": "d20",
+      "results": [
+        {
+          "key": 1,
+          "values": [
+            "SKITTISH",
+            "If you are startled while holding it, its next use rolls two BORK dice and uses the lower."
+          ]
+        },
+        {
+          "key": 2,
+          "values": [
+            "NEEDS ENCOURAGEMENT",
+            "Before first use in a scene, compliment it aloud loudly enough to be heard Nearby. Refuse or whisper: roll BORK before use."
+          ]
+        },
+        {
+          "key": 3,
+          "values": [
+            "LOOSE EVERYTHING",
+            "Whenever BORK shows 1-2, something important comes loose, cracks, slips, or flies off during use. Resolve the action and BORK normally, then roll another Defect; the weapon gains it until this damage is repaired. Reroll 3, 20, and duplicates. If a physical piece came off, it lands Nearby unless circumstances send it somewhere worse. If lost, spend 1 Useful Part to fabricate a replacement. Damage can stack."
+          ]
+        },
+        {
+          "key": 4,
+          "values": [
+            "ONLY WORKS WHEN WET",
+            "It refuses to function unless visibly wet. Water, blood, alcohol, mud, spit, or anything else plausibly wet counts. Once it dries, it stops working."
+          ]
+        },
+        {
+          "key": 5,
+          "values": [
+            "HATES RAIN",
+            "Substantial wetness makes it miserable. Until you spend an action drying it, every use rolls two BORK dice and uses the lower."
+          ]
+        },
+        {
+          "key": 6,
+          "values": [
+            "THROWS ITS WEIGHT AROUND",
+            "On maximum damage, the weapon violently kicks, twists, drags, or carries you with it. If that cannot happen cleanly, something Nearby gets knocked, broken, stepped on, or involved."
+          ]
+        },
+        {
+          "key": 7,
+          "values": [
+            "IMPATIENT",
+            "Once readied, it expects use. Finish your turn without attacking with it: its next use rolls two BORK dice and uses the lower. Putting it away does not forgive you."
+          ]
+        },
+        {
+          "key": 8,
+          "values": [
+            "TOO LOUD",
+            "Every use produces an absurd, unmistakable noise. Anyone Nearby knows exactly where you are. A knife may scream."
+          ]
+        },
+        {
+          "key": 9,
+          "values": [
+            "STICKS IN THINGS",
+            "On maximum damage it gets stuck. SIMPLE or BUILT weapons lodge in the target or surroundings. MECHANICAL weapons jam, wedge, or catch after the attack. Freeing or clearing it takes your next action, or you abandon it."
+          ]
+        },
+        {
+          "key": 10,
+          "values": [
+            "JEALOUS",
+            "Use another weapon while carrying this and it remembers. Its next use rolls two BORK dice and uses the lower."
+          ]
+        },
+        {
+          "key": 11,
+          "values": [
+            "NEEDS TO WARM UP",
+            "First use after 10 peaceful minutes rolls two BORK dice and uses the lower. Afterward normal until another 10 peaceful minutes."
+          ]
+        },
+        {
+          "key": 12,
+          "values": [
+            "DOESN'T KNOW WHEN TO STOP",
+            "On BORK 6, it immediately repeats or extends the action once more, as physically possible. It cannot create ammunition or skip a required reload. If repetition is impossible, extend the motion or force into one extra consequence. This continuation does not trigger another BORK."
+          ]
+        },
+        {
+          "key": 13,
+          "values": [
+            "REPAIRED WITH COFFIN HARDWARE",
+            "First time Nearby a fresh corpse, grave, coffin, or burial site, the weapon pulls, twitches, or rattles. Ignore it: next use rolls two BORK dice and uses the lower. Touching it to the corpse/grave/coffin satisfies it."
+          ]
+        },
+        {
+          "key": 14,
+          "values": [
+            "WON'T FINISH THE JOB",
+            "If it would reduce a living enemy to 0 HP, leave them at 1 HP instead and immediately BORK. Something else must finish them."
+          ]
+        },
+        {
+          "key": 15,
+          "values": [
+            "POSSESSIVE",
+            "Anyone except you uses it with two BORK dice, use lower. If they somehow get a 6, the weapon likes them now and you suffer the same penalty until you appease it."
+          ]
+        },
+        {
+          "key": 16,
+          "values": [
+            "NEEDS A WITNESS",
+            "If nobody else can see you use it, roll two BORK dice and use the lower. Enemies and windows count. Whether corpses count is a GM decision made once."
+          ]
+        },
+        {
+          "key": 17,
+          "values": [
+            "COWARDLY",
+            "First time each fight you attack something obviously larger, more dangerous, or more horrible than you, roll two BORK dice and use the lower. Afterward it accepts this is happening."
+          ]
+        },
+        {
+          "key": 18,
+          "values": [
+            "BLOODTHIRSTY",
+            "Once it deals damage in a fight, if you end a turn without attacking while a hostile remains Nearby, its next use rolls two BORK dice and uses the lower. Putting it away does not clear this."
+          ]
+        },
+        {
+          "key": 19,
+          "values": [
+            "BAD MEMORY",
+            "Whenever you reload, sharpen, restring, clean, or otherwise prepare it, roll d6. On 1-2, gain another random temporary Defect (reroll 19-20 and duplicates) until successful repair."
+          ]
+        },
+        {
+          "key": 20,
+          "values": [
+            "NOTHING. IT'S PERFECT.",
+            "No visible Defect. The GM secretly rolls d6 whenever it is used. On 1, immediately BORK and reveal another Defect (reroll 20 and duplicates). Replace NOTHING. IT'S PERFECT. with that Defect. It has always been present; reinterpret previous events."
+          ]
+        }
+      ],
+      "source": "manuscript/content/tables/weapon-defects.md",
+      "sourceSha256": "543070e48d4530e57a897f02887faf4a1ba20a197bb2a3d387c22514f6d8350e"
+    },
+    "first_name_men": {
+      "columns": 1,
+      "die": "d100",
+      "results": [
+        {
+          "key": 1,
+          "values": [
+            "Abner"
+          ]
+        },
+        {
+          "key": 2,
+          "values": [
+            "Alonzo"
+          ]
+        },
+        {
+          "key": 3,
+          "values": [
+            "Ambrose"
+          ]
+        },
+        {
+          "key": 4,
+          "values": [
+            "Amos"
+          ]
+        },
+        {
+          "key": 5,
+          "values": [
+            "Archibald"
+          ]
+        },
+        {
+          "key": 6,
+          "values": [
+            "Artemus"
+          ]
+        },
+        {
+          "key": 7,
+          "values": [
+            "Asa"
+          ]
+        },
+        {
+          "key": 8,
+          "values": [
+            "Barnabas"
+          ]
+        },
+        {
+          "key": 9,
+          "values": [
+            "Beauregard"
+          ]
+        },
+        {
+          "key": 10,
+          "values": [
+            "Bertram"
+          ]
+        },
+        {
+          "key": 11,
+          "values": [
+            "Buford"
+          ]
+        },
+        {
+          "key": 12,
+          "values": [
+            "Calvin"
+          ]
+        },
+        {
+          "key": 13,
+          "values": [
+            "Chauncey"
+          ]
+        },
+        {
+          "key": 14,
+          "values": [
+            "Chester"
+          ]
+        },
+        {
+          "key": 15,
+          "values": [
+            "Claiborne"
+          ]
+        },
+        {
+          "key": 16,
+          "values": [
+            "Clem"
+          ]
+        },
+        {
+          "key": 17,
+          "values": [
+            "Cornelius"
+          ]
+        },
+        {
+          "key": 18,
+          "values": [
+            "Cuthbert"
+          ]
+        },
+        {
+          "key": 19,
+          "values": [
+            "Cyrus"
+          ]
+        },
+        {
+          "key": 20,
+          "values": [
+            "Darius"
+          ]
+        },
+        {
+          "key": 21,
+          "values": [
+            "Ebenezer"
+          ]
+        },
+        {
+          "key": 22,
+          "values": [
+            "Edgar"
+          ]
+        },
+        {
+          "key": 23,
+          "values": [
+            "Elijah"
+          ]
+        },
+        {
+          "key": 24,
+          "values": [
+            "Elmer"
+          ]
+        },
+        {
+          "key": 25,
+          "values": [
+            "Enoch"
+          ]
+        },
+        {
+          "key": 26,
+          "values": [
+            "Ephraim"
+          ]
+        },
+        {
+          "key": 27,
+          "values": [
+            "Ezekiel"
+          ]
+        },
+        {
+          "key": 28,
+          "values": [
+            "Festus"
+          ]
+        },
+        {
+          "key": 29,
+          "values": [
+            "Fletcher"
+          ]
+        },
+        {
+          "key": 30,
+          "values": [
+            "Gideon"
+          ]
+        },
+        {
+          "key": 31,
+          "values": [
+            "Grover"
+          ]
+        },
+        {
+          "key": 32,
+          "values": [
+            "Harlan"
+          ]
+        },
+        {
+          "key": 33,
+          "values": [
+            "Hezekiah"
+          ]
+        },
+        {
+          "key": 34,
+          "values": [
+            "Hiram"
+          ]
+        },
+        {
+          "key": 35,
+          "values": [
+            "Horace"
+          ]
+        },
+        {
+          "key": 36,
+          "values": [
+            "Ichabod"
+          ]
+        },
+        {
+          "key": 37,
+          "values": [
+            "Ira"
+          ]
+        },
+        {
+          "key": 38,
+          "values": [
+            "Jedediah"
+          ]
+        },
+        {
+          "key": 39,
+          "values": [
+            "Jeremiah"
+          ]
+        },
+        {
+          "key": 40,
+          "values": [
+            "Job"
+          ]
+        },
+        {
+          "key": 41,
+          "values": [
+            "Josiah"
+          ]
+        },
+        {
+          "key": 42,
+          "values": [
+            "Lemuel"
+          ]
+        },
+        {
+          "key": 43,
+          "values": [
+            "Leonidas"
+          ]
+        },
+        {
+          "key": 44,
+          "values": [
+            "Luther"
+          ]
+        },
+        {
+          "key": 45,
+          "values": [
+            "Malachi"
+          ]
+        },
+        {
+          "key": 46,
+          "values": [
+            "Mordecai"
+          ]
+        },
+        {
+          "key": 47,
+          "values": [
+            "Moses"
+          ]
+        },
+        {
+          "key": 48,
+          "values": [
+            "Nehemiah"
+          ]
+        },
+        {
+          "key": 49,
+          "values": [
+            "Obadiah"
+          ]
+        },
+        {
+          "key": 50,
+          "values": [
+            "Orville"
+          ]
+        },
+        {
+          "key": 51,
+          "values": [
+            "Otis"
+          ]
+        },
+        {
+          "key": 52,
+          "values": [
+            "Percival"
+          ]
+        },
+        {
+          "key": 53,
+          "values": [
+            "Phineas"
+          ]
+        },
+        {
+          "key": 54,
+          "values": [
+            "Reuben"
+          ]
+        },
+        {
+          "key": 55,
+          "values": [
+            "Roscoe"
+          ]
+        },
+        {
+          "key": 56,
+          "values": [
+            "Rufus"
+          ]
+        },
+        {
+          "key": 57,
+          "values": [
+            "Silas"
+          ]
+        },
+        {
+          "key": 58,
+          "values": [
+            "Thaddeus"
+          ]
+        },
+        {
+          "key": 59,
+          "values": [
+            "Theophilus"
+          ]
+        },
+        {
+          "key": 60,
+          "values": [
+            "Ulysses"
+          ]
+        },
+        {
+          "key": 61,
+          "values": [
+            "Virgil"
+          ]
+        },
+        {
+          "key": 62,
+          "values": [
+            "Wilbur"
+          ]
+        },
+        {
+          "key": 63,
+          "values": [
+            "Zebediah"
+          ]
+        },
+        {
+          "key": 64,
+          "values": [
+            "Zedekiah"
+          ]
+        },
+        {
+          "key": 65,
+          "values": [
+            "Absalom"
+          ]
+        },
+        {
+          "key": 66,
+          "values": [
+            "Aloysius"
+          ]
+        },
+        {
+          "key": 67,
+          "values": [
+            "Bartholomew"
+          ]
+        },
+        {
+          "key": 68,
+          "values": [
+            "Basil"
+          ]
+        },
+        {
+          "key": 69,
+          "values": [
+            "Burl"
+          ]
+        },
+        {
+          "key": 70,
+          "values": [
+            "Cadwallader"
+          ]
+        },
+        {
+          "key": 71,
+          "values": [
+            "Cicero"
+          ]
+        },
+        {
+          "key": 72,
+          "values": [
+            "Elwood"
+          ]
+        },
+        {
+          "key": 73,
+          "values": [
+            "Erasmus"
+          ]
+        },
+        {
+          "key": 74,
+          "values": [
+            "Garland"
+          ]
+        },
+        {
+          "key": 75,
+          "values": [
+            "Homer"
+          ]
+        },
+        {
+          "key": 76,
+          "values": [
+            "Ignatius"
+          ]
+        },
+        {
+          "key": 77,
+          "values": [
+            "Jabez"
+          ]
+        },
+        {
+          "key": 78,
+          "values": [
+            "Lafayette"
+          ]
+        },
+        {
+          "key": 79,
+          "values": [
+            "Lige"
+          ]
+        },
+        {
+          "key": 80,
+          "values": [
+            "Lucius"
+          ]
+        },
+        {
+          "key": 81,
+          "values": [
+            "Merritt"
+          ]
+        },
+        {
+          "key": 82,
+          "values": [
+            "Orson"
+          ]
+        },
+        {
+          "key": 83,
+          "values": [
+            "Pleasant"
+          ]
+        },
+        {
+          "key": 84,
+          "values": [
+            "Pomeroy"
+          ]
+        },
+        {
+          "key": 85,
+          "values": [
+            "Ransom"
+          ]
+        },
+        {
+          "key": 86,
+          "values": [
+            "Remus"
+          ]
+        },
+        {
+          "key": 87,
+          "values": [
+            "Royal"
+          ]
+        },
+        {
+          "key": 88,
+          "values": [
+            "Solomon"
+          ]
+        },
+        {
+          "key": 89,
+          "values": [
+            "Tiberius"
+          ]
+        },
+        {
+          "key": 90,
+          "values": [
+            "Varnum"
+          ]
+        },
+        {
+          "key": 91,
+          "values": [
+            "Wiley"
+          ]
+        },
+        {
+          "key": 92,
+          "values": [
+            "Worth"
+          ]
+        },
+        {
+          "key": 93,
+          "values": [
+            "Abacus"
+          ]
+        },
+        {
+          "key": 94,
+          "values": [
+            "Creedence"
+          ]
+        },
+        {
+          "key": 95,
+          "values": [
+            "Furnace"
+          ]
+        },
+        {
+          "key": 96,
+          "values": [
+            "Providence"
+          ]
+        },
+        {
+          "key": 97,
+          "values": [
+            "Remedy"
+          ]
+        },
+        {
+          "key": 98,
+          "values": [
+            "Sunday"
+          ]
+        },
+        {
+          "key": 99,
+          "values": [
+            "Testament"
+          ]
+        },
+        {
+          "key": 100,
+          "values": [
+            "Warranty"
+          ]
+        }
+      ],
+      "source": "manuscript/content/tables/mens-first-names.md",
+      "sourceSha256": "6c8c0f8867b2742ba4813130f38cac4e4856787c2eb7a01f8dce321ab94369e7"
+    },
+    "first_name_women": {
+      "columns": 1,
+      "die": "d100",
+      "results": [
+        {
+          "key": 1,
+          "values": [
+            "Abigail"
+          ]
+        },
+        {
+          "key": 2,
+          "values": [
+            "Ada"
+          ]
+        },
+        {
+          "key": 3,
+          "values": [
+            "Adelaide"
+          ]
+        },
+        {
+          "key": 4,
+          "values": [
+            "Agatha"
+          ]
+        },
+        {
+          "key": 5,
+          "values": [
+            "Agnes"
+          ]
+        },
+        {
+          "key": 6,
+          "values": [
+            "Alma"
+          ]
+        },
+        {
+          "key": 7,
+          "values": [
+            "Althea"
+          ]
+        },
+        {
+          "key": 8,
+          "values": [
+            "Amelia"
+          ]
+        },
+        {
+          "key": 9,
+          "values": [
+            "Annabelle"
+          ]
+        },
+        {
+          "key": 10,
+          "values": [
+            "Arabella"
+          ]
+        },
+        {
+          "key": 11,
+          "values": [
+            "Araminta"
+          ]
+        },
+        {
+          "key": 12,
+          "values": [
+            "Augusta"
+          ]
+        },
+        {
+          "key": 13,
+          "values": [
+            "Beatrice"
+          ]
+        },
+        {
+          "key": 14,
+          "values": [
+            "Bernice"
+          ]
+        },
+        {
+          "key": 15,
+          "values": [
+            "Bessie"
+          ]
+        },
+        {
+          "key": 16,
+          "values": [
+            "Blanche"
+          ]
+        },
+        {
+          "key": 17,
+          "values": [
+            "Calpurnia"
+          ]
+        },
+        {
+          "key": 18,
+          "values": [
+            "Charity"
+          ]
+        },
+        {
+          "key": 19,
+          "values": [
+            "Clara"
+          ]
+        },
+        {
+          "key": 20,
+          "values": [
+            "Clementine"
+          ]
+        },
+        {
+          "key": 21,
+          "values": [
+            "Cora"
+          ]
+        },
+        {
+          "key": 22,
+          "values": [
+            "Cordelia"
+          ]
+        },
+        {
+          "key": 23,
+          "values": [
+            "Delilah"
+          ]
+        },
+        {
+          "key": 24,
+          "values": [
+            "Delphine"
+          ]
+        },
+        {
+          "key": 25,
+          "values": [
+            "Dorcas"
+          ]
+        },
+        {
+          "key": 26,
+          "values": [
+            "Dovie"
+          ]
+        },
+        {
+          "key": 27,
+          "values": [
+            "Edith"
+          ]
+        },
+        {
+          "key": 28,
+          "values": [
+            "Effie"
+          ]
+        },
+        {
+          "key": 29,
+          "values": [
+            "Eliza"
+          ]
+        },
+        {
+          "key": 30,
+          "values": [
+            "Elmira"
+          ]
+        },
+        {
+          "key": 31,
+          "values": [
+            "Eudora"
+          ]
+        },
+        {
+          "key": 32,
+          "values": [
+            "Eunice"
+          ]
+        },
+        {
+          "key": 33,
+          "values": [
+            "Euphemia"
+          ]
+        },
+        {
+          "key": 34,
+          "values": [
+            "Fanny"
+          ]
+        },
+        {
+          "key": 35,
+          "values": [
+            "Fern"
+          ]
+        },
+        {
+          "key": 36,
+          "values": [
+            "Flora"
+          ]
+        },
+        {
+          "key": 37,
+          "values": [
+            "Florence"
+          ]
+        },
+        {
+          "key": 38,
+          "values": [
+            "Gertrude"
+          ]
+        },
+        {
+          "key": 39,
+          "values": [
+            "Gladys"
+          ]
+        },
+        {
+          "key": 40,
+          "values": [
+            "Goldie"
+          ]
+        },
+        {
+          "key": 41,
+          "values": [
+            "Harriet"
+          ]
+        },
+        {
+          "key": 42,
+          "values": [
+            "Hattie"
+          ]
+        },
+        {
+          "key": 43,
+          "values": [
+            "Henrietta"
+          ]
+        },
+        {
+          "key": 44,
+          "values": [
+            "Hephzibah"
+          ]
+        },
+        {
+          "key": 45,
+          "values": [
+            "Hortense"
+          ]
+        },
+        {
+          "key": 46,
+          "values": [
+            "Ida"
+          ]
+        },
+        {
+          "key": 47,
+          "values": [
+            "Imogene"
+          ]
+        },
+        {
+          "key": 48,
+          "values": [
+            "Inez"
+          ]
+        },
+        {
+          "key": 49,
+          "values": [
+            "Jemima"
+          ]
+        },
+        {
+          "key": 50,
+          "values": [
+            "Josephine"
+          ]
+        },
+        {
+          "key": 51,
+          "values": [
+            "Lavinia"
+          ]
+        },
+        {
+          "key": 52,
+          "values": [
+            "Lenora"
+          ]
+        },
+        {
+          "key": 53,
+          "values": [
+            "Letitia"
+          ]
+        },
+        {
+          "key": 54,
+          "values": [
+            "Lottie"
+          ]
+        },
+        {
+          "key": 55,
+          "values": [
+            "Louisa"
+          ]
+        },
+        {
+          "key": 56,
+          "values": [
+            "Lucretia"
+          ]
+        },
+        {
+          "key": 57,
+          "values": [
+            "Lula"
+          ]
+        },
+        {
+          "key": 58,
+          "values": [
+            "Mabel"
+          ]
+        },
+        {
+          "key": 59,
+          "values": [
+            "Magnolia"
+          ]
+        },
+        {
+          "key": 60,
+          "values": [
+            "Martha"
+          ]
+        },
+        {
+          "key": 61,
+          "values": [
+            "Matilda"
+          ]
+        },
+        {
+          "key": 62,
+          "values": [
+            "Maude"
+          ]
+        },
+        {
+          "key": 63,
+          "values": [
+            "Mercy"
+          ]
+        },
+        {
+          "key": 64,
+          "values": [
+            "Mildred"
+          ]
+        },
+        {
+          "key": 65,
+          "values": [
+            "Minerva"
+          ]
+        },
+        {
+          "key": 66,
+          "values": [
+            "Myrtle"
+          ]
+        },
+        {
+          "key": 67,
+          "values": [
+            "Nettie"
+          ]
+        },
+        {
+          "key": 68,
+          "values": [
+            "Octavia"
+          ]
+        },
+        {
+          "key": 69,
+          "values": [
+            "Opal"
+          ]
+        },
+        {
+          "key": 70,
+          "values": [
+            "Pearl"
+          ]
+        },
+        {
+          "key": 71,
+          "values": [
+            "Penelope"
+          ]
+        },
+        {
+          "key": 72,
+          "values": [
+            "Phoebe"
+          ]
+        },
+        {
+          "key": 73,
+          "values": [
+            "Prudence"
+          ]
+        },
+        {
+          "key": 74,
+          "values": [
+            "Rhoda"
+          ]
+        },
+        {
+          "key": 75,
+          "values": [
+            "Rosalie"
+          ]
+        },
+        {
+          "key": 76,
+          "values": [
+            "Ruth"
+          ]
+        },
+        {
+          "key": 77,
+          "values": [
+            "Sadie"
+          ]
+        },
+        {
+          "key": 78,
+          "values": [
+            "Sophronia"
+          ]
+        },
+        {
+          "key": 79,
+          "values": [
+            "Susannah"
+          ]
+        },
+        {
+          "key": 80,
+          "values": [
+            "Temperance"
+          ]
+        },
+        {
+          "key": 81,
+          "values": [
+            "Theodosia"
+          ]
+        },
+        {
+          "key": 82,
+          "values": [
+            "Tillie"
+          ]
+        },
+        {
+          "key": 83,
+          "values": [
+            "Trudy"
+          ]
+        },
+        {
+          "key": 84,
+          "values": [
+            "Velma"
+          ]
+        },
+        {
+          "key": 85,
+          "values": [
+            "Verity"
+          ]
+        },
+        {
+          "key": 86,
+          "values": [
+            "Vesta"
+          ]
+        },
+        {
+          "key": 87,
+          "values": [
+            "Viola"
+          ]
+        },
+        {
+          "key": 88,
+          "values": [
+            "Wilhelmina"
+          ]
+        },
+        {
+          "key": 89,
+          "values": [
+            "Winifred"
+          ]
+        },
+        {
+          "key": 90,
+          "values": [
+            "Zilpah"
+          ]
+        },
+        {
+          "key": 91,
+          "values": [
+            "Bathsheba"
+          ]
+        },
+        {
+          "key": 92,
+          "values": [
+            "Drusilla"
+          ]
+        },
+        {
+          "key": 93,
+          "values": [
+            "Etta"
+          ]
+        },
+        {
+          "key": 94,
+          "values": [
+            "Honora"
+          ]
+        },
+        {
+          "key": 95,
+          "values": [
+            "Keziah"
+          ]
+        },
+        {
+          "key": 96,
+          "values": [
+            "Mahala"
+          ]
+        },
+        {
+          "key": 97,
+          "values": [
+            "Narcissa"
+          ]
+        },
+        {
+          "key": 98,
+          "values": [
+            "Calamity"
+          ]
+        },
+        {
+          "key": 99,
+          "values": [
+            "Mourning"
+          ]
+        },
+        {
+          "key": 100,
+          "values": [
+            "Warranty"
+          ]
+        }
+      ],
+      "source": "manuscript/content/tables/womens-first-names.md",
+      "sourceSha256": "8afeb8ab1c81b4d5125539d8678b096837e853c0dabfd1814b8fdefd85dde6a5"
+    },
+    "good": {
+      "columns": 1,
+      "die": "d12",
+      "results": [
+        {
+          "key": 1,
+          "values": [
+            "When something catches fire Nearby, +2 SAVVY."
+          ]
+        },
+        {
+          "key": 2,
+          "values": [
+            "Once/day ignore fall damage because you landed wrong in a useful way."
+          ]
+        },
+        {
+          "key": 3,
+          "values": [
+            "+2 when using broken equipment as a weapon."
+          ]
+        },
+        {
+          "key": 4,
+          "values": [
+            "In a ruin, you can always turn up 1 useless object and 1 maybe-useful object."
+          ]
+        },
+        {
+          "key": 5,
+          "values": [
+            "Once/session declare, \"I fixed this before.\" Gain +2 on one repair check."
+          ]
+        },
+        {
+          "key": 6,
+          "values": [
+            "YOU CAN ALWAYS FIND ROOM FOR ONE MORE BAD IDEA. Gain 1 inventory slot."
+          ]
+        },
+        {
+          "key": 7,
+          "values": [
+            "Pain is delayed. The first time each fight you take damage, record it instead. Apply it at the end of your next turn."
+          ]
+        },
+        {
+          "key": 8,
+          "values": [
+            "Ask the GM, \"What here looks most likely to fail?\" They must answer honestly."
+          ]
+        },
+        {
+          "key": 9,
+          "values": [
+            "Once/session, when a BORK sends a loose object flying, rolling, spilling, or ricocheting away, you know exactly where it ended up."
+          ]
+        },
+        {
+          "key": 10,
+          "values": [
+            "You can sleep almost anywhere. If you have food and water, an uncomfortable place still counts as proper sleep."
+          ]
+        },
+        {
+          "key": 11,
+          "values": [
+            "After one minute examining a broken machine, ask the GM, \"What was this supposed to do?\" They must answer honestly."
+          ]
+        },
+        {
+          "key": 12,
+          "values": [
+            "Once/session, produce one trivial mundane object from a pocket: nail, string, match, button, etc. Not valuable, a weapon, ammo, or a Useful Part."
+          ]
+        }
+      ],
+      "source": "manuscript/content/tables/one-good-thing.md",
+      "sourceSha256": "2a64881028e51c477a686251f05b8a1109acdaeb11454d79c89e101c2326f653"
+    },
+    "keepsake": {
+      "columns": 1,
+      "die": "d8",
+      "results": [
+        {
+          "key": 1,
+          "values": [
+            "A saint charm burned black."
+          ]
+        },
+        {
+          "key": 2,
+          "values": [
+            "A broken pocketwatch frozen at an ugly hour."
+          ]
+        },
+        {
+          "key": 3,
+          "values": [
+            "A child's boot with a name scratched off."
+          ]
+        },
+        {
+          "key": 4,
+          "values": [
+            "A marriage coin split in half."
+          ]
+        },
+        {
+          "key": 5,
+          "values": [
+            "A tax seal from a dead town."
+          ]
+        },
+        {
+          "key": 6,
+          "values": [
+            "A key to nothing that still feels important."
+          ]
+        },
+        {
+          "key": 7,
+          "values": [
+            "A portrait with the face cut out."
+          ]
+        },
+        {
+          "key": 8,
+          "values": [
+            "A dog tag from someone whose voice you hear in dreams."
+          ]
+        }
+      ],
+      "source": "manuscript/content/tables/useless-keepsake.md",
+      "sourceSha256": "27fd288f9ce5db62845848523ce2d18946b830c0d48c0d01f5c91c33f8e3f87f"
+    },
+    "last_name": {
+      "columns": 1,
+      "die": "d100",
+      "results": [
+        {
+          "key": 1,
+          "values": [
+            "Ashdown"
+          ]
+        },
+        {
+          "key": 2,
+          "values": [
+            "Badger"
+          ]
+        },
+        {
+          "key": 3,
+          "values": [
+            "Barrow"
+          ]
+        },
+        {
+          "key": 4,
+          "values": [
+            "Bell"
+          ]
+        },
+        {
+          "key": 5,
+          "values": [
+            "Bile"
+          ]
+        },
+        {
+          "key": 6,
+          "values": [
+            "Blackwood"
+          ]
+        },
+        {
+          "key": 7,
+          "values": [
+            "Bleak"
+          ]
+        },
+        {
+          "key": 8,
+          "values": [
+            "Bloodworth"
+          ]
+        },
+        {
+          "key": 9,
+          "values": [
+            "Boggs"
+          ]
+        },
+        {
+          "key": 10,
+          "values": [
+            "Bone"
+          ]
+        },
+        {
+          "key": 11,
+          "values": [
+            "Bramble"
+          ]
+        },
+        {
+          "key": 12,
+          "values": [
+            "Brass"
+          ]
+        },
+        {
+          "key": 13,
+          "values": [
+            "Brindle"
+          ]
+        },
+        {
+          "key": 14,
+          "values": [
+            "Buckle"
+          ]
+        },
+        {
+          "key": 15,
+          "values": [
+            "Burden"
+          ]
+        },
+        {
+          "key": 16,
+          "values": [
+            "Cask"
+          ]
+        },
+        {
+          "key": 17,
+          "values": [
+            "Cinder"
+          ]
+        },
+        {
+          "key": 18,
+          "values": [
+            "Clatter"
+          ]
+        },
+        {
+          "key": 19,
+          "values": [
+            "Cobb"
+          ]
+        },
+        {
+          "key": 20,
+          "values": [
+            "Coffin"
+          ]
+        },
+        {
+          "key": 21,
+          "values": [
+            "Crake"
+          ]
+        },
+        {
+          "key": 22,
+          "values": [
+            "Crow"
+          ]
+        },
+        {
+          "key": 23,
+          "values": [
+            "Crumb"
+          ]
+        },
+        {
+          "key": 24,
+          "values": [
+            "Ditch"
+          ]
+        },
+        {
+          "key": 25,
+          "values": [
+            "Drabble"
+          ]
+        },
+        {
+          "key": 26,
+          "values": [
+            "Dredge"
+          ]
+        },
+        {
+          "key": 27,
+          "values": [
+            "Drywall"
+          ]
+        },
+        {
+          "key": 28,
+          "values": [
+            "Fallow"
+          ]
+        },
+        {
+          "key": 29,
+          "values": [
+            "Fen"
+          ]
+        },
+        {
+          "key": 30,
+          "values": [
+            "Flint"
+          ]
+        },
+        {
+          "key": 31,
+          "values": [
+            "Gasket"
+          ]
+        },
+        {
+          "key": 32,
+          "values": [
+            "Gristle"
+          ]
+        },
+        {
+          "key": 33,
+          "values": [
+            "Grubb"
+          ]
+        },
+        {
+          "key": 34,
+          "values": [
+            "Haggett"
+          ]
+        },
+        {
+          "key": 35,
+          "values": [
+            "Hinge"
+          ]
+        },
+        {
+          "key": 36,
+          "values": [
+            "Holler"
+          ]
+        },
+        {
+          "key": 37,
+          "values": [
+            "Hooks"
+          ]
+        },
+        {
+          "key": 38,
+          "values": [
+            "Knapp"
+          ]
+        },
+        {
+          "key": 39,
+          "values": [
+            "Knuckle"
+          ]
+        },
+        {
+          "key": 40,
+          "values": [
+            "Latch"
+          ]
+        },
+        {
+          "key": 41,
+          "values": [
+            "Leak"
+          ]
+        },
+        {
+          "key": 42,
+          "values": [
+            "Muck"
+          ]
+        },
+        {
+          "key": 43,
+          "values": [
+            "Nail"
+          ]
+        },
+        {
+          "key": 44,
+          "values": [
+            "Nettle"
+          ]
+        },
+        {
+          "key": 45,
+          "values": [
+            "Pail"
+          ]
+        },
+        {
+          "key": 46,
+          "values": [
+            "Patch"
+          ]
+        },
+        {
+          "key": 47,
+          "values": [
+            "Pike"
+          ]
+        },
+        {
+          "key": 48,
+          "values": [
+            "Plumb"
+          ]
+        },
+        {
+          "key": 49,
+          "values": [
+            "Rattle"
+          ]
+        },
+        {
+          "key": 50,
+          "values": [
+            "Rook"
+          ]
+        },
+        {
+          "key": 51,
+          "values": [
+            "Rust"
+          ]
+        },
+        {
+          "key": 52,
+          "values": [
+            "Sallow"
+          ]
+        },
+        {
+          "key": 53,
+          "values": [
+            "Scrape"
+          ]
+        },
+        {
+          "key": 54,
+          "values": [
+            "Shank"
+          ]
+        },
+        {
+          "key": 55,
+          "values": [
+            "Silt"
+          ]
+        },
+        {
+          "key": 56,
+          "values": [
+            "Slade"
+          ]
+        },
+        {
+          "key": 57,
+          "values": [
+            "Slop"
+          ]
+        },
+        {
+          "key": 58,
+          "values": [
+            "Soot"
+          ]
+        },
+        {
+          "key": 59,
+          "values": [
+            "Spindle"
+          ]
+        },
+        {
+          "key": 60,
+          "values": [
+            "Splint"
+          ]
+        },
+        {
+          "key": 61,
+          "values": [
+            "Stitch"
+          ]
+        },
+        {
+          "key": 62,
+          "values": [
+            "Stump"
+          ]
+        },
+        {
+          "key": 63,
+          "values": [
+            "Tallow"
+          ]
+        },
+        {
+          "key": 64,
+          "values": [
+            "Thistle"
+          ]
+        },
+        {
+          "key": 65,
+          "values": [
+            "Tread"
+          ]
+        },
+        {
+          "key": 66,
+          "values": [
+            "Trench"
+          ]
+        },
+        {
+          "key": 67,
+          "values": [
+            "Vane"
+          ]
+        },
+        {
+          "key": 68,
+          "values": [
+            "Vetch"
+          ]
+        },
+        {
+          "key": 69,
+          "values": [
+            "Wattle"
+          ]
+        },
+        {
+          "key": 70,
+          "values": [
+            "Wick"
+          ]
+        },
+        {
+          "key": 71,
+          "values": [
+            "Wrench"
+          ]
+        },
+        {
+          "key": 72,
+          "values": [
+            "Yarrow"
+          ]
+        },
+        {
+          "key": 73,
+          "values": [
+            "Brackish"
+          ]
+        },
+        {
+          "key": 74,
+          "values": [
+            "Clampett"
+          ]
+        },
+        {
+          "key": 75,
+          "values": [
+            "Crick"
+          ]
+        },
+        {
+          "key": 76,
+          "values": [
+            "Doolittle"
+          ]
+        },
+        {
+          "key": 77,
+          "values": [
+            "Fairweather"
+          ]
+        },
+        {
+          "key": 78,
+          "values": [
+            "Gallows"
+          ]
+        },
+        {
+          "key": 79,
+          "values": [
+            "Goodenough"
+          ]
+        },
+        {
+          "key": 80,
+          "values": [
+            "Hardluck"
+          ]
+        },
+        {
+          "key": 81,
+          "values": [
+            "Hardscrabble"
+          ]
+        },
+        {
+          "key": 82,
+          "values": [
+            "Miser"
+          ]
+        },
+        {
+          "key": 83,
+          "values": [
+            "Pennyworth"
+          ]
+        },
+        {
+          "key": 84,
+          "values": [
+            "Puddifoot"
+          ]
+        },
+        {
+          "key": 85,
+          "values": [
+            "Quarrel"
+          ]
+        },
+        {
+          "key": 86,
+          "values": [
+            "Ransom"
+          ]
+        },
+        {
+          "key": 87,
+          "values": [
+            "Smalls"
+          ]
+        },
+        {
+          "key": 88,
+          "values": [
+            "Trouble"
+          ]
+        },
+        {
+          "key": 89,
+          "values": [
+            "Underfoot"
+          ]
+        },
+        {
+          "key": 90,
+          "values": [
+            "Weatherby"
+          ]
+        },
+        {
+          "key": 91,
+          "values": [
+            "Aftermath"
+          ]
+        },
+        {
+          "key": 92,
+          "values": [
+            "Deadbolt"
+          ]
+        },
+        {
+          "key": 93,
+          "values": [
+            "Drysocket"
+          ]
+        },
+        {
+          "key": 94,
+          "values": [
+            "Misfire"
+          ]
+        },
+        {
+          "key": 95,
+          "values": [
+            "Offal"
+          ]
+        },
+        {
+          "key": 96,
+          "values": [
+            "Overpressure"
+          ]
+        },
+        {
+          "key": 97,
+          "values": [
+            "Sparepart"
+          ]
+        },
+        {
+          "key": 98,
+          "values": [
+            "Wrongway"
+          ]
+        },
+        {
+          "key": 99,
+          "values": [
+            "Yesterday"
+          ]
+        },
+        {
+          "key": 100,
+          "values": [
+            "Somehow"
+          ]
+        }
+      ],
+      "source": "manuscript/content/tables/last-names.md",
+      "sourceSha256": "f939c716b476e2f1cb472dae16736ccfd35767d6e3b26c7d28a2c77957542e43"
+    },
+    "possession": {
+      "columns": 2,
+      "die": "d100",
+      "results": [
+        {
+          "key": 1,
+          "values": [
+            "BUCKET",
+            "Carries liquids. Leaks everything except blood."
+          ]
+        },
+        {
+          "key": 2,
+          "values": [
+            "FOLDING LADDER",
+            "d6+2 rungs appear whenever unfolded. This number can change."
+          ]
+        },
+        {
+          "key": 3,
+          "values": [
+            "CARPENTER'S HAMMER",
+            "Excellent hammer. Handle periodically becomes loose immediately after someone says, \"Hold this.\""
+          ]
+        },
+        {
+          "key": 4,
+          "values": [
+            "FUNERAL ROPE",
+            "Thirty feet long according to the seller. Currently twenty-four."
+          ]
+        },
+        {
+          "key": 5,
+          "values": [
+            "HAND DRILL",
+            "Bores wood normally. Screams against stone."
+          ]
+        },
+        {
+          "key": 6,
+          "values": [
+            "RUSTED CROWBAR",
+            "+2 forcing things open. Occasionally refuses to come back out."
+          ]
+        },
+        {
+          "key": 7,
+          "values": [
+            "SACK OF NAILS",
+            "Contains approximately fifty nails. Spills itself into perfect circles around bad decisions."
+          ]
+        },
+        {
+          "key": 8,
+          "values": [
+            "COLLAPSIBLE SHOVEL",
+            "Folds in half for storage. Also combat. Also digging."
+          ]
+        },
+        {
+          "key": 9,
+          "values": [
+            "CARPENTER'S LEVEL",
+            "Never shows level. Extremely accurate about whether a place is wrong."
+          ]
+        },
+        {
+          "key": 10,
+          "values": [
+            "MEASURING TAPE",
+            "Measurements are correct until repeated."
+          ]
+        },
+        {
+          "key": 11,
+          "values": [
+            "HACKSAW",
+            "Cuts metal eventually. Blade hums when pointed at concealed machinery."
+          ]
+        },
+        {
+          "key": 12,
+          "values": [
+            "GLUE POT",
+            "Bonds anything except the two things you meant to join."
+          ]
+        },
+        {
+          "key": 13,
+          "values": [
+            "COIL OF WIRE",
+            "Useful for traps and repair. Forms knots when unwatched."
+          ]
+        },
+        {
+          "key": 14,
+          "values": [
+            "PLIERS",
+            "Grip tremendously well. Opening them again requires STOUTNESS DR10."
+          ]
+        },
+        {
+          "key": 15,
+          "values": [
+            "WRENCH SET",
+            "Contains every size except the one needed."
+          ]
+        },
+        {
+          "key": 16,
+          "values": [
+            "SMALL HATCHET",
+            "Good for wood. Becomes lodged in wood with unreasonable commitment."
+          ]
+        },
+        {
+          "key": 17,
+          "values": [
+            "MAGNIFYING LENS",
+            "Reveals tiny details. Sometimes reveals details that are not there yet."
+          ]
+        },
+        {
+          "key": 18,
+          "values": [
+            "HAND BELLOWS",
+            "Feeds fires beautifully. When more than one fire is plausible, roll BORK to learn which one it feeds."
+          ]
+        },
+        {
+          "key": 19,
+          "values": [
+            "MAGNET HOOK",
+            "Retrieves metal from wells, mud, rubble, and pockets. Prioritizes weapons."
+          ]
+        },
+        {
+          "key": 20,
+          "values": [
+            "TOOLBOX MARKED PROFESSIONAL",
+            "Contains d6 Useful Parts and one tool nobody recognizes. The box cannot be opened quietly."
+          ]
+        },
+        {
+          "key": 21,
+          "values": [
+            "POCKET COMPASS",
+            "Points toward the nearest significant corpse."
+          ]
+        },
+        {
+          "key": 22,
+          "values": [
+            "BEDROLL",
+            "Warm and dry. Something else occasionally appears to have slept in it first."
+          ]
+        },
+        {
+          "key": 23,
+          "values": [
+            "CANVAS TENT",
+            "Fits two comfortably or five desperately. Door relocates in heavy rain."
+          ]
+        },
+        {
+          "key": 24,
+          "values": [
+            "CANTEEN",
+            "Keeps water remarkably cold. Cap squeals like a rabbit when removed."
+          ]
+        },
+        {
+          "key": 25,
+          "values": [
+            "COOKING POT",
+            "Food prepared inside tastes excellent. Nobody feels well afterward."
+          ]
+        },
+        {
+          "key": 26,
+          "values": [
+            "TIN CUP",
+            "Cannot be lost. Throwing it away guarantees its return."
+          ]
+        },
+        {
+          "key": 27,
+          "values": [
+            "FLINT STRIKER",
+            "Creates sparks reliably. Quantity varies from pathetic to criminal."
+          ]
+        },
+        {
+          "key": 28,
+          "values": [
+            "HOODED LANTERN",
+            "Produces good light. Illuminates everything except what the holder is directly looking at."
+          ]
+        },
+        {
+          "key": 29,
+          "values": [
+            "CRANK TORCH",
+            "Bright beam while cranked. Sounds like a dying insect inside a violin."
+          ]
+        },
+        {
+          "key": 30,
+          "values": [
+            "RAINCOAT",
+            "Waterproof from the outside."
+          ]
+        },
+        {
+          "key": 31,
+          "values": [
+            "BEDROLL PILLOW",
+            "Surprisingly comfortable. Whispers practical but unethical suggestions before sleep."
+          ]
+        },
+        {
+          "key": 32,
+          "values": [
+            "TRAIL MAP",
+            "Accurate depiction of the region fifteen years ago."
+          ]
+        },
+        {
+          "key": 33,
+          "values": [
+            "SPYGLASS",
+            "Magnifies distant objects. Occasionally removes the distance instead."
+          ]
+        },
+        {
+          "key": 34,
+          "values": [
+            "SADDLE BAGS",
+            "Carry six items. Contents migrate between pockets whenever the horse runs."
+          ]
+        },
+        {
+          "key": 35,
+          "values": [
+            "RIDING SADDLE",
+            "Beautiful workmanship. Cinch loosens whenever someone uses the word \"safe.\""
+          ]
+        },
+        {
+          "key": 36,
+          "values": [
+            "EMERGENCY BLANKET",
+            "Extremely warm. Reflects moonlight like a distress beacon."
+          ]
+        },
+        {
+          "key": 37,
+          "values": [
+            "FISHING LINE & HOOKS",
+            "Always catches something. Fish are not guaranteed."
+          ]
+        },
+        {
+          "key": 38,
+          "values": [
+            "TEN IRON TENT STAKES",
+            "There are currently eleven."
+          ]
+        },
+        {
+          "key": 39,
+          "values": [
+            "TRAIL WHISTLE",
+            "Carries for miles. Something always answers."
+          ]
+        },
+        {
+          "key": 40,
+          "values": [
+            "EXPEDITION TRUNK",
+            "Holds twelve items. Weighs exactly the same whether empty or full."
+          ]
+        },
+        {
+          "key": 41,
+          "values": [
+            "BONE SAW",
+            "Excellent at cutting bone. Makes nearby teeth ache."
+          ]
+        },
+        {
+          "key": 42,
+          "values": [
+            "SURGICAL HAMMER",
+            "No known surgical procedure requires this."
+          ]
+        },
+        {
+          "key": 43,
+          "values": [
+            "BANDAGE ROLL",
+            "Stops bleeding. Unravels itself when anyone says, \"That's better.\""
+          ]
+        },
+        {
+          "key": 44,
+          "values": [
+            "BOTTLE OF ANTISEPTIC",
+            "Kills infection, pain, appetite, and certain paints."
+          ]
+        },
+        {
+          "key": 45,
+          "values": [
+            "NEEDLE & GUT THREAD",
+            "+2 stitching wounds. Thread tightens overnight."
+          ]
+        },
+        {
+          "key": 46,
+          "values": [
+            "DENTIST'S PLIERS",
+            "Designed for teeth. Almost irresistibly good at removing nails from wood."
+          ]
+        },
+        {
+          "key": 47,
+          "values": [
+            "SPLINT KIT",
+            "Stabilizes broken limbs. Contains instructions for a species nobody recognizes."
+          ]
+        },
+        {
+          "key": 48,
+          "values": [
+            "TONIC",
+            "Heal d4 HP. Then roll BORK. The bottle refuses further explanation."
+          ]
+        },
+        {
+          "key": 49,
+          "values": [
+            "LAUDANUM SUBSTITUTE",
+            "Eliminates pain. Sometimes eliminates concern about the original problem."
+          ]
+        },
+        {
+          "key": 50,
+          "values": [
+            "THERMOMETER",
+            "Measures temperature accurately. Also briefly displays the patient's remaining lifespan."
+          ]
+        },
+        {
+          "key": 51,
+          "values": [
+            "UNDERTAKER'S MEASURING CORD",
+            "Measures corpses perfectly. Gives living subjects an incorrect measurement."
+          ]
+        },
+        {
+          "key": 52,
+          "values": [
+            "EMBALMING PUMP",
+            "Moves fluid aggressively from one location to another. Labels have worn off."
+          ]
+        },
+        {
+          "key": 53,
+          "values": [
+            "BURIAL CLOTH",
+            "Keeps dead things covered. Living things wrapped inside become strangely difficult to notice."
+          ]
+        },
+        {
+          "key": 54,
+          "values": [
+            "GRAVE BELL",
+            "Designed to prevent premature burial. Rings occasionally from inside your luggage."
+          ]
+        },
+        {
+          "key": 55,
+          "values": [
+            "COFFIN KEY",
+            "Fits no known lock. Locks sometimes appear after carrying it for several days."
+          ]
+        },
+        {
+          "key": 56,
+          "values": [
+            "TOE TAGS",
+            "Blank when applied. Usually filled in by morning."
+          ]
+        },
+        {
+          "key": 57,
+          "values": [
+            "JAR OF LEECHES",
+            "Contains d6 leeches. Count changes whenever the jar is closed."
+          ]
+        },
+        {
+          "key": 58,
+          "values": [
+            "PROSTHETIC HAND",
+            "Useful replacement or excellent back-scratcher. Sometimes grips objects on its own."
+          ]
+        },
+        {
+          "key": 59,
+          "values": [
+            "GLASS EYE",
+            "Not matched to anyone present. Rolls toward concealed openings."
+          ]
+        },
+        {
+          "key": 60,
+          "values": [
+            "BOTTLE OF BONE OIL",
+            "Lubricates machinery wonderfully. Machinery lubricated with it occasionally develops preferences."
+          ]
+        },
+        {
+          "key": 61,
+          "values": [
+            "HAND-CRANK GENERATOR",
+            "Produces electricity. Also produces a smell associated with thunderstorms and graves."
+          ]
+        },
+        {
+          "key": 62,
+          "values": [
+            "ALARM CLOCK",
+            "Keeps perfect time. Alarm rings d6 minutes before something bad happens."
+          ]
+        },
+        {
+          "key": 63,
+          "values": [
+            "PRESSURE GAUGE",
+            "Measures pressure in machines, pipes, containers, and occasionally people."
+          ]
+        },
+        {
+          "key": 64,
+          "values": [
+            "BRASS SPEAKING TUBE",
+            "Carries voices between its two ends. There is only one end."
+          ]
+        },
+        {
+          "key": 65,
+          "values": [
+            "PORTABLE STOVE",
+            "Burns almost anything. Extinguishing it under pressure usually requires SAVVY DR12."
+          ]
+        },
+        {
+          "key": 66,
+          "values": [
+            "HAND PUMP",
+            "Moves liquid uphill. Sometimes continues pumping after disconnected."
+          ]
+        },
+        {
+          "key": 67,
+          "values": [
+            "MECHANICAL CALCULATOR",
+            "Adds perfectly. Subtraction causes visible irritation."
+          ]
+        },
+        {
+          "key": 68,
+          "values": [
+            "TELEGRAPH KEY",
+            "Not connected to anything. Receives messages anyway."
+          ]
+        },
+        {
+          "key": 69,
+          "values": [
+            "SIGNAL LAMP",
+            "Flashes coded messages. Adds punctuation not sent by the operator."
+          ]
+        },
+        {
+          "key": 70,
+          "values": [
+            "PADLOCK",
+            "Nearly impossible to pick. Unfortunately possesses no key."
+          ]
+        },
+        {
+          "key": 71,
+          "values": [
+            "WIND-UP MUSIC BOX",
+            "Plays three notes of a song nobody knows. Machinery nearby sometimes begins operating in rhythm."
+          ]
+        },
+        {
+          "key": 72,
+          "values": [
+            "PORTABLE FAN",
+            "Produces a powerful breeze. Cannot determine which direction is forward."
+          ]
+        },
+        {
+          "key": 73,
+          "values": [
+            "BATTERY",
+            "Still charged somehow. Nobody knows its voltage."
+          ]
+        },
+        {
+          "key": 74,
+          "values": [
+            "HAND-CRANK SIREN",
+            "Audible for miles. Requires three turns to start and approximately thirty to stop."
+          ]
+        },
+        {
+          "key": 75,
+          "values": [
+            "BRASS FIRE EXTINGUISHER",
+            "Suppresses flame. Contents freeze whatever they touch."
+          ]
+        },
+        {
+          "key": 76,
+          "values": [
+            "POCKET BAROMETER",
+            "Predicts storms. Also predicts arguments with comparable accuracy."
+          ]
+        },
+        {
+          "key": 77,
+          "values": [
+            "MECHANICAL TIMER",
+            "Counts downward normally. Occasionally reaches zero and continues into negative numbers."
+          ]
+        },
+        {
+          "key": 78,
+          "values": [
+            "SURVEYOR'S TRANSIT",
+            "Measures angles and distances precisely. Periodically rotates toward something underground."
+          ]
+        },
+        {
+          "key": 79,
+          "values": [
+            "PORTABLE SEWING MACHINE",
+            "Repairs clothing rapidly. Can sew through leather, canvas, skin, and once, a table."
+          ]
+        },
+        {
+          "key": 80,
+          "values": [
+            "UNLABELED LEVER",
+            "Cast iron. Mounted to a small wooden board. Pulling it requires a BORK roll despite no observable mechanism."
+          ]
+        },
+        {
+          "key": 81,
+          "values": [
+            "DOOR HINGE",
+            "No door attached. Creaks whenever somebody nearby lies badly."
+          ]
+        },
+        {
+          "key": 82,
+          "values": [
+            "EMERGENCY PISTOL",
+            "No barrel, trigger, cylinder, or apparent means of firing. Everyone treats it like a loaded gun."
+          ]
+        },
+        {
+          "key": 83,
+          "values": [
+            "SMALL WOODEN BOX",
+            "Empty. Something knocks back when tapped three times."
+          ]
+        },
+        {
+          "key": 84,
+          "values": [
+            "BLACK CANDLE",
+            "Burns downward normally. Flame casts shadows toward itself."
+          ]
+        },
+        {
+          "key": 85,
+          "values": [
+            "BRASS KEY",
+            "Fits the next locked door encountered exactly once."
+          ]
+        },
+        {
+          "key": 86,
+          "values": [
+            "JAR OF DIRT",
+            "Always contains soil from wherever you were yesterday."
+          ]
+        },
+        {
+          "key": 87,
+          "values": [
+            "DECK OF CARDS",
+            "Missing one card. Nobody agrees which one."
+          ]
+        },
+        {
+          "key": 88,
+          "values": [
+            "BROKEN MIRROR",
+            "Reflection sometimes continues moving after you stop."
+          ]
+        },
+        {
+          "key": 89,
+          "values": [
+            "IRON SPOON",
+            "Perfectly ordinary except machinery works better when it is nearby."
+          ]
+        },
+        {
+          "key": 90,
+          "values": [
+            "LEATHER GLOVE",
+            "Left-handed. Anyone wearing it remembers owning its matching glove."
+          ]
+        },
+        {
+          "key": 91,
+          "values": [
+            "EMPTY BOTTLE",
+            "Cannot be filled intentionally. Frequently contains something by morning."
+          ]
+        },
+        {
+          "key": 92,
+          "values": [
+            "SMALL SUITCASE",
+            "Contains weather. Opening outdoors is strongly discouraged."
+          ]
+        },
+        {
+          "key": 93,
+          "values": [
+            "WOODEN RULER",
+            "Twelve inches long. Creates disagreement about what an inch is."
+          ]
+        },
+        {
+          "key": 94,
+          "values": [
+            "SEALED ENVELOPE",
+            "Addressed TO WHOEVER FINDS THIS. Your handwriting is on the front."
+          ]
+        },
+        {
+          "key": 95,
+          "values": [
+            "BRASS MONOCLE",
+            "Shows one invisible thing at a time. User does not choose which."
+          ]
+        },
+        {
+          "key": 96,
+          "values": [
+            "STONE EGG",
+            "Warm when danger is near. Unfortunately warm most of the time."
+          ]
+        },
+        {
+          "key": 97,
+          "values": [
+            "TINY DOOR",
+            "Six inches tall, complete with hinges and knob. Opens onto darkness deeper than its thickness permits."
+          ]
+        },
+        {
+          "key": 98,
+          "values": [
+            "RUSTED CHAIN, THREE FEET",
+            "One end attaches normally. The other occasionally attaches to concepts."
+          ]
+        },
+        {
+          "key": 99,
+          "values": [
+            "RECEIPT",
+            "Lists everything currently carried by the holder. Bottom line reads: BALANCE DUE."
+          ]
+        },
+        {
+          "key": 100,
+          "values": [
+            "THE WARRANTY",
+            "A folded yellow paper bearing your full name. Choose one possession: it never BORKs, malfunctions, or fails its intended purpose. Each time it would have BORKed, the GM secretly marks a box. At three boxes, somebody arrives to honor the warranty. They want the item back."
+          ]
+        }
+      ],
+      "source": "manuscript/content/tables/questionably-functional-possessions.md",
+      "sourceSha256": "0337110248afd693f80432d540faa6e6f8ee0271834cb17d9ee186aef4d5f4d5"
+    },
+    "repair": {
+      "columns": 1,
+      "die": "d66",
+      "results": [
+        {
+          "key": 11,
+          "values": [
+            "A dentist. Dental wire, tiny clamps, and something suspiciously tooth-colored are involved. They would recognize the work immediately."
+          ]
+        },
+        {
+          "key": 12,
+          "values": [
+            "Your father. Badly. The repair is wrapped, pinned, or hammered into place. You were specifically told never to undo it."
+          ]
+        },
+        {
+          "key": 13,
+          "values": [
+            "Three children. String, bent nails, and one brightly painted repair piece are involved. They charged full price."
+          ]
+        },
+        {
+          "key": 14,
+          "values": [
+            "A watchmaker. The repair is absurdly precise and uses tiny screws or a watch gear where no sane person would."
+          ]
+        },
+        {
+          "key": 15,
+          "values": [
+            "An undertaker. Coffin nails and burial hardware are doing structural work. They deny ever touching it."
+          ]
+        },
+        {
+          "key": 16,
+          "values": [
+            "The previous owner, while dying. Their final instructions began, \"Whatever you do, don't-\""
+          ]
+        },
+        {
+          "key": 21,
+          "values": [
+            "A factory professional. The repair is clean, numbered, and stamped with a service mark nobody local recognizes. This is more concerning than bad workmanship."
+          ]
+        },
+        {
+          "key": 22,
+          "values": [
+            "Someone with only kitchen utensils. Part of a fork or spoon was used as repair material. It occasionally matters."
+          ]
+        },
+        {
+          "key": 23,
+          "values": [
+            "You. Apparently. Your own initials mark the repair. You have no memory of doing the work."
+          ]
+        },
+        {
+          "key": 24,
+          "values": [
+            "A traveling preacher. Scripture, prayers, and accusations cover the repair and continue anywhere they could reach."
+          ]
+        },
+        {
+          "key": 25,
+          "values": [
+            "Nobody. You went to sleep with it broken and woke up with it repaired. The replacement piece does not quite match anything else."
+          ]
+        },
+        {
+          "key": 26,
+          "values": [
+            "Someone whose name has been scratched out everywhere. The same erased name appears beneath each repair. Nobody recognizes it. Until somebody does."
+          ]
+        },
+        {
+          "key": 31,
+          "values": [
+            "A cobbler. Waxed thread, punched leather, and tiny eyelets bind the repair. Their stitch pattern is unmistakable."
+          ]
+        },
+        {
+          "key": 32,
+          "values": [
+            "A farrier. Horseshoe nails and rasped iron hold something together. One nail bears a local smith's mark."
+          ]
+        },
+        {
+          "key": 33,
+          "values": [
+            "A bookbinder. Linen thread, glue, and a strip of tooled leather hold it together. A fragment of gilt lettering remains."
+          ]
+        },
+        {
+          "key": 34,
+          "values": [
+            "An optician. Spectacle wire, tiny screws, and a precisely shaped shim are involved. One piece still bears a lens prescription."
+          ]
+        },
+        {
+          "key": 35,
+          "values": [
+            "A musical-instrument repairer. Instrument wire, a tuning peg, and a thin brass brace remain. Striking or sharply jarring the weapon produces a particular note."
+          ]
+        },
+        {
+          "key": 36,
+          "values": [
+            "A taxidermist. Hide glue, waxed thread, and something that might be sinew are involved. A tiny glass eye is trapped under the wrap."
+          ]
+        },
+        {
+          "key": 41,
+          "values": [
+            "A printer. Pieces of type metal act as shims or patches. One exposed piece prints a reversed letter into anything soft enough."
+          ]
+        },
+        {
+          "key": 42,
+          "values": [
+            "A beekeeper. Hive wire, beeswax, and propolis seal the repair. Bees sometimes investigate it."
+          ]
+        },
+        {
+          "key": 43,
+          "values": [
+            "A fire-brigade crew. Hose-clamp brass, red-painted sheet metal, and scorched leather were applied in a hurry. Three different initials appear."
+          ]
+        },
+        {
+          "key": 44,
+          "values": [
+            "A pawnbroker. The repair is sound, but an old inventory tag remains beneath it. According to the tag, the weapon still belongs to someone else."
+          ]
+        },
+        {
+          "key": 45,
+          "values": [
+            "A counterfeiter. The work carries a convincing but false maker's mark. A real professional would notice immediately."
+          ]
+        },
+        {
+          "key": 46,
+          "values": [
+            "A deserter. Uniform buttons, cartridge brass, and field wire were sacrificed to the job. Someone may recognize the regiment."
+          ]
+        },
+        {
+          "key": 51,
+          "values": [
+            "A telegraph lineman. Insulated wire, a ceramic fragment, and lineman's binding hold the repair. A short signal code is scratched beside it."
+          ]
+        },
+        {
+          "key": 52,
+          "values": [
+            "A prison workshop. Several different hands worked on it using numbered institutional scrap. One part has a prisoner's name scratched underneath."
+          ]
+        },
+        {
+          "key": 53,
+          "values": [
+            "A widow who refused to pay a professional. Household sewing, furniture hardware, and stubborn competence hold it together. She remembers exactly what you promised in return."
+          ]
+        },
+        {
+          "key": 54,
+          "values": [
+            "A thief who stole it broken and returned it repaired. The workmanship is competent. One of your original parts is missing anyway."
+          ]
+        },
+        {
+          "key": 55,
+          "values": [
+            "Someone who mistook it for their own weapon. Their initials appear beneath the repair. Somewhere there may be another weapon with yours."
+          ]
+        },
+        {
+          "key": 56,
+          "values": [
+            "Someone you were trying to kill. They repaired it while you were unconscious. Their mark is prominently placed where you have to see it."
+          ]
+        },
+        {
+          "key": 61,
+          "values": [
+            "Two mechanics who hated each other. One half of the repair is elegant; the other was clearly designed to insult it. Both signatures remain."
+          ]
+        },
+        {
+          "key": 62,
+          "values": [
+            "A fortune teller. Copper wire, wax, and a folded card are trapped beneath the repair. They warned you never to remove the card."
+          ]
+        },
+        {
+          "key": 63,
+          "values": [
+            "A horse. One well-placed hoof reseated the damaged part. The hoofprint dent is now part of the repair. Nobody meant for this to work."
+          ]
+        },
+        {
+          "key": 64,
+          "values": [
+            "A house fire. Heat warped, fused, or tightened existing repair material into a functional arrangement. Soot remains in places nobody can clean."
+          ]
+        },
+        {
+          "key": 65,
+          "values": [
+            "A mill machine. It went into the machinery broken and came out functional, with an extra fastener nobody remembers installing. The mill was damaged instead."
+          ]
+        },
+        {
+          "key": 66,
+          "values": [
+            "Something at the bottom of a well. It was lost broken and recovered months later repaired, wrapped in wet cord around a replacement piece that does not match local workmanship."
+          ]
+        }
+      ],
+      "source": "manuscript/content/tables/who-or-what-fixed-this.md",
+      "sourceSha256": "fa610faf3a74423d7bd1332f4c76b5845ae156ae82fa8fc0749e6a938c2acf1f"
+    },
+    "repair_appearance": {
+      "columns": 3,
+      "die": "d66",
+      "results": [
+        {
+          "key": 11,
+          "values": [
+            "Dental wire and tiny clamps bind the grip or a crack; tooth-colored filler plugs damage.",
+            "Wire and clamps reinforce a joint; filler packs a split haft or fitting.",
+            "Tiny clamps and wire retain a pin, spring, or component; filler seals the work."
+          ]
+        },
+        {
+          "key": 12,
+          "values": [
+            "Grip or body crudely wrapped, pinned, or hammered together. Do not undo it.",
+            "Head or joint crudely pinned, wedged, or bound. Do not undo it.",
+            "Stock, housing, or moving assembly crudely pinned or wrapped together. Do not undo it."
+          ]
+        },
+        {
+          "key": 13,
+          "values": [
+            "String, bent nails, and a brightly painted grip patch.",
+            "String, nails, and a painted wedge or brace at a joint.",
+            "A brightly painted scrap plate is nailed or wired over part of the mechanism."
+          ]
+        },
+        {
+          "key": 14,
+          "values": [
+            "Absurdly tiny screws hold the grip or patch; a watch gear serves as a washer.",
+            "Tiny screws crowd a joint; a watch gear serves as a shim or washer.",
+            "Far too many tiny screws and at least one gear clearly were not original."
+          ]
+        },
+        {
+          "key": 15,
+          "values": [
+            "Coffin nails reinforce the grip, tang, crack, or guard.",
+            "Burial hardware braces the head, haft, or joint.",
+            "Coffin fittings have been filed into plates, pins, catches, or springs."
+          ]
+        },
+        {
+          "key": 16,
+          "values": [
+            "A hurried wrap or pin repair carries the unfinished warning nearby.",
+            "A hurried brace, wedge, or binding carries the warning ending mid-sentence.",
+            "A hurried field repair to the stock, housing, or action carries the warning beside it."
+          ]
+        },
+        {
+          "key": 21,
+          "values": [
+            "A clean numbered patch or plate bears an unfamiliar service mark.",
+            "A numbered replacement fitting or brace bears an unfamiliar service mark.",
+            "A perfectly fitted numbered replacement component bears an unfamiliar service mark."
+          ]
+        },
+        {
+          "key": 22,
+          "values": [
+            "Part of a fork or spoon is hammered or wired into the grip or guard.",
+            "A utensil has become a shim, brace, wedge, or fastener.",
+            "A fork tine or utensil scrap serves as a spring, shim, plate, or pin."
+          ]
+        },
+        {
+          "key": 23,
+          "values": [
+            "Your initials hide under the grip or on the concealed side of the repair.",
+            "Your initials are beneath the head, binding, plate, or fitting.",
+            "Your initials are inside the housing or beneath an access plate."
+          ]
+        },
+        {
+          "key": 24,
+          "values": [
+            "Scripture covers the body and continues beneath the grip or wrapping.",
+            "Scripture covers the head, shaft, joints, and anything hidden beneath bindings.",
+            "Scripture covers the exterior and every internal surface the preacher could reach."
+          ]
+        },
+        {
+          "key": 25,
+          "values": [
+            "A mismatched grip piece or repair patch appeared overnight.",
+            "A mismatched wedge, brace, or fitting appeared overnight.",
+            "A replacement component appeared overnight and does not quite match the rest."
+          ]
+        },
+        {
+          "key": 26,
+          "values": [
+            "The erased name hides beneath each repaired surface.",
+            "The erased name appears under bindings, plates, wedges, and fittings.",
+            "The erased name appears on replacement parts and beneath repaired assemblies."
+          ]
+        },
+        {
+          "key": 31,
+          "values": [
+            "Waxed thread, punched leather, and tiny eyelets bind a grip, crack, or worn edge.",
+            "Stitched leather and eyelets brace a joint or split fitting.",
+            "A leather strap, gasket, or eyeleted patch retains a cover or troublesome component."
+          ]
+        },
+        {
+          "key": 32,
+          "values": [
+            "Horseshoe nails and rasped iron reinforce the grip, guard, or a split in the body.",
+            "Rasped iron straps and horseshoe nails brace the head, haft, or joint.",
+            "A forged clip, plate, or pin made from farrier's iron holds the mechanism together."
+          ]
+        },
+        {
+          "key": 33,
+          "values": [
+            "Linen thread, glue, and tooled leather wrap or patch the damaged area; gilt lettering peeks through.",
+            "A stitched leather collar and glued linen reinforce a joint or split shaft.",
+            "Tooled leather, linen, and glue serve as a shim, cover, or retaining strap around the housing."
+          ]
+        },
+        {
+          "key": 34,
+          "values": [
+            "Spectacle wire, tiny screws, and a precise shim reinforce the grip, guard, or repair plate.",
+            "Fine wire and a carefully fitted shim square up a loose joint.",
+            "Spectacle screws, wire, and a fitted shim align a moving or internal part."
+          ]
+        },
+        {
+          "key": 35,
+          "values": [
+            "Instrument wire and a brass brace reinforce the body; a tuning peg tensions the repair.",
+            "Wire and a tuning peg pull a joint or binding tight around a brass brace.",
+            "Instrument wire, a tuning peg, or brass brace tensions or retains part of the action."
+          ]
+        },
+        {
+          "key": 36,
+          "values": [
+            "Hide glue, waxed thread, and probable sinew bind the repair; the glass eye peers from the wrap.",
+            "Sinew and hide glue reinforce a joint, with the glass eye set into the binding.",
+            "Waxed thread and sinew secure the housing or a cover; the glass eye is trapped beneath the work."
+          ]
+        },
+        {
+          "key": 41,
+          "values": [
+            "Type metal forms a grip shim, patch, or small plate; one exposed letter can leave a reversed mark.",
+            "Type metal packs a joint or acts as a brace or wedge.",
+            "Pieces of type metal shim, space, or patch the mechanism; one exposed face can still print."
+          ]
+        },
+        {
+          "key": 42,
+          "values": [
+            "Hive wire binds a crack or grip while beeswax and propolis seal gaps.",
+            "Hive wire braces a joint and propolis seals the binding.",
+            "Hive wire retains a cover or part while beeswax and propolis seal the housing."
+          ]
+        },
+        {
+          "key": 43,
+          "values": [
+            "Hose-clamp brass and red-painted sheet metal splint the damaged area over scorched leather.",
+            "A scorched leather wrap and red emergency patch clamp a joint together.",
+            "Red-painted sheet metal and hose-clamp brass reinforce the housing or action; several initials remain."
+          ]
+        },
+        {
+          "key": 44,
+          "values": [
+            "A sound patch or grip repair hides the pawnbroker's inventory tag underneath.",
+            "A repaired joint or fitting traps the old inventory tag beneath it.",
+            "A replacement plate or component covers the inventory tag, which still names another owner."
+          ]
+        },
+        {
+          "key": 45,
+          "values": [
+            "A repaired surface carries a convincing false maker's mark.",
+            "A replacement fitting or brace bears a forged maker's stamp.",
+            "A repaired or replacement component carries a counterfeit maker's mark convincing at a glance."
+          ]
+        },
+        {
+          "key": 46,
+          "values": [
+            "Uniform buttons, cartridge brass, and field wire reinforce the grip or guard.",
+            "Buttons, cartridge brass, and field wire become washers, braces, or bindings at a joint.",
+            "Cartridge brass and field wire form shims, plates, pins, or retainers; a regimental button remains visible."
+          ]
+        },
+        {
+          "key": 51,
+          "values": [
+            "Insulated wire binds the repair and a ceramic fragment serves as a spacer or grip insert.",
+            "Lineman's binding and a ceramic spacer reinforce a joint or fitting.",
+            "Insulated wire and a ceramic fragment retain or isolate part of the mechanism; a signal code is scratched nearby."
+          ]
+        },
+        {
+          "key": 52,
+          "values": [
+            "Numbered institutional scrap forms a patch or grip plate; a prisoner's name is scratched underneath.",
+            "Numbered scrap becomes a brace, wedge, or replacement fitting with a hidden name.",
+            "A numbered replacement plate or internal part bears a prisoner's name on its concealed side."
+          ]
+        },
+        {
+          "key": 53,
+          "values": [
+            "Household sewing and furniture hardware hold a grip, crack, or guard together.",
+            "Furniture brackets, upholstery tacks, or sewing bind a joint or split haft.",
+            "A cabinet hinge, furniture screw, sewing, or other household hardware serves inside or around the housing."
+          ]
+        },
+        {
+          "key": 54,
+          "values": [
+            "The repair is competent, but an original grip piece, pin, or fitting is gone and something else took its place.",
+            "A sound replacement brace, wedge, or fitting works, but one original structural piece is missing.",
+            "The action works cleanly around a replacement component; one original part has vanished."
+          ]
+        },
+        {
+          "key": 55,
+          "values": [
+            "Someone else's initials hide beneath the grip or repair patch.",
+            "Their initials sit beneath a binding, brace, or replacement fitting.",
+            "Their initials are inside the housing or beneath an access plate; another weapon may carry yours."
+          ]
+        },
+        {
+          "key": 56,
+          "values": [
+            "A competent visible repair bears the mark of the person you tried to kill.",
+            "Their mark is cut or stamped prominently into the repaired joint or fitting.",
+            "Their mark sits where the repaired housing or action makes it impossible to ignore."
+          ]
+        },
+        {
+          "key": 61,
+          "values": [
+            "Two visibly different repair styles meet across the grip or damaged body, each signed.",
+            "One side of the joint is elegant; the other is an obvious insult to it. Both mechanics signed their work.",
+            "Two competing repair styles occupy the housing or action, each apparently correcting the other. Both signatures remain."
+          ]
+        },
+        {
+          "key": 62,
+          "values": [
+            "Copper wire and wax seal a folded card beneath the grip or wrap.",
+            "The card is trapped beneath a copper-bound joint, brace, or fitting.",
+            "Copper wire and wax hide the folded card beneath an access plate or inside the housing."
+          ]
+        },
+        {
+          "key": 63,
+          "values": [
+            "A hoof impact reseated or straightened the damaged area; the hoof-shaped dent remains.",
+            "The hoof drove a head, wedge, collar, or joint back into working alignment.",
+            "The impact reseated a bent lever, cover, catch, or housing part; the hoofprint dent remains."
+          ]
+        },
+        {
+          "key": 64,
+          "values": [
+            "Heat shrank, fused, or warped an existing wrap, patch, or guard into a working fit; soot remains.",
+            "Fire tightened a collar, wedge, binding, or brace into a functional joint.",
+            "Heat distorted or fused a plate, housing, or repaired component just enough to work; soot remains inside."
+          ]
+        },
+        {
+          "key": 65,
+          "values": [
+            "Mill pressure straightened or flattened the damaged area and left an extra rivet or fastener behind.",
+            "The machine pressed the joint back into alignment and added an unnecessary fastener.",
+            "The mechanism came out with a precisely placed extra fastener or plate nobody remembers installing."
+          ]
+        },
+        {
+          "key": 66,
+          "values": [
+            "Wet cord binds a mismatched grip piece or patch recovered with the weapon.",
+            "Wet cord secures a replacement wedge, brace, or fitting unlike local workmanship.",
+            "Wet cord surrounds a mismatched replacement component or plate that does not resemble local work."
+          ]
+        }
+      ],
+      "source": "manuscript/content/references/weapon-repair-appearance.md",
+      "sourceSha256": "4af863d2d68aab6bc1c12ba1d1415a970f0faace57bae234f7e1d4ab2402d340"
+    },
+    "weapon": {
+      "columns": 5,
+      "die": "d20",
+      "results": [
+        {
+          "key": 1,
+          "values": [
+            "Corpse Knife",
+            "SIMPLE",
+            "d4",
+            "",
+            "Small, concealable."
+          ]
+        },
+        {
+          "key": 2,
+          "values": [
+            "Skinning Knife",
+            "SIMPLE",
+            "d4",
+            "",
+            "+2 cutting flesh, hide, rope."
+          ]
+        },
+        {
+          "key": 3,
+          "values": [
+            "Hammer",
+            "BUILT",
+            "d6",
+            "",
+            "Also a tool."
+          ]
+        },
+        {
+          "key": 4,
+          "values": [
+            "Hatchet",
+            "BUILT",
+            "d6",
+            "",
+            "Throwable Nearby."
+          ]
+        },
+        {
+          "key": 5,
+          "values": [
+            "Long Shovel",
+            "BUILT",
+            "d6",
+            "",
+            "Reach. Excellent grave credentials."
+          ]
+        },
+        {
+          "key": 6,
+          "values": [
+            "Meat Cleaver",
+            "SIMPLE",
+            "d6",
+            "",
+            "Ugly criticals."
+          ]
+        },
+        {
+          "key": 7,
+          "values": [
+            "Crowbar",
+            "SIMPLE",
+            "d6",
+            "",
+            "+2 forcing things."
+          ]
+        },
+        {
+          "key": 8,
+          "values": [
+            "Chain-Hook",
+            "BUILT",
+            "d6",
+            "",
+            "Pull something Nearby."
+          ]
+        },
+        {
+          "key": 9,
+          "values": [
+            "Rust Sword",
+            "SIMPLE",
+            "d8",
+            "",
+            "Someone once cared about it."
+          ]
+        },
+        {
+          "key": 10,
+          "values": [
+            "Machete",
+            "SIMPLE",
+            "d8",
+            "",
+            "Clears brush and extremities."
+          ]
+        },
+        {
+          "key": 11,
+          "values": [
+            "Doubtful Pistol",
+            "MECHANICAL",
+            "d8",
+            "d6",
+            "Confidence not included."
+          ]
+        },
+        {
+          "key": 12,
+          "values": [
+            "Horse Pistol",
+            "MECHANICAL",
+            "d10",
+            "6 per packet",
+            "One-shot. Obscene recoil."
+          ]
+        },
+        {
+          "key": 13,
+          "values": [
+            "Lever Rifle",
+            "MECHANICAL",
+            "d10",
+            "d6",
+            "Far."
+          ]
+        },
+        {
+          "key": 14,
+          "values": [
+            "Scattergun",
+            "MECHANICAL",
+            "d10",
+            "d4",
+            "Nearby. Horrible noise."
+          ]
+        },
+        {
+          "key": 15,
+          "values": [
+            "Double-Barrel",
+            "MECHANICAL",
+            "2d6",
+            "d4",
+            "Both barrels. STOUTNESS DR12 after firing both or be knocked backward/off balance."
+          ]
+        },
+        {
+          "key": 16,
+          "values": [
+            "Sawed-Off Shotgun",
+            "MECHANICAL",
+            "d10",
+            "d4",
+            "Close. Concealable badly."
+          ]
+        },
+        {
+          "key": 17,
+          "values": [
+            "Crossbow",
+            "MECHANICAL",
+            "d8",
+            "d6",
+            "Quiet. Reload takes an action."
+          ]
+        },
+        {
+          "key": 18,
+          "values": [
+            "Mining Pick",
+            "BUILT",
+            "d8",
+            "",
+            "+2 vs stone, doors, armor."
+          ]
+        },
+        {
+          "key": 19,
+          "values": [
+            "Sledgehammer",
+            "BUILT",
+            "d10",
+            "",
+            "Two hands. Slow."
+          ]
+        },
+        {
+          "key": 20,
+          "values": [
+            "Improvised Nightmare",
+            "CHOOSE*",
+            "d12",
+            "",
+            "Say what it is. *Choose the Family that matches. Roll twice on Weapon Defects. Keep both."
+          ]
+        }
+      ],
+      "source": "manuscript/content/tables/weapons-of-regret.md",
+      "sourceSha256": "f5e142675c63e13365bc0b3872b8037acfd7da65ab0c53f3ff6225f703b72bec"
+    },
+    "wrong": {
+      "columns": 1,
+      "die": "d20",
+      "results": [
+        {
+          "key": 1,
+          "values": [
+            "Your hands shake until violence begins."
+          ]
+        },
+        {
+          "key": 2,
+          "values": [
+            "You collect teeth, labeled by owner if possible."
+          ]
+        },
+        {
+          "key": 3,
+          "values": [
+            "You cannot pass a locked container without wanting to open it."
+          ]
+        },
+        {
+          "key": 4,
+          "values": [
+            "You are usually the first person to smell smoke. This has never helped."
+          ]
+        },
+        {
+          "key": 5,
+          "values": [
+            "You hear advice from tools. It is bad advice."
+          ]
+        },
+        {
+          "key": 6,
+          "values": [
+            "You refuse to throw anything away if it still has screws in it."
+          ]
+        },
+        {
+          "key": 7,
+          "values": [
+            "Animals mistrust you, except ruined ones."
+          ]
+        },
+        {
+          "key": 8,
+          "values": [
+            "You laugh when frightened. It ruins stealth."
+          ]
+        },
+        {
+          "key": 9,
+          "values": [
+            "You cannot sleep facing a door. If someone moves you while asleep, you wake immediately."
+          ]
+        },
+        {
+          "key": 10,
+          "values": [
+            "You compulsively straighten crooked objects: signs, frames, grave markers, weapons."
+          ]
+        },
+        {
+          "key": 11,
+          "values": [
+            "You always give a false name when asked unexpectedly. Sometimes you remember which one."
+          ]
+        },
+        {
+          "key": 12,
+          "values": [
+            "You refuse to step over a body. Around it, under it, or move it - never over."
+          ]
+        },
+        {
+          "key": 13,
+          "values": [
+            "You count stairs aloud. Every stair. Even while sneaking."
+          ]
+        },
+        {
+          "key": 14,
+          "values": [
+            "Once somebody points out an unknown lever, button, crank, or switch, you cannot stop thinking about using it."
+          ]
+        },
+        {
+          "key": 15,
+          "values": [
+            "You keep one pocket \"for evidence.\" Anything placed there is evidence until disproven."
+          ]
+        },
+        {
+          "key": 16,
+          "values": [
+            "You cannot whisper when angry."
+          ]
+        },
+        {
+          "key": 17,
+          "values": [
+            "You apologize to doors before forcing them open."
+          ]
+        },
+        {
+          "key": 18,
+          "values": [
+            "You believe written warnings more than people, regardless of age, spelling, or handwriting."
+          ]
+        },
+        {
+          "key": 19,
+          "values": [
+            "You pick up unattended coins immediately. You can regret it while bending down."
+          ]
+        },
+        {
+          "key": 20,
+          "values": [
+            "You insist one ordinary item you carry is lucky. Choose it. You become unreasonable if anyone else touches it."
+          ]
+        }
+      ],
+      "source": "manuscript/content/tables/whats-wrong-with-you.md",
+      "sourceSha256": "cb9795d4d5ea6698159f98eaa1fccb432877b695daafbfe8208c4e2297784c5f"
+    }
+  }
+}
