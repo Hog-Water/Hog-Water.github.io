@@ -269,65 +269,61 @@ export function createGenerator({ catalog, catalogHash, random = Math.random }) 
       const current = currentTableEvent(state, "wrong", "identity.wrong");
       if (current?.source.key !== 20 || !luckyItem) throw new GenerationError("lucky-item choice requires current What's Wrong With You? #20 and a value");
       const context = begin(state, "lucky-item-choice");
-      addEvent(context, "choice", { "identity.wrong": `${resultText("wrong", 20)} Lucky item: ${luckyItem}.` }, catalog.tables.wrong.source, { input: luckyItem });
+      addEvent(context, "choice", { "identity.wrong": `${state.character["identity.wrong"]} Lucky item: ${luckyItem}.` }, catalog.tables.wrong.source, { input: luckyItem });
       clearUnresolved(context, "lucky-item");
       return context.next;
     },
-    good: (state, options = {}) => tableOperation(state, "good", "identity.good", ([text], key) => ({ "identity.good": text, "inventory.load.capacity": key === 6 ? 9 : 8 }), options),
+    good(state, options = {}) {
+      return tableOperation(state, "good", "identity.good", ([text], key, context) => {
+        addDerived(context, { "inventory.load.capacity": key === 10 ? 12 : 10 }, SOURCES.inventory, { reason: "Current One Good Thing" });
+        return { "identity.good": text };
+      }, options);
+    },
     debt: (state, options = {}) => tableOperation(state, "debt", "identity.debt", ([text]) => ({ "identity.debt": text }), options),
     companion(state, options = {}) {
-      const previous = currentTableEvent(state, "companion", "identity.companion");
-      const base = baseFortune(state);
-      if (!Number.isInteger(base)) throw new GenerationError("Companion generation requires a generated FORTUNE roll");
-      let outcome;
-      do outcome = tableResult("companion", options.key); while (outcome.result.key === 6 && base === 3 && options.key === undefined);
-      if (outcome.result.key === 6 && base === 3) throw new GenerationError("Companion #6 is invalid when the base FORTUNE roll is +3");
-      const context = begin(state, "companion");
-      addTableEvent(context, "companion", outcome, { "identity.companion": outcome.result.values[0] }, previous);
-      refreshFortune(context, "Current Companion result");
+      const next = tableOperation(state, "companion", "identity.companion", ([text]) => ({ "identity.companion": text }), options);
+      const context = begin(next, "companion-fortune");
+      refreshFortune(context, "Current Companion");
       return context.next;
     },
     startingSupplies(state, options = {}) {
-      const previousSilver = eventWriting(state, "resources.silver");
-      const previousLight = latestEvent(state, (event) => event.reason === "Starting light quantity");
       const context = begin(state, "starting-supplies");
-      const lightRoll = options.lightRoll === undefined ? roll("d6") : forcedRoll("d6", options.lightRoll);
-      const silverRoll = options.silverRoll === undefined ? roll("d10") : forcedRoll("d10", options.silverRoll);
-      if (lightRoll.result < 1 || lightRoll.result > 6 || silverRoll.result < 1 || silverRoll.result > 10) throw new GenerationError("invalid starting resource roll");
-      addEvent(context, previousSilver ? "reroll" : "roll", { "resources.silver": silverRoll.result }, SOURCES.starting, { roll: silverRoll, ...(previousSilver ? { previousEvent: previousSilver.id } : {}) });
-      addEvent(context, "derived", { "resources.water": 1, "resources.rations": 1, "inventory.load.current": state.character["inventory.load.current"] ?? "", "inventory.load.capacity": state.character["inventory.load.capacity"] ?? 8, "inventory.other_junk": state.character["inventory.other_junk"] ?? "Clothes." }, SOURCES.starting, { reason: "Starting supplies" });
-      addEvent(context, previousLight ? "reroll" : "roll", { "resources.light": "" }, SOURCES.starting, { roll: lightRoll, reason: "Starting light quantity", ...(previousLight ? { previousEvent: previousLight.id } : {}) });
-      if (["candles", "lantern"].includes(options.light)) {
-        const count = lightRoll.result;
-        const light = options.light === "candles" ? `${count} ${count === 1 ? "candle" : "candles"}` : `Basic lantern with ${count} hours of oil`;
-        addEvent(context, "choice", { "resources.light": light }, SOURCES.starting, { input: { light: options.light } });
-        clearUnresolved(context, "light-choice");
-      } else if (options.light !== undefined) throw new GenerationError("light must be candles or lantern");
+      const silver = options.silver === undefined ? die(20) : options.silver;
+      const water = options.water === undefined ? die(4) : options.water;
+      const rations = options.rations === undefined ? die(4) : options.rations;
+      if (![silver, water, rations].every(Number.isInteger) || silver < 1 || silver > 20 || water < 1 || water > 4 || rations < 1 || rations > 4) throw new GenerationError("starting supply rolls are out of range");
+      addEvent(context, "roll", { "resources.silver": silver, "resources.water": water, "resources.rations": rations }, SOURCES.starting, { roll: { notation: "d20/d4/d4", dice: [silver, water, rations], result: [silver, water, rations] } });
+      refreshParts(context, "Starting Useful Parts plus current Background and Toolboxes");
+      if (options.light === "candles" || options.light === "lantern") addEvent(context, "choice", { "resources.light": options.light === "candles" ? "Candles" : "Basic lantern" }, SOURCES.starting, { input: options.light });
       else unresolved(context, "light-choice", "player-choice", SOURCES.starting, "Choose candles or a basic lantern.");
-      refreshParts(context, "Current Background and Toolbox possessions");
       return context.next;
     },
-    resolveLight(state, light) {
-      if (!["candles", "lantern"].includes(light)) throw new GenerationError("light must be candles or lantern");
-      const quantity = latestEvent(state, (event) => event.reason === "Starting light quantity")?.roll?.result;
-      if (!Number.isInteger(quantity)) throw new GenerationError("light choice requires a generated starting-light quantity");
-      const value = light === "candles" ? `${quantity} ${quantity === 1 ? "candle" : "candles"}` : `Basic lantern with ${quantity} hours of oil`;
+    resolveLight(state, value) {
+      if (!["candles", "lantern"].includes(value)) throw new GenerationError("light choice must be candles or lantern");
       const context = begin(state, "light-choice");
-      addEvent(context, "choice", { "resources.light": value }, SOURCES.starting, { input: { light } });
+      addEvent(context, "choice", { "resources.light": value === "candles" ? "Candles" : "Basic lantern" }, SOURCES.starting, { input: value });
       clearUnresolved(context, "light-choice");
       return context.next;
     },
     weapon(state, options = {}) {
-      const next = tableOperation(state, "weapon", "weapon.type", (values, key, context) => {
-        let [name, family, damage, ammo] = values;
-        if (key === 20) {
-          name = "";
-          family = "";
-          if (!options.name || !["SIMPLE", "BUILT", "MECHANICAL"].includes(options.family)) unresolved(context, "improvised-nightmare", "player-choice", catalog.tables.weapon.source, "Name the Improvised Nightmare and choose its physical Family.");
-          else { name = options.name; family = options.family; clearUnresolved(context, "improvised-nightmare"); }
-        } else clearUnresolved(context, "improvised-nightmare");
-        return { "weapon.type": name, "weapon.family": family, "weapon.damage": damage, "weapon.ammo_die": ammo ? (ammo.match(/^\d+/)?.[0] ?? ammo) : "", "weapon.nickname": "", ...(!currentTableEvent(state, "weapon", "weapon.type") ? { "weapon.wear.1": false, "weapon.wear.2": false, "weapon.wear.3": false } : {}) };
-      }, options);
+      const outcome = tableResult("weapon", options.key);
+      const previous = currentTableEvent(state, "weapon", "weapon.type");
+      const context = begin(state, "weapon");
+      const [name, family, damage, ammo] = outcome.result.values;
+      if (outcome.result.key === 20 && (!options.improvisedNightmare?.name || !["SIMPLE", "BUILT", "MECHANICAL"].includes(options.improvisedNightmare.family))) {
+        addTableEvent(context, "weapon", outcome, { "weapon.type": name, "weapon.family": "", "weapon.damage": damage, "weapon.ammo_die": ammo }, previous);
+        unresolved(context, "improvised-nightmare", "player-choice", catalog.tables.weapon.source, "Name the improvised nightmare and choose its physical Family.");
+      } else {
+        addTableEvent(context, "weapon", outcome, { "weapon.type": outcome.result.key === 20 ? options.improvisedNightmare.name : name, "weapon.family": outcome.result.key === 20 ? options.improvisedNightmare.family : family, "weapon.damage": damage, "weapon.ammo_die": ammo }, previous);
+        clearUnresolved(context, "improvised-nightmare");
+      }
+      const next = context.next;
+      return operations.weaponDependencies(next, options);
+    },
+    weaponDependencies(state, options = {}) {
+      let next = state;
+      if (options.defects !== false) next = operations.defects(next, options.defects ?? {});
+      if (options.repair !== false) next = operations.repair(next, options.repair ?? {});
       const context = begin(next, "weapon-dependencies");
       if (currentTableEvent(next, "repair", "weapon.repair_history")) refreshRepairAppearance(context, "Current Weapon Family");
       refreshMatchingChoice(context);
@@ -346,13 +342,14 @@ export function createGenerator({ catalog, catalogHash, random = Math.random }) 
       const weaponEvent = currentTableEvent(state, "weapon", "weapon.type");
       if (!weaponEvent) throw new GenerationError("Defects require a generated weapon");
       const needed = weaponEvent.source.key === 20 ? 2 : 1;
-      const forced = options.keys ? [...options.keys] : null;
-      if (forced && forced.length !== needed) throw new GenerationError(`weapon requires ${needed} initial Defect result(s)`);
+      const forced = options.keys ? [...options.keys] : options.key === undefined ? null : [options.key];
+      const strictForced = Boolean(options.keys);
+      if (strictForced && forced.length !== needed) throw new GenerationError(`weapon requires ${needed} initial Defect result(s)`);
       const chosen = [];
       while (chosen.length < needed) {
         const outcome = tableResult("defect", forced?.shift());
         if (chosen.some(({ result }) => result.key === outcome.result.key) || (needed > 1 && outcome.result.key === 20)) {
-          if (forced) throw new GenerationError("initial Defects must be distinct, and #20 cannot accompany another Defect");
+          if (strictForced) throw new GenerationError("initial Defects must be distinct, and #20 cannot accompany another Defect");
           continue;
         }
         chosen.push(outcome);
@@ -428,14 +425,11 @@ export function createGenerator({ catalog, catalogHash, random = Math.random }) 
     state = operations.companion(state, options.companion ?? {});
     state = operations.startingSupplies(state, options.starting ?? {});
     state = operations.weapon(state, options.weapon ?? {});
-    state = operations.defects(state, options.defects ?? {});
-    state = operations.repair(state, options.repair ?? {});
-    state = operations.possession(state, 1, options.possession1 ?? {});
-    state = operations.possession(state, 2, options.possession2 ?? {});
+    state = operations.possession(state, 1, options.possessions?.[1] ?? {});
+    state = operations.possession(state, 2, options.possessions?.[2] ?? {});
     state = operations.keepsake(state, options.keepsake ?? {});
-    if (options.warrantySlot !== undefined) state = operations.warranty(state, options.warrantySlot);
     return state;
   }
 
-  return { operations, generateFull };
+  return { generateFull, operations };
 }
