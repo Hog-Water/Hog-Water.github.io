@@ -2,50 +2,57 @@ import { createGenerator, emptyState } from "./engine.mjs";
 
 const NONEMPTY = (value) => value !== undefined && value !== null && value !== "" && value !== false;
 
+export const creationTableDefinitions = Object.freeze([
+  { id: "first_name_men", label: "Men's first names", target: "field-first-name", operation: "firstName", args: ["first_name_men"] },
+  { id: "first_name_women", label: "Women's first names", target: "field-first-name", operation: "firstName", args: ["first_name_women"] },
+  { id: "last_name", label: "Last names", target: "field-last-name", operation: "lastName" },
+  { id: "background", label: "Background", target: "field-background", operation: "background" },
+  { id: "wrong", label: "What's Wrong With You?", target: "field-wrong", operation: "wrong" },
+  { id: "good", label: "One Good Thing", target: "field-good", operation: "good" },
+  { id: "debt", label: "Debt", target: "field-debt", operation: "debt" },
+  { id: "companion", label: "Companion", target: "field-companion", operation: "companion" },
+  { id: "weapon", label: "Weapon of Regret", target: "field-weapon", operation: "weapon" },
+  { id: "defect", label: "Weapon Defects", target: "field-defects", operation: "defects" },
+  { id: "repair", label: "Repair history", target: "field-repair", operation: "repair" },
+  { id: "repair_appearance", label: "Repair appearance by Family", target: "field-repair", operation: "repair" },
+  { id: "possession", label: "Questionably Functional Possessions", target: "field-possessions", operation: "possession", slotRequired: true },
+  { id: "keepsake", label: "Useless Keepsake", target: "field-keepsake", operation: "keepsake" },
+]);
+
+export function directTableArguments(definition, key, slot) {
+  const args = definition.args ? [...definition.args] : [];
+  if (definition.slotRequired) args.push(slot);
+  args.push({ key });
+  return args;
+}
+
 export const populatedWarrantyTargets = (state) => [1, 2].filter((slot) => state.character[`possessions.${slot}.name`]);
 
 export function createAppModel({ catalog, catalogHash, random, confirmReplace = () => true }) {
   const generator = createGenerator({ catalog, catalogHash, random });
   let state = emptyState(catalogHash);
-  let candidate = null;
   let manualSequence = 0;
 
-  const active = () => candidate ?? state;
-  const setActive = (next) => { if (candidate) candidate = next; else state = next; };
-
-  function generateCandidate() {
-    candidate = generator.generateFull();
-    return candidate;
-  }
-
-  function acceptCandidate() {
-    if (!candidate) return state;
-    if (candidate.unresolved.length) throw new Error("Resolve every required choice before accepting this Fool");
-    if (Object.values(state.character).some(NONEMPTY) && !confirmReplace("Replace the current Fool with this generated candidate?")) return state;
-    state = candidate;
-    candidate = null;
+  function generateFool() {
+    if (Object.values(state.character).some(NONEMPTY) && !confirmReplace("Replace the current Fool with a newly generated Fool?")) return state;
+    state = generator.generateFull();
     return state;
   }
 
-  function discardCandidate() { candidate = null; return state; }
-
   function resolveChoice(id, value) {
-    const operations = generator.operations;
-    const current = active();
     const next = {
-      "light-choice": () => operations.resolveLight(current, value),
-      "lucky-item": () => operations.resolveLuckyItem(current, value),
-      "improvised-nightmare": () => operations.resolveImprovisedNightmare(current, value),
-      "weapon-nickname": () => operations.resolveWeaponNickname(current, value),
-      "warranty-choice": () => operations.warranty(current, value),
+      "light-choice": () => generator.operations.resolveLight(state, value),
+      "lucky-item": () => generator.operations.resolveLuckyItem(state, value),
+      "improvised-nightmare": () => generator.operations.resolveImprovisedNightmare(state, value),
+      "weapon-nickname": () => generator.operations.resolveWeaponNickname(state, value),
+      "warranty-choice": () => generator.operations.warranty(state, value),
     }[id];
     if (!next) throw new Error(`Unsupported choice: ${id}`);
-    setActive(next());
-    return active();
+    state = next();
+    return state;
   }
 
   function runOperation(operation, affectedFields, ...args) {
-    if (candidate) throw new Error("Finish or discard the generated candidate before rerolling the current Fool");
     const occupied = affectedFields.filter((field) => NONEMPTY(state.character[field]));
     if (occupied.length && !confirmReplace(`Replace current ${occupied.join(", ")}?`)) return state;
     state = operation(state, ...args);
@@ -53,27 +60,19 @@ export function createAppModel({ catalog, catalogHash, random, confirmReplace = 
   }
 
   function manualEdit(field, value) {
-    if (candidate) throw new Error("Accept the candidate before editing play state");
     const number = ++manualSequence;
     state = structuredClone(state);
     state.character[field] = value;
-    state.events.push({
-      id: `manual-${number}`,
-      transaction: `manual-tx-${number}`,
-      kind: "manual",
-      writes: { [field]: value },
-    });
+    state.events.push({ id: `manual-${number}`, transaction: `manual-tx-${number}`, kind: "manual", writes: { [field]: value } });
     return state;
   }
 
   return {
     generator,
-    active,
+    active: () => state,
     current: () => state,
-    pending: () => candidate,
-    generateCandidate,
-    acceptCandidate,
-    discardCandidate,
+    pending: () => null,
+    generateFool,
     resolveChoice,
     runOperation,
     manualEdit,
