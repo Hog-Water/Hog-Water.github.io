@@ -8,7 +8,7 @@ h1 { margin-bottom: 0; letter-spacing: .04em; }
 main { width: min(72rem, calc(100% - 2rem)); margin: 1rem auto 3rem; }
 button { min-height: 2.6rem; padding: .55rem .8rem; border: 2px solid #1b1b1b; border-radius: .25rem; background: #fff; color: #111; font: inherit; font-weight: 750; cursor: pointer; }
 button:hover { background: #f4da63; }
-button:focus-visible, input:focus-visible, textarea:focus-visible, summary:focus-visible { outline: 3px solid #5d2ab8; outline-offset: 2px; }
+button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px solid #5d2ab8; outline-offset: 2px; }
 .primary { padding-inline: 1.4rem; background: #e5c42f; font-size: 1.05rem; }
 .quiet { border-color: transparent; background: transparent; }
 .status { padding: .6rem .8rem; border-left: .35rem solid #5d2ab8; background: #fff; }
@@ -39,6 +39,15 @@ textarea { min-height: 4.8rem; resize: vertical; }
 .possession { padding: .8rem; border: 1px solid #888; }
 .badge { display: inline-block; margin-bottom: .5rem; padding: .22rem .45rem; background: #5d2ab8; color: #fff; font-size: .72rem; font-weight: 900; letter-spacing: .08em; }
 .serialization { margin-top: 1rem; padding: 1rem; background: #fff; }
+.table-link { align-self: center; color: #402078; font-size: .8rem; font-weight: 800; }
+.creation-tables { margin-top: 1.5rem; padding: 1rem; border: 2px solid #222; background: #fff; }
+.creation-table { margin-top: 1rem; padding-top: 1rem; border-top: 3px solid #5d2ab8; scroll-margin-top: 1rem; }
+.creation-table table { width: 100%; margin-top: .6rem; border-collapse: collapse; font-size: .88rem; }
+.creation-table th, .creation-table td { padding: .45rem; border: 1px solid #aaa; text-align: left; vertical-align: top; }
+.creation-table th { width: 3.5rem; background: #eee8fa; }
+.creation-table td:last-child { width: 6rem; }
+.creation-table button { min-height: 2rem; padding: .3rem .5rem; }
+.table-source { overflow-wrap: anywhere; color: #555; font-family: ui-monospace, monospace; font-size: .72rem; }
 .serialization textarea { min-height: 16rem; font-family: ui-monospace, monospace; font-size: .78rem; }
 [hidden] { display: none !important; }
 @media (max-width: 44rem) {
@@ -48,4 +57,5 @@ textarea { min-height: 4.8rem; resize: vertical; }
   .grid.three, .abilities, .possessions { grid-template-columns: 1fr; }
   .grid.two, .reckon { grid-template-columns: 1fr; }
   .section-title { align-items: stretch; flex-direction: column; }
+  .creation-table { overflow-x: auto; }
 }
