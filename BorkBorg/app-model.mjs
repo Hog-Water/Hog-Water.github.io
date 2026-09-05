@@ -29,7 +29,21 @@ export function directTableArguments(definition, key, slot) {
 export const populatedWarrantyTargets = (state) => [1, 2].filter((slot) => state.character[`possessions.${slot}.name`]);
 
 export function createAppModel({ catalog, catalogHash, random, confirmReplace = () => true }) {
-  const generator = createGenerator({ catalog, catalogHash, random });
+  const randomSource = random ?? Math.random;
+  const engineGenerator = createGenerator({ catalog, catalogHash, random: randomSource });
+  const withConvenienceLight = (options = {}) => options.light === undefined
+    ? { ...options, light: randomSource() < 0.5 ? "candles" : "lantern" }
+    : options;
+  const generator = {
+    operations: {
+      ...engineGenerator.operations,
+      startingSupplies: (current, options = {}) => engineGenerator.operations.startingSupplies(current, withConvenienceLight(options)),
+    },
+    generateFull: (options = {}) => engineGenerator.generateFull({
+      ...options,
+      starting: withConvenienceLight(options.starting ?? {}),
+    }),
+  };
   let state = emptyState(catalogHash);
   let manualSequence = 0;
 
