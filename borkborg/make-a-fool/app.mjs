@@ -139,10 +139,10 @@ function renderCreationTables() {
   for (const definition of creationTableDefinitions) {
     const sourceTable = catalog.tables[definition.id];
     if (!sourceTable) throw new Error(`Catalog is missing ${definition.id}`);
-    const article = document.createElement("article");
+    const article = document.createElement("details");
     article.className = "creation-table";
     article.id = `table-${definition.id}`;
-    const heading = document.createElement("h3");
+    const heading = document.createElement("summary");
     heading.textContent = `${definition.label} (${sourceTable.die})`;
     const provenance = document.createElement("p");
     provenance.className = "table-source";
@@ -189,6 +189,41 @@ function renderCreationTables() {
 }
 
 renderCreationTables();
+
+// Reference DOM is created once. Character renders leave each disclosure intact.
+function navigateToReference(target) {
+  let ancestor = target;
+  while (ancestor) {
+    if (ancestor.matches("details")) ancestor.open = true;
+    ancestor = ancestor.parentElement;
+  }
+  const focusTarget = target.matches("details") ? target.querySelector("summary") : target;
+  if (!focusTarget.matches("summary, a, button, input, select, textarea")) focusTarget.tabIndex = -1;
+  focusTarget.focus({ preventScroll: true });
+  target.scrollIntoView({ block: "start" });
+}
+
+document.addEventListener("click", (event) => {
+  const link = event.target.closest('a[href^="#"]');
+  if (!link || event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+  const target = document.getElementById(link.hash.slice(1));
+  if (!target || !target.closest("#creation-tables")) return;
+  event.preventDefault();
+  navigateToReference(target);
+});
+
+// Print retains the creation references that were visible before screen collapse.
+// Restore every individual screen choice when preview or printing finishes.
+let referencesBeforePrint = null;
+globalThis.addEventListener("beforeprint", () => {
+  if (referencesBeforePrint) return;
+  referencesBeforePrint = [...document.querySelectorAll("#creation-tables, #tables details")].map((section) => [section, section.open]);
+  for (const [section] of referencesBeforePrint) section.open = true;
+});
+globalThis.addEventListener("afterprint", () => {
+  for (const [section, open] of referencesBeforePrint ?? []) section.open = open;
+  referencesBeforePrint = null;
+});
 
 document.querySelector("#make-fool").addEventListener("click", () => {
   model.generateFool();

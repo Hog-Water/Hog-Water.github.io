@@ -90,6 +90,9 @@ textarea { min-height: 5rem; resize: vertical; }
 .serialization { margin-top: 1rem; padding: 1rem; background: var(--surface); }
 .table-link { align-self: center; color: var(--link); font-size: .8rem; font-weight: 800; }
 .creation-tables { margin-top: 1.75rem; padding: 1.1rem; border: 2px solid var(--border); background: var(--surface); }
+.creation-tables > summary { font-size: 1.5rem; }
+.creation-tables > summary, .creation-table > summary, .serialization > summary { min-height: 2.75rem; padding: .5rem .25rem; font-weight: 800; cursor: pointer; overflow-wrap: anywhere; }
+.creation-tables[open] > summary, .creation-table[open] > summary, .serialization[open] > summary { margin-bottom: .75rem; }
 .creation-tables > p { margin-bottom: 1rem; }
 .creation-table { margin-top: 1.15rem; padding-top: 1rem; border-top: 3px solid var(--focus); scroll-margin-top: 1rem; }
 .creation-table table { width: 100%; margin-top: .6rem; border-collapse: collapse; font-size: .88rem; }
