@@ -2,7 +2,7 @@
 import { validateDocument, validateCharacter, validateEvent, validateOperation } from "./generated/state-validator.mjs";
 
 export const PORTABLE_FORMAT = "bork-borg.make-a-fool.state";
-export const PORTABLE_VERSION = "0.0.3";
+export const PORTABLE_VERSION = "0.0.4";
 export const LEGACY_FORMAT = "bork-borg.make-a-fool.state.v1";
 
 export class StateValidationError extends Error {

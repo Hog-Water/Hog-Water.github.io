@@ -32,7 +32,7 @@ export function directTableArguments(definition, key, slot) {
 
 export const populatedWarrantyTargets = (state) => [1, 2].filter((slot) => readField(state.character, `possessions.${slot}.name`));
 
-export function createAppModel({ catalog, catalogHash, random, confirmReplace = () => true }) {
+export function createAppModel({ catalog, catalogHash, random, confirmReplace = () => true, chooseBackgroundEquipment = () => "retain" }) {
   const randomSource = random ?? Math.random;
   const engineGenerator = createGenerator({ catalog, catalogHash, random: randomSource });
   const withConvenienceLight = (options = {}) => options.light === undefined
@@ -41,6 +41,12 @@ export function createAppModel({ catalog, catalogHash, random, confirmReplace = 
   const generator = {
     operations: {
       ...engineGenerator.operations,
+      background: (current, options = {}) => {
+        const equipment = Object.hasOwn(current.character.background ?? {}, "have")
+          ? options.equipment ?? chooseBackgroundEquipment()
+          : "replace";
+        return engineGenerator.operations.background(current, { ...options, equipment });
+      },
       startingSupplies: (current, options = {}) => {
         assertState(current);
         if (current.catalog.sha256 !== catalogHash || current.catalog.format !== catalog.format) {

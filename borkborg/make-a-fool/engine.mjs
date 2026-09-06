@@ -274,7 +274,14 @@ export function createGenerator({ catalog, catalogHash, random = Math.random }) 
       return context.next;
     },
     background(state, options = {}) {
-      const next = tableOperation(state, "background", "background.name", ([name, know, have]) => ({ "background.name": name, "background.know": know, "background.have": have }), options);
+      const recordedGear = Object.hasOwn(state.character.background ?? {}, "have");
+      const equipment = options.equipment ?? "retain";
+      if (!["retain", "replace"].includes(equipment)) throw new GenerationError("Background equipment must explicitly retain or replace starting gear");
+      const next = tableOperation(state, "background", "background.name", ([name, know, have]) => ({
+        "background.name": name,
+        "background.know": know,
+        ...(!recordedGear || equipment === "replace" ? { "background.have": have } : {}),
+      }), options);
       const context = begin(next, "background-parts");
       refreshParts(context, "Current Background and Toolbox possessions");
       return context.next;

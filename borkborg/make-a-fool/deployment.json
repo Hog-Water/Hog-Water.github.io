@@ -1,10 +1,10 @@
 {
-  "makeAFoolVersion": "0.0.2",
-  "stateVersion": "0.0.3",
+  "makeAFoolVersion": "0.0.3",
+  "stateVersion": "0.0.4",
   "supportedPortableVersions": [
-    "0.0.3"
+    "0.0.4"
   ],
   "catalogFormat": "bork-borg.make-a-fool.catalog.v2",
-  "commitSha": "8abe1b24b9da4ce43087a7a814e55d2a18a9a585",
+  "commitSha": "401d7d72339f03a255d2bf526f9921c4dade162e",
   "canonicalPath": "/borkborg/make-a-fool/"
 }

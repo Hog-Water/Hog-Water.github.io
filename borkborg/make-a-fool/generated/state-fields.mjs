@@ -1,4 +1,4 @@
-// Generated from state.0.0.3.schema.json. Do not edit.
+// Generated from state.0.0.4.schema.json. Do not edit.
 export const fieldPaths = Object.freeze({
   "identity.name.firstName": [
     "identity",
@@ -63,6 +63,10 @@ export const fieldPaths = Object.freeze({
   "identity.companion": [
     "identity",
     "companion"
+  ],
+  "identity.companionName": [
+    "identity",
+    "companionName"
   ],
   "resources.silver": [
     "resources",
@@ -187,5 +191,9 @@ export const fieldPaths = Object.freeze({
   "notes.scars_people_angry": [
     "notes",
     "scars_people_angry"
+  ],
+  "knowledge.learned": [
+    "knowledge",
+    "learned"
   ]
 });

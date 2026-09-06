@@ -1,5 +1,5 @@
 import { createLocalRecovery, FOOL_STORAGE_KEY } from "./persistence.mjs";
-import { downloadFoolJSON, downloadRawBackup, createJSONImportSession } from "./file-io.mjs";
+import { downloadFoolMarkdown, downloadFoolJSON, downloadRawBackup, createJSONImportSession } from "./file-io.mjs";
 import { readField } from "./field-adapter.mjs";
 import { catalogSha256 } from "./engine.mjs";
 import { createAppModel, creationTableDefinitions, directTableArguments, populatedWarrantyTargets } from "./app-model.mjs";
@@ -9,7 +9,7 @@ if (!catalogResponse.ok) throw new Error("Unable to load the MAKE A FOOL catalog
 const catalogText = await catalogResponse.text();
 const catalog = JSON.parse(catalogText);
 let importReplacementApproved = false;
-const model = createAppModel({ catalog, catalogHash: await catalogSha256(catalogText), confirmReplace: (message) => importReplacementApproved || globalThis.confirm(message) });
+const model = createAppModel({ catalog, catalogHash: await catalogSha256(catalogText), confirmReplace: (message) => importReplacementApproved || globalThis.confirm(message), chooseBackgroundEquipment: () => globalThis.confirm("Replace your Background starting gear with the new Background equipment? OK replaces that gear, including edits or an intentionally empty field. Cancel keeps your current gear while changing the Background. Other Junk & Loot stays unchanged.") ? "replace" : "retain" });
 const importSession = createJSONImportSession(model);
 
 const sheet = document.querySelector("#sheet");
@@ -78,7 +78,7 @@ const operationMap = {
   savvy: [() => model.generator.operations.ability, ["abilities.savvy"], () => ["savvy"]],
   fortune: [() => model.generator.operations.ability, ["abilities.fortune"], () => ["fortune"]],
   hp: [() => model.generator.operations.hp, ["health.hp.maximum"]],
-  background: [() => model.generator.operations.background, ["background.name", "background.know", "background.have", "resources.parts"]],
+  background: [() => model.generator.operations.background, ["background.name", "background.know", "resources.parts"]],
   wrong: [() => model.generator.operations.wrong, ["identity.wrong"]],
   good: [() => model.generator.operations.good, ["identity.good", "inventory.load.capacity"]],
   debt: [() => model.generator.operations.debt, ["identity.debt"]],
@@ -130,6 +130,11 @@ function choiceControl(item) {
   return wrapper;
 }
 
+function renderCompanionNameDetail() {
+  const identity = model.current().character.identity;
+  document.querySelector("#companion-name-outstanding").hidden = !identity?.companion?.trim() || Boolean(identity?.companionName?.trim());
+}
+
 function fitSheetText() {
   const fields = [...sheet.querySelectorAll("textarea")];
   for (const field of fields) field.style.minHeight = "";
@@ -152,6 +157,7 @@ sheet.addEventListener("input", (event) => {
     const corrected = fieldEditError !== null;
     commitControl(control, { coalesce: true });
     saveCurrent();
+    renderCompanionNameDetail();
     serialized.value = model.serialize();
     if (corrected) status.textContent = "Corrected edit applied. Check browser saving status above.";
   } catch (error) {
@@ -174,6 +180,7 @@ function render({ forceSheet = false } = {}) {
     else if (forceSheet || document.activeElement !== control) control.value = value ?? "";
   }
   for (const slot of [1, 2]) document.querySelector(`[data-warranty="${slot}"]`).hidden = readField(active.character, `possessions.${slot}.warranty`) !== true;
+  renderCompanionNameDetail();
   choices.replaceChildren(...active.unresolved.map(choiceControl));
   choicePanel.hidden = active.unresolved.length === 0;
   serialized.value = model.serialize();
@@ -309,17 +316,22 @@ function commitFocusedEdit(action) {
   if (focused?.matches("[data-field]") && sheet.contains(focused)) commitControl(focused);
 }
 
-function downloadCurrent() {
-  commitFocusedEdit("Download JSON");
+function downloadCurrent(format = "JSON") {
+  commitFocusedEdit(`Download ${format}`);
   saveCurrent();
   model.endManualEdit();
-  const { filename } = downloadFoolJSON(model.current());
+  const { filename } = (format === "Markdown" ? downloadFoolMarkdown : downloadFoolJSON)(model.current());
   serialized.value = model.serialize();
   return `Download requested: ${filename}. Check your browser's downloads or save prompt.`;
 }
 
 document.querySelector("#download-json").addEventListener("click", () => {
   try { status.textContent = downloadCurrent(); }
+  catch (error) { status.textContent = `Download not started. ${error.message}`; }
+});
+
+document.querySelector("#download-markdown").addEventListener("click", () => {
+  try { status.textContent = downloadCurrent("Markdown"); }
   catch (error) { status.textContent = `Download not started. ${error.message}`; }
 });
 

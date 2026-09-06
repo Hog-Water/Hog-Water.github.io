@@ -1,7 +1,7 @@
 import { assertJson, assertState, LEGACY_FORMAT, PORTABLE_FORMAT, parseJSONDocument, StateValidationError } from "./state-contract.mjs";
 
 // Release support is explicit. Numeric ordering never establishes compatibility.
-export const SUPPORTED_PORTABLE_VERSIONS = Object.freeze(["0.0.3"]);
+export const SUPPORTED_PORTABLE_VERSIONS = Object.freeze(["0.0.4"]);
 
 export function assertSupportedState(value) {
   assertJson(value);

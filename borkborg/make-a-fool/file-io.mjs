@@ -1,3 +1,4 @@
+import { prepareMarkdownDownload } from "./markdown-export.mjs";
 import { serializeStateJSON } from "./state-contract.mjs";
 
 /** One canonical payload from the current edited snapshot, with no I/O. */
@@ -13,7 +14,12 @@ export function prepareJSONDownload(state) {
 /** Requests a browser download; completion belongs to the browser/user. */
 export function downloadFoolJSON(state, browser = globalThis) {
   // Validate before constructing a Blob, allocating a URL, or touching the DOM.
-  return downloadPayload(prepareJSONDownload(state), browser);
+  return downloadPayload(prepareJSONDownload(state), browser, "JSON");
+}
+
+/** Validated readable export; JSON is the complete portable backup. */
+export function downloadFoolMarkdown(state, browser = globalThis) {
+  return downloadPayload(prepareMarkdownDownload(state), browser, "Markdown");
 }
 
 /** Raw recovery is deliberately not a validated current-format export. */
@@ -22,11 +28,11 @@ export function downloadRawBackup(text, browser = globalThis) {
   return downloadPayload({ text, filename: "fool-local-raw-backup.txt", mimeType: "text/plain;charset=utf-8" }, browser);
 }
 
-function downloadPayload(payload, browser) {
+function downloadPayload(payload, browser, format = "raw backup") {
   if (!browser.document?.body || typeof browser.document.createElement !== "function"
       || typeof browser.Blob !== "function" || typeof browser.URL?.createObjectURL !== "function"
       || typeof browser.URL?.revokeObjectURL !== "function" || typeof browser.setTimeout !== "function") {
-    throw new Error("This browser cannot start a JSON download. Keep the page open and try a current browser.");
+    throw new Error(`This browser cannot start a ${format} download. Keep the page open and try a current browser.`);
   }
   let url;
   let anchor;
@@ -41,7 +47,7 @@ function downloadPayload(payload, browser) {
     anchor.click();
   } catch {
     if (url) browser.URL.revokeObjectURL(url);
-    throw new Error("The browser could not start the JSON download. Keep this page open and try Download JSON again.");
+    throw new Error(`The browser could not start the ${format} download. Keep this page open and try Download ${format} again.`);
   } finally {
     anchor?.remove();
   }
