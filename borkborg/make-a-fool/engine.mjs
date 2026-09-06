@@ -1,6 +1,9 @@
 /** Pure, browser-capable MAKE A FOOL rules transactions. */
 
-export const STATE_FORMAT = "bork-borg.make-a-fool.state.v1";
+import { assertState, applyEvent, PORTABLE_FORMAT, PORTABLE_VERSION } from "./state-contract.mjs";
+import { flatWrites, readField, writesField } from "./field-adapter.mjs";
+
+export const STATE_FORMAT = PORTABLE_FORMAT;
 export const CATALOG_FORMAT = "bork-borg.make-a-fool.catalog.v1";
 
 const SOURCES = {
@@ -38,7 +41,7 @@ export function catalogSha256(bytes) {
 
 export function emptyState(catalogHash) {
   if (!/^[0-9a-f]{64}$/.test(catalogHash)) throw new GenerationError("catalog hash must be lowercase SHA-256");
-  return { format: STATE_FORMAT, catalog: { format: CATALOG_FORMAT, sha256: catalogHash }, character: {}, events: [], unresolved: [] };
+  return { format: STATE_FORMAT, version: PORTABLE_VERSION, catalog: { format: CATALOG_FORMAT, sha256: catalogHash }, character: {}, events: [], unresolved: [] };
 }
 
 function validateCatalog(catalog) {
@@ -83,22 +86,31 @@ export function createGenerator({ catalog, catalogHash, random = Math.random }) 
     if (!result) throw new GenerationError(`${name} has no result ${rolled.result}`);
     return { table, result, roll: rolled };
   };
-  const begin = (state, label) => {
-    const next = clone(state);
-    if (next.format !== STATE_FORMAT || next.catalog?.sha256 !== catalogHash || next.catalog?.format !== catalog.format) {
-      throw new GenerationError("state and catalog do not match");
+  const compatible = (state) => {
+    assertState(state);
+    if (state.catalog.sha256 !== catalogHash || state.catalog.format !== catalog.format) {
+      throw new GenerationError("State and catalog do not match. This historical Fool can be edited and backed up, but catalog rolls require a newly generated Fool.");
     }
-    return { next, transaction: `tx-${String(++sequence).padStart(6, "0")}-${label}` };
+  };
+  const uniqueId = (state, prefix, suffix = "") => {
+    const used = new Set(state.events.flatMap((event) => [event.id, event.transaction]));
+    let value;
+    do value = `${prefix}${String(++sequence).padStart(6, "0")}${suffix}`; while (used.has(value));
+    return value;
+  };
+  const begin = (state, label) => {
+    compatible(state);
+    return { next: clone(state), transaction: uniqueId(state, "tx-", `-${label}`) };
   };
   const latestEvent = (state, predicate) => [...state.events].reverse().find(predicate);
-  const eventWriting = (state, field) => latestEvent(state, (event) => Object.hasOwn(event.writes, field));
+  const eventWriting = (state, field) => latestEvent(state, (event) => writesField(event, field));
   const currentTableEvent = (state, table, field) => latestEvent(
     state,
-    (event) => event.source?.table === table && (!field || Object.hasOwn(event.writes, field)),
+    (event) => event.source?.table === table && (!field || writesField(event, field)),
   );
   const addEvent = (context, kind, writes, source, extras = {}) => {
-    const event = { id: `event-${String(++sequence).padStart(6, "0")}`, transaction: context.transaction, kind, writes, source: { path: source }, ...extras };
-    Object.assign(context.next.character, writes);
+    const event = { id: uniqueId(context.next, "event-"), transaction: context.transaction, kind, writes: flatWrites(writes), source: { path: source }, ...extras };
+    context.next.character = applyEvent(context.next.character, event);
     context.next.events.push(event);
     return event;
   };
@@ -133,7 +145,7 @@ export function createGenerator({ catalog, catalogHash, random = Math.random }) 
   }
 
   function baseFortune(state) {
-    const event = latestEvent(state, (candidate) => candidate.source?.path === SOURCES.abilities && Object.hasOwn(candidate.writes, "abilities.fortune"));
+    const event = latestEvent(state, (candidate) => candidate.source?.path === SOURCES.abilities && writesField(candidate, "abilities.fortune"));
     return event?.roll?.result;
   }
 
@@ -162,14 +174,14 @@ export function createGenerator({ catalog, catalogHash, random = Math.random }) 
   }
 
   function refreshParts(context, reason) {
-    const base = context.next.character["background.name"] === "TINKER BASTARD" ? 2 : 1;
+    const base = readField(context.next.character, "background.name") === "TINKER BASTARD" ? 2 : 1;
     const value = base + currentToolboxRoll(context.next, 1) + currentToolboxRoll(context.next, 2);
     addDerived(context, { "resources.parts": value }, SOURCES.starting, { reason });
   }
 
   function repairAppearance(state) {
     const repair = currentTableEvent(state, "repair", "weapon.repair_history");
-    const family = state.character["weapon.family"];
+    const family = readField(state.character, "weapon.family");
     if (!repair || !["SIMPLE", "BUILT", "MECHANICAL"].includes(family)) return null;
     const appearance = byTable.repair_appearance?.get(repair.source.key);
     if (!appearance) throw new GenerationError("repair appearance catalog is stale or incomplete");
@@ -192,7 +204,7 @@ export function createGenerator({ catalog, catalogHash, random = Math.random }) 
   function currentDefectKeys(state) {
     return [1, 2].flatMap((slot) => {
       const event = currentTableEvent(state, "defect", `weapon.defects.${slot}`);
-      return event && state.character[`weapon.defects.${slot}`] ? [event.source.key] : [];
+      return event && readField(state.character, `weapon.defects.${slot}`) ? [event.source.key] : [];
     });
   }
 
@@ -200,12 +212,12 @@ export function createGenerator({ catalog, catalogHash, random = Math.random }) 
     const weapon = currentTableEvent(context.next, "weapon", "weapon.type");
     const matches = weapon && currentDefectKeys(context.next).includes(weapon.source.key);
     if (matches) {
-      if (!context.next.character["weapon.nickname"]) {
+      if (!readField(context.next.character, "weapon.nickname")) {
         unresolved(context, "weapon-nickname", "player-choice", SOURCES.matching, "The Weapon and Defect rolls match. Name the weapon.");
       }
     } else {
       clearUnresolved(context, "weapon-nickname");
-      if (context.next.character["weapon.nickname"]) addDerived(context, { "weapon.nickname": "" }, SOURCES.matching, { reason: "Weapon and Defect rolls no longer match" });
+      if (readField(context.next.character, "weapon.nickname")) addDerived(context, { "weapon.nickname": "" }, SOURCES.matching, { reason: "Weapon and Defect rolls no longer match" });
     }
   }
 
@@ -226,7 +238,7 @@ export function createGenerator({ catalog, catalogHash, random = Math.random }) 
     ability(state, ability, options = {}) {
       if (!["stoutness", "alacrity", "savvy", "fortune"].includes(ability)) throw new GenerationError("invalid ability");
       const field = `abilities.${ability}`;
-      const previous = latestEvent(state, (event) => event.source?.path === SOURCES.abilities && Object.hasOwn(event.writes, field));
+      const previous = latestEvent(state, (event) => event.source?.path === SOURCES.abilities && writesField(event, field));
       const context = begin(state, `ability-${ability}`);
       const dice = options.dice ?? [die(4), die(4)];
       if (dice.length !== 2 || dice.some((value) => !Number.isInteger(value) || value < 1 || value > 4)) throw new GenerationError("ability dice must be two d4 results");
@@ -240,7 +252,7 @@ export function createGenerator({ catalog, catalogHash, random = Math.random }) 
       return context.next;
     },
     hp(state, options = {}) {
-      const stoutness = state.character["abilities.stoutness"];
+      const stoutness = readField(state.character, "abilities.stoutness");
       if (!Number.isInteger(stoutness)) throw new GenerationError("HP requires an integer STOUTNESS");
       const previous = latestEvent(state, (event) => event.source?.path === SOURCES.hp && event.roll?.notation === "d8");
       const context = begin(state, "hp");
@@ -248,7 +260,7 @@ export function createGenerator({ catalog, catalogHash, random = Math.random }) 
       if (rolled.result < 1 || rolled.result > 8) throw new GenerationError("HP roll must be 1..8");
       const maximum = Math.max(1, rolled.result + stoutness);
       const writes = { "health.hp.maximum": maximum };
-      if (options.initializeCurrent || !Object.hasOwn(state.character, "health.hp.current")) writes["health.hp.current"] = maximum;
+      if (options.initializeCurrent || readField(state.character, "health.hp.current") === undefined) writes["health.hp.current"] = maximum;
       addEvent(context, previous ? "reroll" : "roll", writes, SOURCES.hp, { roll: rolled, ...(previous ? { previousEvent: previous.id } : {}) });
       return context.next;
     },
@@ -269,61 +281,65 @@ export function createGenerator({ catalog, catalogHash, random = Math.random }) 
       const current = currentTableEvent(state, "wrong", "identity.wrong");
       if (current?.source.key !== 20 || !luckyItem) throw new GenerationError("lucky-item choice requires current What's Wrong With You? #20 and a value");
       const context = begin(state, "lucky-item-choice");
-      addEvent(context, "choice", { "identity.wrong": `${state.character["identity.wrong"]} Lucky item: ${luckyItem}.` }, catalog.tables.wrong.source, { input: luckyItem });
+      addEvent(context, "choice", { "identity.wrong": `${resultText("wrong", 20)} Lucky item: ${luckyItem}.` }, catalog.tables.wrong.source, { input: luckyItem });
       clearUnresolved(context, "lucky-item");
       return context.next;
     },
-    good(state, options = {}) {
-      return tableOperation(state, "good", "identity.good", ([text], key, context) => {
-        addDerived(context, { "inventory.load.capacity": key === 10 ? 12 : 10 }, SOURCES.inventory, { reason: "Current One Good Thing" });
-        return { "identity.good": text };
-      }, options);
-    },
+    good: (state, options = {}) => tableOperation(state, "good", "identity.good", ([text], key) => ({ "identity.good": text, "inventory.load.capacity": key === 6 ? 9 : 8 }), options),
     debt: (state, options = {}) => tableOperation(state, "debt", "identity.debt", ([text]) => ({ "identity.debt": text }), options),
     companion(state, options = {}) {
-      const next = tableOperation(state, "companion", "identity.companion", ([text]) => ({ "identity.companion": text }), options);
-      const context = begin(next, "companion-fortune");
-      refreshFortune(context, "Current Companion");
+      const previous = currentTableEvent(state, "companion", "identity.companion");
+      const base = baseFortune(state);
+      if (!Number.isInteger(base)) throw new GenerationError("Companion generation requires a generated FORTUNE roll");
+      let outcome;
+      do outcome = tableResult("companion", options.key); while (outcome.result.key === 6 && base === 3 && options.key === undefined);
+      if (outcome.result.key === 6 && base === 3) throw new GenerationError("Companion #6 is invalid when the base FORTUNE roll is +3");
+      const context = begin(state, "companion");
+      addTableEvent(context, "companion", outcome, { "identity.companion": outcome.result.values[0] }, previous);
+      refreshFortune(context, "Current Companion result");
       return context.next;
     },
     startingSupplies(state, options = {}) {
+      const previousSilver = eventWriting(state, "resources.silver");
+      const previousLight = latestEvent(state, (event) => event.reason === "Starting light quantity");
       const context = begin(state, "starting-supplies");
-      const silver = options.silver === undefined ? die(20) : options.silver;
-      const water = options.water === undefined ? die(4) : options.water;
-      const rations = options.rations === undefined ? die(4) : options.rations;
-      if (![silver, water, rations].every(Number.isInteger) || silver < 1 || silver > 20 || water < 1 || water > 4 || rations < 1 || rations > 4) throw new GenerationError("starting supply rolls are out of range");
-      addEvent(context, "roll", { "resources.silver": silver, "resources.water": water, "resources.rations": rations }, SOURCES.starting, { roll: { notation: "d20/d4/d4", dice: [silver, water, rations], result: [silver, water, rations] } });
-      refreshParts(context, "Starting Useful Parts plus current Background and Toolboxes");
-      if (options.light === "candles" || options.light === "lantern") addEvent(context, "choice", { "resources.light": options.light === "candles" ? "Candles" : "Basic lantern" }, SOURCES.starting, { input: options.light });
+      const lightRoll = options.lightRoll === undefined ? roll("d6") : forcedRoll("d6", options.lightRoll);
+      const silverRoll = options.silverRoll === undefined ? roll("d10") : forcedRoll("d10", options.silverRoll);
+      if (lightRoll.result < 1 || lightRoll.result > 6 || silverRoll.result < 1 || silverRoll.result > 10) throw new GenerationError("invalid starting resource roll");
+      addEvent(context, previousSilver ? "reroll" : "roll", { "resources.silver": silverRoll.result }, SOURCES.starting, { roll: silverRoll, ...(previousSilver ? { previousEvent: previousSilver.id } : {}) });
+      addEvent(context, "derived", { "resources.water": 1, "resources.rations": 1, "inventory.load.current": readField(state.character, "inventory.load.current") ?? "", "inventory.load.capacity": readField(state.character, "inventory.load.capacity") ?? 8, "inventory.other_junk": readField(state.character, "inventory.other_junk") ?? "Clothes." }, SOURCES.starting, { reason: "Starting supplies" });
+      addEvent(context, previousLight ? "reroll" : "roll", { "resources.light": "" }, SOURCES.starting, { roll: lightRoll, reason: "Starting light quantity", ...(previousLight ? { previousEvent: previousLight.id } : {}) });
+      if (["candles", "lantern"].includes(options.light)) {
+        const count = lightRoll.result;
+        const light = options.light === "candles" ? `${count} ${count === 1 ? "candle" : "candles"}` : `Basic lantern with ${count} hours of oil`;
+        addEvent(context, "choice", { "resources.light": light }, SOURCES.starting, { input: { light: options.light } });
+        clearUnresolved(context, "light-choice");
+      } else if (options.light !== undefined) throw new GenerationError("light must be candles or lantern");
       else unresolved(context, "light-choice", "player-choice", SOURCES.starting, "Choose candles or a basic lantern.");
+      refreshParts(context, "Current Background and Toolbox possessions");
       return context.next;
     },
-    resolveLight(state, value) {
-      if (!["candles", "lantern"].includes(value)) throw new GenerationError("light choice must be candles or lantern");
+    resolveLight(state, light) {
+      if (!["candles", "lantern"].includes(light)) throw new GenerationError("light must be candles or lantern");
+      const quantity = latestEvent(state, (event) => event.reason === "Starting light quantity")?.roll?.result;
+      if (!Number.isInteger(quantity)) throw new GenerationError("light choice requires a generated starting-light quantity");
+      const value = light === "candles" ? `${quantity} ${quantity === 1 ? "candle" : "candles"}` : `Basic lantern with ${quantity} hours of oil`;
       const context = begin(state, "light-choice");
-      addEvent(context, "choice", { "resources.light": value === "candles" ? "Candles" : "Basic lantern" }, SOURCES.starting, { input: value });
+      addEvent(context, "choice", { "resources.light": value }, SOURCES.starting, { input: { light } });
       clearUnresolved(context, "light-choice");
       return context.next;
     },
     weapon(state, options = {}) {
-      const outcome = tableResult("weapon", options.key);
-      const previous = currentTableEvent(state, "weapon", "weapon.type");
-      const context = begin(state, "weapon");
-      const [name, family, damage, ammo] = outcome.result.values;
-      if (outcome.result.key === 20 && (!options.improvisedNightmare?.name || !["SIMPLE", "BUILT", "MECHANICAL"].includes(options.improvisedNightmare.family))) {
-        addTableEvent(context, "weapon", outcome, { "weapon.type": name, "weapon.family": "", "weapon.damage": damage, "weapon.ammo_die": ammo }, previous);
-        unresolved(context, "improvised-nightmare", "player-choice", catalog.tables.weapon.source, "Name the improvised nightmare and choose its physical Family.");
-      } else {
-        addTableEvent(context, "weapon", outcome, { "weapon.type": outcome.result.key === 20 ? options.improvisedNightmare.name : name, "weapon.family": outcome.result.key === 20 ? options.improvisedNightmare.family : family, "weapon.damage": damage, "weapon.ammo_die": ammo }, previous);
-        clearUnresolved(context, "improvised-nightmare");
-      }
-      const next = context.next;
-      return operations.weaponDependencies(next, options);
-    },
-    weaponDependencies(state, options = {}) {
-      let next = state;
-      if (options.defects !== false) next = operations.defects(next, options.defects ?? {});
-      if (options.repair !== false) next = operations.repair(next, options.repair ?? {});
+      const next = tableOperation(state, "weapon", "weapon.type", (values, key, context) => {
+        let [name, family, damage, ammo] = values;
+        if (key === 20) {
+          name = "";
+          family = "";
+          if (!options.name || !["SIMPLE", "BUILT", "MECHANICAL"].includes(options.family)) unresolved(context, "improvised-nightmare", "player-choice", catalog.tables.weapon.source, "Name the Improvised Nightmare and choose its physical Family.");
+          else { name = options.name; family = options.family; clearUnresolved(context, "improvised-nightmare"); }
+        } else clearUnresolved(context, "improvised-nightmare");
+        return { "weapon.type": name, "weapon.family": family, "weapon.damage": damage, "weapon.ammo_die": ammo ? (ammo.match(/^\d+/)?.[0] ?? ammo) : "", "weapon.nickname": "", ...(!currentTableEvent(state, "weapon", "weapon.type") ? { "weapon.wear": readField(state.character, "weapon.wear") ?? 0 } : {}) };
+      }, options);
       const context = begin(next, "weapon-dependencies");
       if (currentTableEvent(next, "repair", "weapon.repair_history")) refreshRepairAppearance(context, "Current Weapon Family");
       refreshMatchingChoice(context);
@@ -384,17 +400,17 @@ export function createGenerator({ catalog, catalogHash, random = Math.random }) 
       const context = begin(state, `possession-${slot}`);
       const outcome = tableResult("possession", options.key);
       const previous = currentPossessionEvent(state, slot);
-      addTableEvent(context, "possession", outcome, { [field]: outcome.result.values[0], [`possessions.${slot}.behavior`]: outcome.result.values[1], ...(!previous ? { [`possessions.${slot}.warranty`]: false, [`possessions.${slot}.wear.1`]: false, [`possessions.${slot}.wear.2`]: false, [`possessions.${slot}.wear.3`]: false } : {}) }, previous);
+      addTableEvent(context, "possession", outcome, { [field]: outcome.result.values[0], [`possessions.${slot}.behavior`]: outcome.result.values[1], ...(!previous ? { [`possessions.${slot}.warranty`]: readField(state.character, `possessions.${slot}.warranty`) ?? false, [`possessions.${slot}.wear`]: readField(state.character, `possessions.${slot}.wear`) ?? 0 } : {}) }, previous);
       if (outcome.result.key === 20) {
         const parts = options.toolboxRoll === undefined ? die(6) : options.toolboxRoll;
         if (!Number.isInteger(parts) || parts < 1 || parts > 6) throw new GenerationError("toolbox roll must be 1..6");
-        const base = context.next.character["background.name"] === "TINKER BASTARD" ? 2 : 1;
+        const base = readField(context.next.character, "background.name") === "TINKER BASTARD" ? 2 : 1;
         const otherSlot = slot === 1 ? 2 : 1;
         const total = base + parts + currentToolboxRoll(context.next, otherSlot);
         addEvent(context, "roll", { "resources.parts": total }, catalog.tables.possession.source, { source: { path: catalog.tables.possession.source, table: "possession", key: 20 }, roll: forcedRoll("d6", parts), reason: "TOOLBOX MARKED PROFESSIONAL", input: { slot } });
       }
       if (outcome.result.key !== 20) refreshParts(context, "Current Background and Toolbox possessions");
-      if (currentWarrantyExists(context.next) && !context.next.character["possessions.1.warranty"] && !context.next.character["possessions.2.warranty"]) unresolved(context, "warranty-choice", "player-choice", catalog.tables.possession.source, "Choose which possession receives The Warranty.");
+      if (currentWarrantyExists(context.next) && !readField(context.next.character, "possessions.1.warranty") && !readField(context.next.character, "possessions.2.warranty")) unresolved(context, "warranty-choice", "player-choice", catalog.tables.possession.source, "Choose which possession receives The Warranty.");
       else if (currentWarrantyExists(context.next)) clearUnresolved(context, "warranty-choice");
       else {
         clearUnresolved(context, "warranty-choice");
@@ -412,6 +428,15 @@ export function createGenerator({ catalog, catalogHash, random = Math.random }) 
     keepsake: (state, options = {}) => tableOperation(state, "keepsake", "keepsake.description", ([text]) => ({ "keepsake.description": text }), options),
   };
 
+  // Validate before any dice are consumed and before a result escapes. The
+  // implementation remains one rules engine; only field access is adapted.
+  for (const [name, operation] of Object.entries(operations)) {
+    operations[name] = (state, ...args) => {
+      compatible(state);
+      return assertState(operation(state, ...args));
+    };
+  }
+
   function generateFull(options = {}) {
     let state = emptyState(catalogHash);
     state = operations.firstName(state, options.firstNameTable ?? (die(2) === 1 ? "first_name_men" : "first_name_women"), options.firstName ?? {});
@@ -425,11 +450,14 @@ export function createGenerator({ catalog, catalogHash, random = Math.random }) 
     state = operations.companion(state, options.companion ?? {});
     state = operations.startingSupplies(state, options.starting ?? {});
     state = operations.weapon(state, options.weapon ?? {});
-    state = operations.possession(state, 1, options.possessions?.[1] ?? {});
-    state = operations.possession(state, 2, options.possessions?.[2] ?? {});
+    state = operations.defects(state, options.defects ?? {});
+    state = operations.repair(state, options.repair ?? {});
+    state = operations.possession(state, 1, options.possession1 ?? {});
+    state = operations.possession(state, 2, options.possession2 ?? {});
     state = operations.keepsake(state, options.keepsake ?? {});
+    if (options.warrantySlot !== undefined) state = operations.warranty(state, options.warrantySlot);
     return state;
   }
 
-  return { generateFull, operations };
+  return { operations, generateFull };
 }

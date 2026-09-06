@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>BORK BORG - MAKE A FOOL</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <header class="masthead">
+    <div><p class="eyebrow">BORK BORG</p><h1>MAKE A FOOL</h1></div>
+    <div class="masthead-actions">
+      <label class="theme-picker">Theme<select id="theme-choice"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></label>
+      <button id="make-fool" class="primary" type="button">MAKE A FOOL</button>
+      <p id="theme-feedback" class="theme-feedback" role="status" hidden></p>
+    </div>
+  </header>
+  <main>
+    <section id="choice-panel" class="candidate" hidden aria-labelledby="choice-title">
+      <div><p class="eyebrow">Outstanding character details</p><h2 id="choice-title">Finish these when you are ready</h2><p>These details do not stop you from using or editing the rest of the Fool.</p></div>
+      <div id="choices" class="choices" aria-live="polite"></div>
+    </section>
+    <p id="status" class="status" role="status" aria-live="polite">Ready to make trouble.</p>
+    <section class="card" aria-labelledby="backup-title"><div class="section-title"><h2 id="backup-title">Save or load a Fool</h2><div class="actions"><button id="download-json" type="button">Download JSON</button><button id="import-json" type="button" aria-haspopup="dialog">Import JSON</button></div></div><input id="import-file" type="file" accept=".json,application/json" hidden><p>Download the current Fool, including your edits, outstanding details, and history. In a fresh session, choose Import JSON and select your saved file. Review it, then replace the current Fool or cancel. You can download the current Fool before replacing it.</p><p>There is no automatic saving. Download a new copy after editing and before closing or reloading this page.</p></section>
+    <dialog id="import-dialog" class="card import-dialog" aria-labelledby="import-title" aria-describedby="import-summary import-warning"><h2 id="import-title">Replace the current Fool?</h2><p id="import-summary"></p><p id="import-warning">This replaces the whole current Fool, including its history and outstanding details. Download the current Fool first if you want to keep it.</p><div class="actions"><button id="import-cancel" type="button" autofocus>Cancel</button><button id="import-backup" type="button">Download current JSON</button><button id="import-replace" type="button">Replace with imported Fool</button></div><p id="import-status" role="status" aria-live="polite"></p></dialog>
+    <form id="sheet" class="sheet" novalidate>
+      <section class="card identity"><div class="section-title"><h2>Identity</h2></div><div class="grid two">
+        <label id="field-first-name">First name<input data-field="identity.name.firstName"><select id="first-name-table" aria-label="First-name table"><option value="first_name_men">Men's first names</option><option value="first_name_women">Women's first names</option></select><a class="table-link" href="#table-first_name_men">View name tables</a></label><button data-roll="firstName" type="button">Roll first</button>
+        <label id="field-last-name">Last name<input data-field="identity.name.lastName"><a class="table-link" href="#table-last_name">View table</a></label><button data-roll="lastName" type="button">Roll last</button>
+      </div></section>
+      <section class="card"><div class="section-title"><h2>Abilities &amp; HP</h2></div><div class="grid abilities">
+        <label>STOUTNESS<input inputmode="numeric" data-field="abilities.stoutness"></label><button data-roll="stoutness" type="button">Roll</button>
+        <label>ALACRITY<input inputmode="numeric" data-field="abilities.alacrity"></label><button data-roll="alacrity" type="button">Roll</button>
+        <label>SAVVY<input inputmode="numeric" data-field="abilities.savvy"></label><button data-roll="savvy" type="button">Roll</button>
+        <label>FORTUNE<input inputmode="numeric" data-field="abilities.fortune"></label><button data-roll="fortune" type="button">Roll</button>
+        <label>Current HP<input inputmode="numeric" data-field="health.hp.current"></label><span></span>
+        <label>Max HP<input inputmode="numeric" data-field="health.hp.maximum"></label><button data-roll="hp" type="button">Reroll max</button>
+      </div></section>
+      <section id="field-background" class="card wide"><div class="section-title"><h2>Background</h2><div class="actions"><a class="table-link" href="#table-background">View table</a><button data-roll="background" type="button">Roll / reroll</button></div></div><p class="reminder">NO TWO FOOLS ALIKE - ASK THE PEOPLE AT YOUR TABLE</p><div class="grid three"><label>Background<textarea data-field="background.name"></textarea></label><label>You Know<textarea data-field="background.know"></textarea></label><label>You Have<textarea data-field="background.have"></textarea></label></div></section>
+      <section class="card wide"><div class="section-title"><h2>I Reckon</h2></div><div class="reckon">
+        <div class="reckon-item"><label id="field-wrong">What's Wrong With You?<textarea data-field="identity.wrong"></textarea></label><div class="reckon-actions"><a class="table-link" href="#table-wrong">View table</a><button data-roll="wrong" type="button">Roll / reroll</button></div></div>
+        <div class="reckon-item"><label id="field-good">One Good Thing<textarea data-field="identity.good"></textarea></label><div class="reckon-actions"><a class="table-link" href="#table-good">View table</a><button data-roll="good" type="button">Roll / reroll</button></div></div>
+        <div class="reckon-item"><label id="field-debt">Debt<textarea data-field="identity.debt"></textarea></label><div class="reckon-actions"><a class="table-link" href="#table-debt">View table</a><button data-roll="debt" type="button">Roll / reroll</button></div></div>
+        <div class="reckon-item"><label id="field-companion">Companion<textarea data-field="identity.companion"></textarea></label><div class="reckon-actions"><a class="table-link" href="#table-companion">View table</a><button data-roll="companion" type="button">Roll / reroll</button></div></div>
+      </div></section>
+      <section class="card wide supplies"><div class="section-title"><h2>Resources &amp; Load</h2><button data-roll="supplies" type="button">Reroll starting supplies</button></div><div class="grid resources"><label>Silver<input data-field="resources.silver"></label><label>Water<input data-field="resources.water"></label><label>Rations<input data-field="resources.rations"></label><label>Useful Parts<input data-field="resources.parts"></label><label>Light<input data-field="resources.light"></label><label>Current load<input data-field="inventory.load.current"></label><label>Capacity<input data-field="inventory.load.capacity"></label></div></section>
+      <section id="field-weapon" class="card wide"><div class="section-title"><h2>Weapon of Regret</h2><button data-roll="weapon" type="button">Roll / reroll weapon</button></div><div class="grid weapon"><label>Weapon<input data-field="weapon.type"><a class="table-link" href="#table-weapon">View Weapon table</a></label><label>Nickname<input data-field="weapon.nickname"></label><label>Family<input data-field="weapon.family"></label><label>Damage<input data-field="weapon.damage"></label><label>Ammo<input data-field="weapon.ammo_die"></label></div><fieldset class="wear"><legend>Weapon Wear</legend><label><input type="checkbox" data-field="weapon.wear.1"> 1</label><label><input type="checkbox" data-field="weapon.wear.2"> 2</label><label><input type="checkbox" data-field="weapon.wear.3"> 3</label></fieldset><div class="field-toolbar actions"><a class="table-link" href="#table-defect">View Defects table</a><button data-roll="defects" type="button">Reroll defects</button></div><div id="field-defects" class="grid equal-two"><label>Defect 1<textarea data-field="weapon.defects.1"></textarea></label><label>Defect 2<textarea data-field="weapon.defects.2"></textarea></label></div><div class="repair-toolbar"><div class="actions"><a class="table-link" href="#table-repair">View Repair History table</a><a class="table-link" href="#table-repair_appearance">View Repair Appearance table</a><button data-roll="repair" type="button">Reroll repair</button></div></div><div id="field-repair" class="grid equal-two"><label>Repair history<textarea data-field="weapon.repair_history"></textarea></label><label>What the repair looks like<textarea data-field="weapon.repair_appearance"></textarea></label></div></section>
+      <section id="field-possessions" class="card wide"><div class="section-title"><h2>Questionably Functional Possessions</h2><a class="table-link" href="#table-possession">View table</a></div><div id="possessions" class="possessions"></div></section>
+      <section id="field-keepsake" class="card wide keepsake"><div class="section-title"><h2 id="keepsake-title">Useless Keepsake</h2><div class="actions"><a class="table-link" href="#table-keepsake">View table</a><button data-roll="keepsake" type="button">Roll / reroll</button></div></div><textarea aria-labelledby="keepsake-title" data-field="keepsake.description"></textarea></section>
+      <section class="card wide notes"><div class="section-title"><h2>Other Junk, Scars, People Angry &amp; Notes</h2></div><label>Other Junk &amp; Loot<textarea rows="5" data-field="inventory.other_junk"></textarea></label><label>Scars / People Angry / Notes<textarea rows="7" data-field="notes.scars_people_angry"></textarea></label></section>
+    </form>
+    <section id="creation-tables" class="creation-tables" aria-labelledby="creation-tables-title"><h2 id="creation-tables-title">Creation tables</h2><p>Choose a result to apply it to the live sheet, or use the sheet's Roll / reroll controls for a random result. Results come from the source-derived catalog.</p><div id="tables"></div></section>
+    <details class="serialization"><summary>Portable state preview</summary><p>This read-only JSON shows the current Fool included by Download JSON. Import JSON restores a saved Fool after your replacement confirmation. There is no automatic saving.</p><textarea id="serialized" readonly aria-label="Serialized portable Fool state"></textarea></details>
+  </main>
+  <script type="module" src="theme.mjs"></script>
+  <script type="module" src="app.mjs"></script>
+</body>
+</html>

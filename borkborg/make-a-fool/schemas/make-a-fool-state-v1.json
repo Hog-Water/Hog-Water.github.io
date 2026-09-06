@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hog-water.github.io/BorkBorg/schemas/make-a-fool-state-v1.json",
+  "title": "BORK BORG MAKE A FOOL state",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "catalog", "character", "events", "unresolved"],
+  "properties": {
+    "format": { "const": "bork-borg.make-a-fool.state.v1" },
+    "catalog": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["format", "sha256"],
+      "properties": {
+        "format": { "const": "bork-borg.make-a-fool.catalog.v1" },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    },
+    "character": {
+      "type": "object",
+      "description": "Editable character values keyed by the stable dotted field names in docs/INTERACTIVE_CHARACTER_SHEET.md.",
+      "propertyNames": { "$ref": "#/$defs/fieldName" },
+      "additionalProperties": { "$ref": "#/$defs/fieldValue" }
+    },
+    "events": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/event" }
+    },
+    "unresolved": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/unresolved" }
+    }
+  },
+  "$defs": {
+    "roll": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["notation", "dice", "result"],
+      "properties": {
+        "notation": { "type": "string", "enum": ["d4", "d6", "d8", "d10", "d12", "d20", "d66", "d100", "d4-d4"] },
+        "dice": { "type": "array", "items": { "type": "integer" }, "minItems": 1 },
+        "result": { "type": "integer" }
+      }
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "transaction", "kind", "writes"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "transaction": { "type": "string", "minLength": 1 },
+        "kind": { "type": "string", "enum": ["roll", "choice", "manual", "derived", "reroll"] },
+        "writes": {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": { "$ref": "#/$defs/fieldName" },
+          "additionalProperties": { "$ref": "#/$defs/fieldValue" }
+        },
+        "source": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path"],
+          "properties": {
+            "path": { "type": "string", "pattern": "^manuscript/content/" },
+            "table": { "type": "string" },
+            "key": { "type": "integer" }
+          }
+        },
+        "roll": { "$ref": "#/$defs/roll" },
+        "input": {},
+        "previousEvent": { "type": "string" },
+        "reason": { "type": "string" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "kind": { "const": "manual" } }, "required": ["kind"] },
+          "then": { "not": { "required": ["source", "roll", "previousEvent"] } },
+          "else": { "required": ["source"] }
+        },
+        {
+          "if": { "properties": { "kind": { "enum": ["roll", "reroll"] } }, "required": ["kind"] },
+          "then": { "required": ["roll"] }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "reroll" } }, "required": ["kind"] },
+          "then": { "required": ["previousEvent"] }
+        }
+      ]
+    },
+    "unresolved": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "source", "prompt"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "kind": { "type": "string", "enum": ["player-choice", "party-consent", "deferred-gm", "overwrite-confirmation"] },
+        "source": { "type": "string", "pattern": "^manuscript/content/" },
+        "prompt": { "type": "string", "minLength": 1 }
+      }
+    },
+    "fieldValue": { "type": ["string", "integer", "boolean", "null"] },
+    "fieldName": {
+      "enum": [
+        "identity.name.firstName", "identity.name.lastName",
+        "abilities.stoutness", "abilities.alacrity", "abilities.savvy", "abilities.fortune",
+        "health.hp.current", "health.hp.maximum",
+        "background.name", "background.know", "background.have",
+        "identity.wrong", "identity.good", "identity.debt", "identity.companion",
+        "resources.silver", "resources.water", "resources.rations", "resources.parts", "resources.light",
+        "inventory.load.current", "inventory.load.capacity", "inventory.other_junk",
+        "weapon.type", "weapon.nickname", "weapon.family", "weapon.damage", "weapon.ammo_die",
+        "weapon.defects.1", "weapon.defects.2", "weapon.repair_history", "weapon.repair_appearance",
+        "weapon.wear.1", "weapon.wear.2", "weapon.wear.3",
+        "possessions.1.name", "possessions.1.behavior", "possessions.1.warranty",
+        "possessions.1.wear.1", "possessions.1.wear.2", "possessions.1.wear.3",
+        "possessions.2.name", "possessions.2.behavior", "possessions.2.warranty",
+        "possessions.2.wear.1", "possessions.2.wear.2", "possessions.2.wear.3",
+        "keepsake.description", "notes.scars_people_angry"
+      ]
+    }
+  }
+}

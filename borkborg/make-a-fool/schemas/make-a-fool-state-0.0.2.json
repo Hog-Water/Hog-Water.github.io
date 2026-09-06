@@ -1,0 +1,2040 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BORK BORG MAKE A FOOL portable state 0.0.2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "version",
+    "catalog",
+    "character",
+    "events",
+    "unresolved"
+  ],
+  "properties": {
+    "format": {
+      "const": "bork-borg.make-a-fool.state"
+    },
+    "catalog": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "format",
+        "sha256"
+      ],
+      "properties": {
+        "format": {
+          "const": "bork-borg.make-a-fool.catalog.v1"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "character": {
+      "$ref": "#/$defs/character"
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/event"
+      }
+    },
+    "unresolved": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/unresolved"
+      }
+    },
+    "version": {
+      "const": "0.0.2"
+    }
+  },
+  "$defs": {
+    "roll": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "notation",
+        "dice",
+        "result"
+      ],
+      "properties": {
+        "notation": {
+          "type": "string",
+          "pattern": "[\\s\\S]"
+        },
+        "dice": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          },
+          "minItems": 1
+        },
+        "result": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "integer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "transaction",
+        "kind",
+        "writes"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "[\\s\\S]"
+        },
+        "transaction": {
+          "type": "string",
+          "pattern": "[\\s\\S]"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "roll",
+            "choice",
+            "manual",
+            "derived",
+            "reroll"
+          ]
+        },
+        "writes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/operation"
+          },
+          "description": "Ordered set operations relative to character; integer path segments are zero-based array indexes. Create missing containers, assign without inserting or shifting array items. Apply each event atomically. This is a custom operation, not RFC 6902 JSON Patch."
+        },
+        "source": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "path"
+          ],
+          "properties": {
+            "path": {
+              "type": "string",
+              "pattern": "^manuscript/content/"
+            },
+            "table": {
+              "type": "string"
+            },
+            "key": {
+              "type": "integer"
+            }
+          }
+        },
+        "roll": {
+          "$ref": "#/$defs/roll"
+        },
+        "input": {},
+        "previousEvent": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "manual"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "source"
+                  ]
+                },
+                {
+                  "required": [
+                    "roll"
+                  ]
+                },
+                {
+                  "required": [
+                    "previousEvent"
+                  ]
+                }
+              ]
+            }
+          },
+          "else": {
+            "required": [
+              "source"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "enum": [
+                  "roll",
+                  "reroll"
+                ]
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "roll"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "reroll"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "required": [
+              "previousEvent"
+            ]
+          }
+        }
+      ]
+    },
+    "unresolved": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "source",
+        "prompt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "[\\s\\S]"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "player-choice",
+            "party-consent",
+            "deferred-gm",
+            "overwrite-confirmation"
+          ]
+        },
+        "source": {
+          "type": "string",
+          "pattern": "^manuscript/content/"
+        },
+        "prompt": {
+          "type": "string",
+          "pattern": "[\\s\\S]"
+        }
+      }
+    },
+    "operation": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "identity"
+                },
+                {
+                  "const": "name"
+                },
+                {
+                  "const": "firstName"
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "identity"
+                },
+                {
+                  "const": "name"
+                },
+                {
+                  "const": "lastName"
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "abilities"
+                },
+                {
+                  "const": "stoutness"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "value": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "const": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "abilities"
+                },
+                {
+                  "const": "alacrity"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "value": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "const": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "abilities"
+                },
+                {
+                  "const": "savvy"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "value": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "const": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "abilities"
+                },
+                {
+                  "const": "fortune"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "value": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "const": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "health"
+                },
+                {
+                  "const": "hp"
+                },
+                {
+                  "const": "current"
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "value": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "const": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "health"
+                },
+                {
+                  "const": "hp"
+                },
+                {
+                  "const": "maximum"
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "value": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "const": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "background"
+                },
+                {
+                  "const": "name"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "background"
+                },
+                {
+                  "const": "know"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "background"
+                },
+                {
+                  "const": "have"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "identity"
+                },
+                {
+                  "const": "wrong"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "identity"
+                },
+                {
+                  "const": "good"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "identity"
+                },
+                {
+                  "const": "debt"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "identity"
+                },
+                {
+                  "const": "companion"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "resources"
+                },
+                {
+                  "const": "silver"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "value": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "resources"
+                },
+                {
+                  "const": "water"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "value": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "resources"
+                },
+                {
+                  "const": "rations"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "value": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "resources"
+                },
+                {
+                  "const": "parts"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "value": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "resources"
+                },
+                {
+                  "const": "light"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "inventory"
+                },
+                {
+                  "const": "load"
+                },
+                {
+                  "const": "current"
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "value": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "inventory"
+                },
+                {
+                  "const": "load"
+                },
+                {
+                  "const": "capacity"
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "value": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "inventory"
+                },
+                {
+                  "const": "other_junk"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "weapon"
+                },
+                {
+                  "const": "type"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "weapon"
+                },
+                {
+                  "const": "nickname"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "weapon"
+                },
+                {
+                  "const": "family"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "weapon"
+                },
+                {
+                  "const": "damage"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "weapon"
+                },
+                {
+                  "const": "ammo_die"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "weapon"
+                },
+                {
+                  "const": "defects"
+                },
+                {
+                  "const": 0
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "weapon"
+                },
+                {
+                  "const": "defects"
+                },
+                {
+                  "const": 1
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "weapon"
+                },
+                {
+                  "const": "repair_history"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "weapon"
+                },
+                {
+                  "const": "repair_appearance"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "weapon"
+                },
+                {
+                  "const": "wear"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 3
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "possessions"
+                },
+                {
+                  "const": 0
+                },
+                {
+                  "const": "name"
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "possessions"
+                },
+                {
+                  "const": 0
+                },
+                {
+                  "const": "behavior"
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "possessions"
+                },
+                {
+                  "const": 0
+                },
+                {
+                  "const": "warranty"
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "value": {
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "possessions"
+                },
+                {
+                  "const": 0
+                },
+                {
+                  "const": "wear"
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 3
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "possessions"
+                },
+                {
+                  "const": 1
+                },
+                {
+                  "const": "name"
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "possessions"
+                },
+                {
+                  "const": 1
+                },
+                {
+                  "const": "behavior"
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "possessions"
+                },
+                {
+                  "const": 1
+                },
+                {
+                  "const": "warranty"
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "value": {
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "possessions"
+                },
+                {
+                  "const": 1
+                },
+                {
+                  "const": "wear"
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 3
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "keepsake"
+                },
+                {
+                  "const": "description"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "path",
+            "value"
+          ],
+          "properties": {
+            "op": {
+              "const": "set"
+            },
+            "path": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "const": "notes"
+                },
+                {
+                  "const": "scars_people_angry"
+                }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "character": {
+      "type": "object",
+      "properties": {
+        "identity": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            },
+            "wrong": {
+              "type": "string"
+            },
+            "good": {
+              "type": "string"
+            },
+            "debt": {
+              "type": "string"
+            },
+            "companion": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "abilities": {
+          "type": "object",
+          "properties": {
+            "stoutness": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "const": ""
+                }
+              ]
+            },
+            "alacrity": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "const": ""
+                }
+              ]
+            },
+            "savvy": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "const": ""
+                }
+              ]
+            },
+            "fortune": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "const": ""
+                }
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "health": {
+          "type": "object",
+          "properties": {
+            "hp": {
+              "type": "object",
+              "properties": {
+                "current": {
+                  "anyOf": [
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "const": ""
+                    }
+                  ]
+                },
+                "maximum": {
+                  "anyOf": [
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "const": ""
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "background": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "know": {
+              "type": "string"
+            },
+            "have": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "resources": {
+          "type": "object",
+          "properties": {
+            "silver": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "water": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "rations": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "parts": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "light": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "inventory": {
+          "type": "object",
+          "properties": {
+            "load": {
+              "type": "object",
+              "properties": {
+                "current": {
+                  "anyOf": [
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "capacity": {
+                  "anyOf": [
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            "other_junk": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "weapon": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "nickname": {
+              "type": "string"
+            },
+            "family": {
+              "type": "string"
+            },
+            "damage": {
+              "type": "string"
+            },
+            "ammo_die": {
+              "type": "string"
+            },
+            "defects": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 2
+            },
+            "repair_history": {
+              "type": "string"
+            },
+            "repair_appearance": {
+              "type": "string"
+            },
+            "wear": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 3
+            }
+          },
+          "additionalProperties": false
+        },
+        "possessions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "behavior": {
+                "type": "string"
+              },
+              "warranty": {
+                "type": "boolean"
+              },
+              "wear": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 3
+              }
+            },
+            "additionalProperties": false
+          },
+          "maxItems": 2
+        },
+        "keepsake": {
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "notes": {
+          "type": "object",
+          "properties": {
+            "scars_people_angry": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "description": "Shared versioned portable character-state contract. Legacy state remains a separate explicit migration boundary.",
+  "$id": "https://hog-water.github.io/BorkBorg/schemas/make-a-fool-state-0.0.2.json"
+}

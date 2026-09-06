@@ -1,6 +1,11 @@
-import { createGenerator, emptyState } from "./engine.mjs";
+import { createGenerator, emptyState, GenerationError } from "./engine.mjs";
+import { assertState, applyEvent, serializeStateJSON } from "./state-contract.mjs";
+import { fieldWrite, nextIdentity, readField } from "./field-adapter.mjs";
+import { importStateJSON, migrateState } from "./state-migration.mjs";
 
 const NONEMPTY = (value) => value !== undefined && value !== null && value !== "" && value !== false;
+const hasContent = (value) => value && typeof value === "object" ? Object.values(value).some(hasContent) : NONEMPTY(value);
+const hasStateContent = (state) => hasContent(state.character) || state.events.length > 0 || state.unresolved.length > 0;
 
 export const creationTableDefinitions = Object.freeze([
   { id: "first_name_men", label: "Men's first names", target: "field-first-name", operation: "firstName", args: ["first_name_men"] },
@@ -26,7 +31,7 @@ export function directTableArguments(definition, key, slot) {
   return args;
 }
 
-export const populatedWarrantyTargets = (state) => [1, 2].filter((slot) => state.character[`possessions.${slot}.name`]);
+export const populatedWarrantyTargets = (state) => [1, 2].filter((slot) => readField(state.character, `possessions.${slot}.name`));
 
 export function createAppModel({ catalog, catalogHash, random, confirmReplace = () => true }) {
   const randomSource = random ?? Math.random;
@@ -37,7 +42,13 @@ export function createAppModel({ catalog, catalogHash, random, confirmReplace = 
   const generator = {
     operations: {
       ...engineGenerator.operations,
-      startingSupplies: (current, options = {}) => engineGenerator.operations.startingSupplies(current, withConvenienceLight(options)),
+      startingSupplies: (current, options = {}) => {
+        assertState(current);
+        if (current.catalog.sha256 !== catalogHash || current.catalog.format !== catalog.format) {
+          throw new GenerationError("State and catalog do not match. This historical Fool can be edited and backed up, but catalog rolls require a newly generated Fool.");
+        }
+        return engineGenerator.operations.startingSupplies(current, withConvenienceLight(options));
+      },
     },
     generateFull: (options = {}) => engineGenerator.generateFull({
       ...options,
@@ -45,12 +56,11 @@ export function createAppModel({ catalog, catalogHash, random, confirmReplace = 
     }),
   };
   let state = emptyState(catalogHash);
-  let manualSequence = 0;
 
   function generateFool() {
-    if (Object.values(state.character).some(NONEMPTY) && !confirmReplace("Replace the current Fool with a newly generated Fool?")) return state;
+    if (hasStateContent(state) && !confirmReplace("Replace the current Fool with a newly generated Fool?")) return structuredClone(state);
     state = generator.generateFull();
-    return state;
+    return structuredClone(state);
   }
 
   function resolveChoice(id, value) {
@@ -63,33 +73,53 @@ export function createAppModel({ catalog, catalogHash, random, confirmReplace = 
     }[id];
     if (!next) throw new Error(`Unsupported choice: ${id}`);
     state = next();
-    return state;
+    return structuredClone(state);
   }
 
   function runOperation(operation, affectedFields, ...args) {
-    const occupied = affectedFields.filter((field) => NONEMPTY(state.character[field]));
-    if (occupied.length && !confirmReplace(`Replace current ${occupied.join(", ")}?`)) return state;
-    state = operation(state, ...args);
-    return state;
+    const occupied = affectedFields.filter((field) => NONEMPTY(readField(state.character, field)));
+    if (occupied.length && !confirmReplace(`Replace current ${occupied.join(", ")}?`)) return structuredClone(state);
+    state = assertState(operation(structuredClone(state), ...args));
+    return structuredClone(state);
   }
 
   function manualEdit(field, value) {
-    const number = ++manualSequence;
-    state = structuredClone(state);
-    state.character[field] = value;
-    state.events.push({ id: `manual-${number}`, transaction: `manual-tx-${number}`, kind: "manual", writes: { [field]: value } });
-    return state;
+    const writes = [fieldWrite(state.character, field, value)];
+    // On a newly blank sheet the first Defect control is visibly blank. Record
+    // its initialization explicitly, never as an unrecorded sparse placeholder.
+    if (field === "weapon.defects.2" && readField(state.character, "weapon.defects.1") === undefined) {
+      writes.unshift(fieldWrite(state.character, "weapon.defects.1", ""));
+    }
+    const event = { id: nextIdentity(state.events, "manual-"), transaction: nextIdentity(state.events, "manual-tx-"), kind: "manual", writes };
+    const candidate = { ...structuredClone(state), character: applyEvent(state.character, event), events: [...structuredClone(state.events), event] };
+    state = assertState(candidate);
+    return structuredClone(state);
+  }
+
+  function prepareRestore(input) {
+    return typeof input === "string" ? importStateJSON(input) : migrateState(input);
+  }
+  function restore(candidate) {
+    // Validate and detach before asking to replace; an invalid candidate must
+    // not prompt, and cancel must preserve the current snapshot and history.
+    const next = structuredClone(assertState(candidate));
+    if (hasStateContent(state) && !confirmReplace("Replace the current Fool with the imported Fool?")) return false;
+    state = next;
+    return true;
   }
 
   return {
     generator,
-    active: () => state,
-    current: () => state,
+    active: () => structuredClone(state),
+    current: () => structuredClone(state),
     pending: () => null,
     generateFool,
     resolveChoice,
     runOperation,
     manualEdit,
-    serialize: () => JSON.stringify(state, null, 2),
+    prepareRestore,
+    restore,
+    catalogMatches: () => state.catalog.sha256 === catalogHash && state.catalog.format === catalog.format,
+    serialize: () => serializeStateJSON(state),
   };
 }
