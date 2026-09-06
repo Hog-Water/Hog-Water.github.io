@@ -1,7 +1,7 @@
 import { createGenerator, emptyState, GenerationError } from "./engine.mjs";
 import { assertState, applyEvent, serializeStateJSON } from "./state-contract.mjs";
 import { fieldWrite, nextIdentity, readField } from "./field-adapter.mjs";
-import { importStateJSON, migrateState } from "./state-migration.mjs";
+import { prepareSupportedState, assertSupportedState } from "./compatibility.mjs";
 
 const NONEMPTY = (value) => value !== undefined && value !== null && value !== "" && value !== false;
 const hasContent = (value) => value && typeof value === "object" ? Object.values(value).some(hasContent) : NONEMPTY(value);
@@ -56,14 +56,18 @@ export function createAppModel({ catalog, catalogHash, random, confirmReplace = 
     }),
   };
   let state = emptyState(catalogHash);
+  let manualSession = null;
+  const endManualEdit = () => { manualSession = null; };
 
   function generateFool() {
+    endManualEdit();
     if (hasStateContent(state) && !confirmReplace("Replace the current Fool with a newly generated Fool?")) return structuredClone(state);
     state = generator.generateFull();
     return structuredClone(state);
   }
 
   function resolveChoice(id, value) {
+    endManualEdit();
     const next = {
       "light-choice": () => generator.operations.resolveLight(state, value),
       "lucky-item": () => generator.operations.resolveLuckyItem(state, value),
@@ -77,33 +81,44 @@ export function createAppModel({ catalog, catalogHash, random, confirmReplace = 
   }
 
   function runOperation(operation, affectedFields, ...args) {
+    endManualEdit();
     const occupied = affectedFields.filter((field) => NONEMPTY(readField(state.character, field)));
     if (occupied.length && !confirmReplace(`Replace current ${occupied.join(", ")}?`)) return structuredClone(state);
     state = assertState(operation(structuredClone(state), ...args));
     return structuredClone(state);
   }
 
-  function manualEdit(field, value) {
-    const writes = [fieldWrite(state.character, field, value)];
-    // On a newly blank sheet the first Defect control is visibly blank. Record
-    // its initialization explicitly, never as an unrecorded sparse placeholder.
-    if (field === "weapon.defects.2" && readField(state.character, "weapon.defects.1") === undefined) {
-      writes.unshift(fieldWrite(state.character, "weapon.defects.1", ""));
+  function manualEdit(field, value, { coalesce = false } = {}) {
+    // Only an event created during this model's explicitly active input session
+    // can be revised. Imported/preexisting history is never eligible.
+    const continuing = coalesce && manualSession?.field === field
+      && state.events.at(-1)?.id === manualSession.event.id;
+    const baseline = continuing ? manualSession.character : state.character;
+    const writes = [fieldWrite(baseline, field, value)];
+    // Defect 2 on a blank sheet records its visible preceding empty slot.
+    if (field === "weapon.defects.2" && readField(baseline, "weapon.defects.1") === undefined) {
+      writes.unshift(fieldWrite(baseline, "weapon.defects.1", ""));
     }
-    const event = { id: nextIdentity(state.events, "manual-"), transaction: nextIdentity(state.events, "manual-tx-"), kind: "manual", writes };
-    const candidate = { ...structuredClone(state), character: applyEvent(state.character, event), events: [...structuredClone(state.events), event] };
-    state = assertState(candidate);
+    const event = continuing ? { ...manualSession.event, writes }
+      : { id: nextIdentity(state.events, "manual-"), transaction: nextIdentity(state.events, "manual-tx-"), kind: "manual", writes };
+    const history = continuing ? state.events.slice(0, -1) : state.events;
+    const candidate = { ...structuredClone(state), character: applyEvent(baseline, event), events: [...structuredClone(history), event] };
+    assertState(candidate);
+    manualSession = coalesce ? { field, character: structuredClone(baseline), event: structuredClone(event) } : null;
+    state = candidate;
     return structuredClone(state);
   }
 
   function prepareRestore(input) {
-    return typeof input === "string" ? importStateJSON(input) : migrateState(input);
+    return prepareSupportedState(input);
   }
   function restore(candidate) {
     // Validate and detach before asking to replace; an invalid candidate must
     // not prompt, and cancel must preserve the current snapshot and history.
-    const next = structuredClone(assertState(candidate));
+    const next = structuredClone(assertSupportedState(candidate));
+    endManualEdit();
     if (hasStateContent(state) && !confirmReplace("Replace the current Fool with the imported Fool?")) return false;
+    endManualEdit();
     state = next;
     return true;
   }
@@ -117,6 +132,7 @@ export function createAppModel({ catalog, catalogHash, random, confirmReplace = 
     resolveChoice,
     runOperation,
     manualEdit,
+    endManualEdit,
     prepareRestore,
     restore,
     catalogMatches: () => state.catalog.sha256 === catalogHash && state.catalog.format === catalog.format,

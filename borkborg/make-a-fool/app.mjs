@@ -1,4 +1,5 @@
-import { downloadFoolJSON, createJSONImportSession } from "./file-io.mjs";
+import { createLocalRecovery, FOOL_STORAGE_KEY } from "./persistence.mjs";
+import { downloadFoolJSON, downloadRawBackup, createJSONImportSession } from "./file-io.mjs";
 import { readField } from "./field-adapter.mjs";
 import { catalogSha256 } from "./engine.mjs";
 import { createAppModel, creationTableDefinitions, directTableArguments, populatedWarrantyTargets } from "./app-model.mjs";
@@ -23,6 +24,47 @@ const importFile = document.querySelector("#import-file");
 const importDialog = document.querySelector("#import-dialog");
 const importStatus = document.querySelector("#import-status");
 let importToken = null;
+const localRecovery = createLocalRecovery();
+const recoveryPanel = document.querySelector("#local-recovery");
+const recoveryStatus = document.querySelector("#recovery-status");
+const storageStatus = document.querySelector("#storage-status");
+const local = localRecovery.inspect();
+if (local.status === "supported") model.restore(local.state);
+// A fresh blank sheet is not itself a save or an instruction to replace data.
+let lastObservedState = model.serialize();
+function showStorageStatus(result = localRecovery.status()) {
+  storageStatus.textContent = result.message;
+  recoveryPanel.hidden = !localRecovery.isProtected();
+  if (!recoveryPanel.hidden) recoveryStatus.textContent = result.message;
+  document.querySelector("#raw-backup").disabled = localRecovery.rawBackup() === null;
+  document.querySelector("#reset-local").disabled = localRecovery.rawBackup() === null;
+}
+function saveCurrent({ force = false } = {}) {
+  const text = model.serialize();
+  if (force || text !== lastObservedState) {
+    lastObservedState = text;
+    showStorageStatus(localRecovery.save(model.current()));
+  }
+}
+showStorageStatus(local);
+globalThis.addEventListener("storage", (event) => {
+  if (event.key === FOOL_STORAGE_KEY || event.key === null) showStorageStatus(localRecovery.checkExternal());
+});
+document.querySelector("#raw-backup").addEventListener("click", () => {
+  try {
+    const { filename } = downloadRawBackup(localRecovery.rawBackup());
+    recoveryStatus.textContent = `Raw backup requested: ${filename}. Check your browser's downloads. This is the original stored text, not a validated current-format Fool. Local data is still preserved.`;
+  } catch (error) { recoveryStatus.textContent = `Raw backup not started. ${error.message} Local data is still preserved.`; }
+});
+document.querySelector("#reset-local").addEventListener("click", () => {
+  if (!globalThis.confirm("Remove the preserved local payload and start new? Download a raw backup first if you want to keep it. This cannot be undone here.")) return;
+  try {
+    localRecovery.reset();
+    saveCurrent({ force: true });
+    showStorageStatus();
+    status.textContent = "Preserved local payload removed at your request. The current sheet is now the active Fool. Check the browser saving status above.";
+  } catch (error) { recoveryStatus.textContent = `Reset not applied. ${error.message} Reload to review the saved data.`; }
+});
 
 for (const slot of [1, 2]) {
   possessions.insertAdjacentHTML("beforeend", `<article class="possession" data-possession="${slot}"><div class="section-title"><h3>Possession ${slot}</h3><button data-roll="possession${slot}" type="button">Roll / reroll</button></div><span class="badge" data-warranty="${slot}" hidden>UNDER WARRANTY</span><label>Name<input data-field="possessions.${slot}.name"></label><label>Behavior<textarea data-field="possessions.${slot}.behavior"></textarea></label><fieldset class="wear"><legend>Wear</legend>${[1, 2, 3].map((wear) => `<label><input type="checkbox" data-field="possessions.${slot}.wear.${wear}"> ${wear}</label>`).join("")}</fieldset></article>`);
@@ -102,13 +144,29 @@ function fitSheetText() {
   }
 }
 
-// Sizing changes presentation only; ordinary change events still own state edits.
+// Save valid focused edits immediately; reload must not require a blur first.
 sheet.addEventListener("input", (event) => {
-  if (event.target.matches("textarea")) fitSheetText();
+  const control = event.target.closest("[data-field]");
+  if (!control) return;
+  try {
+    const corrected = fieldEditError !== null;
+    commitControl(control, { coalesce: true });
+    saveCurrent();
+    serialized.value = model.serialize();
+    if (corrected) status.textContent = "Corrected edit applied. Check browser saving status above.";
+  } catch (error) {
+    fieldEditError = error;
+    status.textContent = `This edit is not valid yet and has not been saved. ${error.message}`;
+  }
+  if (control.matches("textarea")) fitSheetText();
+});
+sheet.addEventListener("focusout", (event) => {
+  if (event.target.matches("[data-field]")) model.endManualEdit();
 });
 globalThis.addEventListener("resize", fitSheetText);
 
 function render({ forceSheet = false } = {}) {
+  saveCurrent();
   const active = model.current();
   for (const control of sheet.querySelectorAll("[data-field]")) {
     const value = readField(active.character, control.dataset.field);
@@ -230,13 +288,14 @@ document.querySelector("#make-fool").addEventListener("click", () => {
   render();
   sheet.scrollIntoView({ behavior: "smooth" });
 });
-function commitControl(control) {
+function commitControl(control, { coalesce = false } = {}) {
   const numericFields = new Set(["abilities.stoutness", "abilities.alacrity", "abilities.savvy", "abilities.fortune", "health.hp.current", "health.hp.maximum"]);
   const value = control.type === "checkbox" ? control.checked : numericFields.has(control.dataset.field) && control.value !== "" ? Number(control.value) : control.value;
   const current = readField(model.current().character, control.dataset.field) ?? (control.type === "checkbox" ? false : "");
   const displayed = control.type === "checkbox" ? current === true : String(current);
   const controlValue = control.type === "checkbox" ? control.checked : control.value;
-  if (controlValue !== displayed && value !== current) model.manualEdit(control.dataset.field, value);
+  if (controlValue !== displayed && value !== current) model.manualEdit(control.dataset.field, value, { coalesce });
+  if (!coalesce) model.endManualEdit();
   fieldEditError = null;
 }
 
@@ -252,6 +311,8 @@ function commitFocusedEdit(action) {
 
 function downloadCurrent() {
   commitFocusedEdit("Download JSON");
+  saveCurrent();
+  model.endManualEdit();
   const { filename } = downloadFoolJSON(model.current());
   serialized.value = model.serialize();
   return `Download requested: ${filename}. Check your browser's downloads or save prompt.`;
@@ -341,6 +402,7 @@ document.querySelector("#import-replace").addEventListener("click", () => {
     clearImportReview();
     if (!replaced) { status.textContent = "Import canceled. Your current Fool is unchanged."; return; }
     fieldEditError = null;
+    saveCurrent({ force: true });
     // Closing the native dialog can restore focus to an old sheet control.
     // Explicit whole-record replacement must refresh that control as well.
     render({ forceSheet: true });

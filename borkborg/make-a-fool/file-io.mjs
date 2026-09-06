@@ -13,7 +13,16 @@ export function prepareJSONDownload(state) {
 /** Requests a browser download; completion belongs to the browser/user. */
 export function downloadFoolJSON(state, browser = globalThis) {
   // Validate before constructing a Blob, allocating a URL, or touching the DOM.
-  const payload = prepareJSONDownload(state);
+  return downloadPayload(prepareJSONDownload(state), browser);
+}
+
+/** Raw recovery is deliberately not a validated current-format export. */
+export function downloadRawBackup(text, browser = globalThis) {
+  if (typeof text !== "string") throw new Error("No readable local payload is available for raw backup.");
+  return downloadPayload({ text, filename: "fool-local-raw-backup.txt", mimeType: "text/plain;charset=utf-8" }, browser);
+}
+
+function downloadPayload(payload, browser) {
   if (!browser.document?.body || typeof browser.document.createElement !== "function"
       || typeof browser.Blob !== "function" || typeof browser.URL?.createObjectURL !== "function"
       || typeof browser.URL?.revokeObjectURL !== "function" || typeof browser.setTimeout !== "function") {
