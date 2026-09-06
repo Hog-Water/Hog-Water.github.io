@@ -1,13 +1,9 @@
 {
-  "format": "bork-borg.make-a-fool.catalog.v1",
+  "format": "bork-borg.make-a-fool.catalog.v2",
   "sources": [
     {
-      "path": "manuscript/content/tables/mens-first-names.md",
-      "sha256": "6c8c0f8867b2742ba4813130f38cac4e4856787c2eb7a01f8dce321ab94369e7"
-    },
-    {
-      "path": "manuscript/content/tables/womens-first-names.md",
-      "sha256": "8afeb8ab1c81b4d5125539d8678b096837e853c0dabfd1814b8fdefd85dde6a5"
+      "path": "manuscript/content/tables/first-names.md",
+      "sha256": "98f4dfbc45a0e34cb3dbb8f8cc316db1d59bf49b4632cbbf06b769d1e641fa6c"
     },
     {
       "path": "manuscript/content/tables/last-names.md",
@@ -59,7 +55,7 @@
     },
     {
       "path": "manuscript/content/make-a-fool/content/name-the-fool.md",
-      "sha256": "c80a765fb12adc2c43cc5f861a9a60bf073aa6f6ed0cb8eeac7340be691c3339"
+      "sha256": "1e5cd9b2f85c03b4fbb9f9b898630f9263677ae2d66664fafe6cef425d5b8989"
     },
     {
       "path": "manuscript/content/make-a-fool/content/abilities.md",
@@ -719,1221 +715,1213 @@
       "source": "manuscript/content/tables/weapon-defects.md",
       "sourceSha256": "543070e48d4530e57a897f02887faf4a1ba20a197bb2a3d387c22514f6d8350e"
     },
-    "first_name_men": {
+    "first_name": {
       "columns": 1,
-      "die": "d100",
+      "die": "d10/d20",
       "results": [
         {
           "key": 1,
-          "values": [
-            "Abner"
-          ]
-        },
-        {
-          "key": 2,
-          "values": [
-            "Alonzo"
-          ]
-        },
-        {
-          "key": 3,
-          "values": [
-            "Ambrose"
-          ]
-        },
-        {
-          "key": 4,
-          "values": [
-            "Amos"
-          ]
-        },
-        {
-          "key": 5,
-          "values": [
-            "Archibald"
-          ]
-        },
-        {
-          "key": 6,
-          "values": [
-            "Artemus"
-          ]
-        },
-        {
-          "key": 7,
-          "values": [
-            "Asa"
-          ]
-        },
-        {
-          "key": 8,
-          "values": [
-            "Barnabas"
-          ]
-        },
-        {
-          "key": 9,
-          "values": [
-            "Beauregard"
-          ]
-        },
-        {
-          "key": 10,
-          "values": [
-            "Bertram"
-          ]
-        },
-        {
-          "key": 11,
-          "values": [
-            "Buford"
-          ]
-        },
-        {
-          "key": 12,
-          "values": [
-            "Calvin"
-          ]
-        },
-        {
-          "key": 13,
-          "values": [
-            "Chauncey"
-          ]
-        },
-        {
-          "key": 14,
-          "values": [
-            "Chester"
-          ]
-        },
-        {
-          "key": 15,
-          "values": [
-            "Claiborne"
-          ]
-        },
-        {
-          "key": 16,
-          "values": [
-            "Clem"
-          ]
-        },
-        {
-          "key": 17,
-          "values": [
-            "Cornelius"
-          ]
-        },
-        {
-          "key": 18,
-          "values": [
-            "Cuthbert"
-          ]
-        },
-        {
-          "key": 19,
-          "values": [
-            "Cyrus"
-          ]
-        },
-        {
-          "key": 20,
-          "values": [
-            "Darius"
-          ]
-        },
-        {
-          "key": 21,
-          "values": [
-            "Ebenezer"
-          ]
-        },
-        {
-          "key": 22,
-          "values": [
-            "Edgar"
-          ]
-        },
-        {
-          "key": 23,
-          "values": [
-            "Elijah"
-          ]
-        },
-        {
-          "key": 24,
-          "values": [
-            "Elmer"
-          ]
-        },
-        {
-          "key": 25,
-          "values": [
-            "Enoch"
-          ]
-        },
-        {
-          "key": 26,
-          "values": [
-            "Ephraim"
-          ]
-        },
-        {
-          "key": 27,
-          "values": [
-            "Ezekiel"
-          ]
-        },
-        {
-          "key": 28,
-          "values": [
-            "Festus"
-          ]
-        },
-        {
-          "key": 29,
-          "values": [
-            "Fletcher"
-          ]
-        },
-        {
-          "key": 30,
-          "values": [
-            "Gideon"
-          ]
-        },
-        {
-          "key": 31,
-          "values": [
-            "Grover"
-          ]
-        },
-        {
-          "key": 32,
-          "values": [
-            "Harlan"
-          ]
-        },
-        {
-          "key": 33,
-          "values": [
-            "Hezekiah"
-          ]
-        },
-        {
-          "key": 34,
-          "values": [
-            "Hiram"
-          ]
-        },
-        {
-          "key": 35,
-          "values": [
-            "Horace"
-          ]
-        },
-        {
-          "key": 36,
-          "values": [
-            "Ichabod"
-          ]
-        },
-        {
-          "key": 37,
-          "values": [
-            "Ira"
-          ]
-        },
-        {
-          "key": 38,
-          "values": [
-            "Jedediah"
-          ]
-        },
-        {
-          "key": 39,
-          "values": [
-            "Jeremiah"
-          ]
-        },
-        {
-          "key": 40,
-          "values": [
-            "Job"
-          ]
-        },
-        {
-          "key": 41,
-          "values": [
-            "Josiah"
-          ]
-        },
-        {
-          "key": 42,
-          "values": [
-            "Lemuel"
-          ]
-        },
-        {
-          "key": 43,
-          "values": [
-            "Leonidas"
-          ]
-        },
-        {
-          "key": 44,
-          "values": [
-            "Luther"
-          ]
-        },
-        {
-          "key": 45,
-          "values": [
-            "Malachi"
-          ]
-        },
-        {
-          "key": 46,
-          "values": [
-            "Mordecai"
-          ]
-        },
-        {
-          "key": 47,
-          "values": [
-            "Moses"
-          ]
-        },
-        {
-          "key": 48,
-          "values": [
-            "Nehemiah"
-          ]
-        },
-        {
-          "key": 49,
-          "values": [
-            "Obadiah"
-          ]
-        },
-        {
-          "key": 50,
-          "values": [
-            "Orville"
-          ]
-        },
-        {
-          "key": 51,
-          "values": [
-            "Otis"
-          ]
-        },
-        {
-          "key": 52,
-          "values": [
-            "Percival"
-          ]
-        },
-        {
-          "key": 53,
-          "values": [
-            "Phineas"
-          ]
-        },
-        {
-          "key": 54,
-          "values": [
-            "Reuben"
-          ]
-        },
-        {
-          "key": 55,
-          "values": [
-            "Roscoe"
-          ]
-        },
-        {
-          "key": 56,
-          "values": [
-            "Rufus"
-          ]
-        },
-        {
-          "key": 57,
-          "values": [
-            "Silas"
-          ]
-        },
-        {
-          "key": 58,
-          "values": [
-            "Thaddeus"
-          ]
-        },
-        {
-          "key": 59,
-          "values": [
-            "Theophilus"
-          ]
-        },
-        {
-          "key": 60,
-          "values": [
-            "Ulysses"
-          ]
-        },
-        {
-          "key": 61,
-          "values": [
-            "Virgil"
-          ]
-        },
-        {
-          "key": 62,
-          "values": [
-            "Wilbur"
-          ]
-        },
-        {
-          "key": 63,
-          "values": [
-            "Zebediah"
-          ]
-        },
-        {
-          "key": 64,
-          "values": [
-            "Zedekiah"
-          ]
-        },
-        {
-          "key": 65,
-          "values": [
-            "Absalom"
-          ]
-        },
-        {
-          "key": 66,
-          "values": [
-            "Aloysius"
-          ]
-        },
-        {
-          "key": 67,
-          "values": [
-            "Bartholomew"
-          ]
-        },
-        {
-          "key": 68,
-          "values": [
-            "Basil"
-          ]
-        },
-        {
-          "key": 69,
-          "values": [
-            "Burl"
-          ]
-        },
-        {
-          "key": 70,
-          "values": [
-            "Cadwallader"
-          ]
-        },
-        {
-          "key": 71,
-          "values": [
-            "Cicero"
-          ]
-        },
-        {
-          "key": 72,
-          "values": [
-            "Elwood"
-          ]
-        },
-        {
-          "key": 73,
-          "values": [
-            "Erasmus"
-          ]
-        },
-        {
-          "key": 74,
-          "values": [
-            "Garland"
-          ]
-        },
-        {
-          "key": 75,
-          "values": [
-            "Homer"
-          ]
-        },
-        {
-          "key": 76,
-          "values": [
-            "Ignatius"
-          ]
-        },
-        {
-          "key": 77,
-          "values": [
-            "Jabez"
-          ]
-        },
-        {
-          "key": 78,
-          "values": [
-            "Lafayette"
-          ]
-        },
-        {
-          "key": 79,
-          "values": [
-            "Lige"
-          ]
-        },
-        {
-          "key": 80,
           "values": [
             "Lucius"
           ]
         },
         {
-          "key": 81,
-          "values": [
-            "Merritt"
-          ]
-        },
-        {
-          "key": 82,
-          "values": [
-            "Orson"
-          ]
-        },
-        {
-          "key": 83,
-          "values": [
-            "Pleasant"
-          ]
-        },
-        {
-          "key": 84,
-          "values": [
-            "Pomeroy"
-          ]
-        },
-        {
-          "key": 85,
-          "values": [
-            "Ransom"
-          ]
-        },
-        {
-          "key": 86,
-          "values": [
-            "Remus"
-          ]
-        },
-        {
-          "key": 87,
-          "values": [
-            "Royal"
-          ]
-        },
-        {
-          "key": 88,
-          "values": [
-            "Solomon"
-          ]
-        },
-        {
-          "key": 89,
-          "values": [
-            "Tiberius"
-          ]
-        },
-        {
-          "key": 90,
-          "values": [
-            "Varnum"
-          ]
-        },
-        {
-          "key": 91,
-          "values": [
-            "Wiley"
-          ]
-        },
-        {
-          "key": 92,
-          "values": [
-            "Worth"
-          ]
-        },
-        {
-          "key": 93,
-          "values": [
-            "Abacus"
-          ]
-        },
-        {
-          "key": 94,
-          "values": [
-            "Creedence"
-          ]
-        },
-        {
-          "key": 95,
-          "values": [
-            "Furnace"
-          ]
-        },
-        {
-          "key": 96,
-          "values": [
-            "Providence"
-          ]
-        },
-        {
-          "key": 97,
-          "values": [
-            "Remedy"
-          ]
-        },
-        {
-          "key": 98,
-          "values": [
-            "Sunday"
-          ]
-        },
-        {
-          "key": 99,
-          "values": [
-            "Testament"
-          ]
-        },
-        {
-          "key": 100,
-          "values": [
-            "Warranty"
-          ]
-        }
-      ],
-      "source": "manuscript/content/tables/mens-first-names.md",
-      "sourceSha256": "6c8c0f8867b2742ba4813130f38cac4e4856787c2eb7a01f8dce321ab94369e7"
-    },
-    "first_name_women": {
-      "columns": 1,
-      "die": "d100",
-      "results": [
-        {
-          "key": 1,
-          "values": [
-            "Abigail"
-          ]
-        },
-        {
           "key": 2,
           "values": [
-            "Ada"
+            "Theophilus"
           ]
         },
         {
           "key": 3,
           "values": [
-            "Adelaide"
+            "Hephzibah"
           ]
         },
         {
           "key": 4,
           "values": [
-            "Agatha"
+            "Rhoda"
           ]
         },
         {
           "key": 5,
           "values": [
-            "Agnes"
+            "Eunice"
           ]
         },
         {
           "key": 6,
           "values": [
-            "Alma"
+            "Lige"
           ]
         },
         {
           "key": 7,
           "values": [
-            "Althea"
+            "Ezekiel"
           ]
         },
         {
           "key": 8,
           "values": [
-            "Amelia"
+            "Homer"
           ]
         },
         {
           "key": 9,
           "values": [
-            "Annabelle"
+            "Beatrice"
           ]
         },
         {
           "key": 10,
           "values": [
-            "Arabella"
+            "Cyrus"
           ]
         },
         {
           "key": 11,
           "values": [
-            "Araminta"
+            "Royal"
           ]
         },
         {
           "key": 12,
           "values": [
-            "Augusta"
+            "Jabez"
           ]
         },
         {
           "key": 13,
           "values": [
-            "Beatrice"
+            "Moses"
           ]
         },
         {
           "key": 14,
           "values": [
-            "Bernice"
+            "Luther"
           ]
         },
         {
           "key": 15,
           "values": [
-            "Bessie"
+            "Roscoe"
           ]
         },
         {
           "key": 16,
           "values": [
-            "Blanche"
+            "Ira"
           ]
         },
         {
           "key": 17,
           "values": [
-            "Calpurnia"
+            "Phoebe"
           ]
         },
         {
           "key": 18,
           "values": [
-            "Charity"
+            "Blanche"
           ]
         },
         {
           "key": 19,
           "values": [
-            "Clara"
+            "Lottie"
           ]
         },
         {
           "key": 20,
           "values": [
-            "Clementine"
+            "Theodosia"
           ]
         },
         {
           "key": 21,
           "values": [
-            "Cora"
+            "Cuthbert"
           ]
         },
         {
           "key": 22,
           "values": [
-            "Cordelia"
+            "Rosalie"
           ]
         },
         {
           "key": 23,
           "values": [
-            "Delilah"
+            "Honora"
           ]
         },
         {
           "key": 24,
           "values": [
-            "Delphine"
+            "Abacus"
           ]
         },
         {
           "key": 25,
           "values": [
-            "Dorcas"
+            "Ransom"
           ]
         },
         {
           "key": 26,
           "values": [
-            "Dovie"
+            "Nettie"
           ]
         },
         {
           "key": 27,
           "values": [
-            "Edith"
+            "Velma"
           ]
         },
         {
           "key": 28,
           "values": [
-            "Effie"
+            "Maude"
           ]
         },
         {
           "key": 29,
           "values": [
-            "Eliza"
+            "Harlan"
           ]
         },
         {
           "key": 30,
           "values": [
-            "Elmira"
+            "Barnabas"
           ]
         },
         {
           "key": 31,
           "values": [
-            "Eudora"
+            "Dovie"
           ]
         },
         {
           "key": 32,
           "values": [
-            "Eunice"
+            "Hiram"
           ]
         },
         {
           "key": 33,
           "values": [
-            "Euphemia"
+            "Bernice"
           ]
         },
         {
           "key": 34,
           "values": [
-            "Fanny"
+            "Chester"
           ]
         },
         {
           "key": 35,
           "values": [
-            "Fern"
+            "Calvin"
           ]
         },
         {
           "key": 36,
           "values": [
-            "Flora"
+            "Enoch"
           ]
         },
         {
           "key": 37,
           "values": [
-            "Florence"
+            "Warranty"
           ]
         },
         {
           "key": 38,
           "values": [
-            "Gertrude"
+            "Martha"
           ]
         },
         {
           "key": 39,
           "values": [
-            "Gladys"
+            "Augusta"
           ]
         },
         {
           "key": 40,
           "values": [
-            "Goldie"
+            "Remus"
           ]
         },
         {
           "key": 41,
           "values": [
-            "Harriet"
+            "Sunday"
           ]
         },
         {
           "key": 42,
           "values": [
-            "Hattie"
+            "Bartholomew"
           ]
         },
         {
           "key": 43,
           "values": [
-            "Henrietta"
+            "Louisa"
           ]
         },
         {
           "key": 44,
           "values": [
-            "Hephzibah"
+            "Warranty"
           ]
         },
         {
           "key": 45,
           "values": [
-            "Hortense"
+            "Ichabod"
           ]
         },
         {
           "key": 46,
           "values": [
-            "Ida"
+            "Magnolia"
           ]
         },
         {
           "key": 47,
           "values": [
-            "Imogene"
+            "Araminta"
           ]
         },
         {
           "key": 48,
           "values": [
-            "Inez"
+            "Testament"
           ]
         },
         {
           "key": 49,
           "values": [
-            "Jemima"
+            "Elwood"
           ]
         },
         {
           "key": 50,
           "values": [
-            "Josephine"
+            "Fletcher"
           ]
         },
         {
           "key": 51,
           "values": [
-            "Lavinia"
+            "Tillie"
           ]
         },
         {
           "key": 52,
           "values": [
-            "Lenora"
+            "Zedekiah"
           ]
         },
         {
           "key": 53,
           "values": [
-            "Letitia"
+            "Dorcas"
           ]
         },
         {
           "key": 54,
           "values": [
-            "Lottie"
+            "Archibald"
           ]
         },
         {
           "key": 55,
           "values": [
-            "Louisa"
+            "Tiberius"
           ]
         },
         {
           "key": 56,
           "values": [
-            "Lucretia"
+            "Euphemia"
           ]
         },
         {
           "key": 57,
           "values": [
-            "Lula"
+            "Drusilla"
           ]
         },
         {
           "key": 58,
           "values": [
-            "Mabel"
+            "Winifred"
           ]
         },
         {
           "key": 59,
           "values": [
-            "Magnolia"
+            "Cornelius"
           ]
         },
         {
           "key": 60,
           "values": [
-            "Martha"
+            "Octavia"
           ]
         },
         {
           "key": 61,
           "values": [
-            "Matilda"
+            "Eudora"
           ]
         },
         {
           "key": 62,
           "values": [
-            "Maude"
+            "Cadwallader"
           ]
         },
         {
           "key": 63,
           "values": [
-            "Mercy"
+            "Obadiah"
           ]
         },
         {
           "key": 64,
           "values": [
-            "Mildred"
+            "Fanny"
           ]
         },
         {
           "key": 65,
           "values": [
-            "Minerva"
+            "Matilda"
           ]
         },
         {
           "key": 66,
           "values": [
-            "Myrtle"
+            "Charity"
           ]
         },
         {
           "key": 67,
           "values": [
-            "Nettie"
+            "Eliza"
           ]
         },
         {
           "key": 68,
           "values": [
-            "Octavia"
+            "Narcissa"
           ]
         },
         {
           "key": 69,
           "values": [
-            "Opal"
+            "Furnace"
           ]
         },
         {
           "key": 70,
           "values": [
-            "Pearl"
+            "Delphine"
           ]
         },
         {
           "key": 71,
           "values": [
-            "Penelope"
+            "Bessie"
           ]
         },
         {
           "key": 72,
           "values": [
-            "Phoebe"
+            "Amelia"
           ]
         },
         {
           "key": 73,
           "values": [
-            "Prudence"
+            "Lafayette"
           ]
         },
         {
           "key": 74,
           "values": [
-            "Rhoda"
+            "Wilbur"
           ]
         },
         {
           "key": 75,
           "values": [
-            "Rosalie"
+            "Lenora"
           ]
         },
         {
           "key": 76,
           "values": [
-            "Ruth"
+            "Temperance"
           ]
         },
         {
           "key": 77,
           "values": [
-            "Sadie"
+            "Adelaide"
           ]
         },
         {
           "key": 78,
           "values": [
-            "Sophronia"
+            "Ulysses"
           ]
         },
         {
           "key": 79,
           "values": [
-            "Susannah"
+            "Minerva"
           ]
         },
         {
           "key": 80,
           "values": [
-            "Temperance"
+            "Darius"
           ]
         },
         {
           "key": 81,
           "values": [
-            "Theodosia"
+            "Ambrose"
           ]
         },
         {
           "key": 82,
           "values": [
-            "Tillie"
+            "Ebenezer"
           ]
         },
         {
           "key": 83,
           "values": [
-            "Trudy"
+            "Sophronia"
           ]
         },
         {
           "key": 84,
           "values": [
-            "Velma"
+            "Henrietta"
           ]
         },
         {
           "key": 85,
           "values": [
-            "Verity"
+            "Malachi"
           ]
         },
         {
           "key": 86,
           "values": [
-            "Vesta"
+            "Alonzo"
           ]
         },
         {
           "key": 87,
           "values": [
-            "Viola"
+            "Providence"
           ]
         },
         {
           "key": 88,
           "values": [
-            "Wilhelmina"
+            "Thaddeus"
           ]
         },
         {
           "key": 89,
           "values": [
-            "Winifred"
+            "Viola"
           ]
         },
         {
           "key": 90,
           "values": [
-            "Zilpah"
+            "Elmira"
           ]
         },
         {
           "key": 91,
           "values": [
-            "Bathsheba"
+            "Silas"
           ]
         },
         {
           "key": 92,
           "values": [
-            "Drusilla"
+            "Jedediah"
           ]
         },
         {
           "key": 93,
           "values": [
-            "Etta"
+            "Josephine"
           ]
         },
         {
           "key": 94,
           "values": [
-            "Honora"
+            "Varnum"
           ]
         },
         {
           "key": 95,
           "values": [
-            "Keziah"
+            "Imogene"
           ]
         },
         {
           "key": 96,
           "values": [
-            "Mahala"
+            "Agnes"
           ]
         },
         {
           "key": 97,
           "values": [
-            "Narcissa"
+            "Delilah"
           ]
         },
         {
           "key": 98,
           "values": [
-            "Calamity"
+            "Zilpah"
           ]
         },
         {
           "key": 99,
           "values": [
-            "Mourning"
+            "Vesta"
           ]
         },
         {
           "key": 100,
           "values": [
-            "Warranty"
+            "Merritt"
+          ]
+        },
+        {
+          "key": 101,
+          "values": [
+            "Ephraim"
+          ]
+        },
+        {
+          "key": 102,
+          "values": [
+            "Clementine"
+          ]
+        },
+        {
+          "key": 103,
+          "values": [
+            "Gladys"
+          ]
+        },
+        {
+          "key": 104,
+          "values": [
+            "Absalom"
+          ]
+        },
+        {
+          "key": 105,
+          "values": [
+            "Clara"
+          ]
+        },
+        {
+          "key": 106,
+          "values": [
+            "Ignatius"
+          ]
+        },
+        {
+          "key": 107,
+          "values": [
+            "Zebediah"
+          ]
+        },
+        {
+          "key": 108,
+          "values": [
+            "Ruth"
+          ]
+        },
+        {
+          "key": 109,
+          "values": [
+            "Prudence"
+          ]
+        },
+        {
+          "key": 110,
+          "values": [
+            "Ida"
+          ]
+        },
+        {
+          "key": 111,
+          "values": [
+            "Garland"
+          ]
+        },
+        {
+          "key": 112,
+          "values": [
+            "Gideon"
+          ]
+        },
+        {
+          "key": 113,
+          "values": [
+            "Virgil"
+          ]
+        },
+        {
+          "key": 114,
+          "values": [
+            "Claiborne"
+          ]
+        },
+        {
+          "key": 115,
+          "values": [
+            "Flora"
+          ]
+        },
+        {
+          "key": 116,
+          "values": [
+            "Elijah"
+          ]
+        },
+        {
+          "key": 117,
+          "values": [
+            "Effie"
+          ]
+        },
+        {
+          "key": 118,
+          "values": [
+            "Mordecai"
+          ]
+        },
+        {
+          "key": 119,
+          "values": [
+            "Buford"
+          ]
+        },
+        {
+          "key": 120,
+          "values": [
+            "Amos"
+          ]
+        },
+        {
+          "key": 121,
+          "values": [
+            "Otis"
+          ]
+        },
+        {
+          "key": 122,
+          "values": [
+            "Mercy"
+          ]
+        },
+        {
+          "key": 123,
+          "values": [
+            "Alma"
+          ]
+        },
+        {
+          "key": 124,
+          "values": [
+            "Reuben"
+          ]
+        },
+        {
+          "key": 125,
+          "values": [
+            "Opal"
+          ]
+        },
+        {
+          "key": 126,
+          "values": [
+            "Mildred"
+          ]
+        },
+        {
+          "key": 127,
+          "values": [
+            "Burl"
+          ]
+        },
+        {
+          "key": 128,
+          "values": [
+            "Annabelle"
+          ]
+        },
+        {
+          "key": 129,
+          "values": [
+            "Orson"
+          ]
+        },
+        {
+          "key": 130,
+          "values": [
+            "Abigail"
+          ]
+        },
+        {
+          "key": 131,
+          "values": [
+            "Letitia"
+          ]
+        },
+        {
+          "key": 132,
+          "values": [
+            "Erasmus"
+          ]
+        },
+        {
+          "key": 133,
+          "values": [
+            "Chauncey"
+          ]
+        },
+        {
+          "key": 134,
+          "values": [
+            "Pearl"
+          ]
+        },
+        {
+          "key": 135,
+          "values": [
+            "Trudy"
+          ]
+        },
+        {
+          "key": 136,
+          "values": [
+            "Susannah"
+          ]
+        },
+        {
+          "key": 137,
+          "values": [
+            "Festus"
+          ]
+        },
+        {
+          "key": 138,
+          "values": [
+            "Hezekiah"
+          ]
+        },
+        {
+          "key": 139,
+          "values": [
+            "Hortense"
+          ]
+        },
+        {
+          "key": 140,
+          "values": [
+            "Mahala"
+          ]
+        },
+        {
+          "key": 141,
+          "values": [
+            "Keziah"
+          ]
+        },
+        {
+          "key": 142,
+          "values": [
+            "Elmer"
+          ]
+        },
+        {
+          "key": 143,
+          "values": [
+            "Wiley"
+          ]
+        },
+        {
+          "key": 144,
+          "values": [
+            "Orville"
+          ]
+        },
+        {
+          "key": 145,
+          "values": [
+            "Myrtle"
+          ]
+        },
+        {
+          "key": 146,
+          "values": [
+            "Verity"
+          ]
+        },
+        {
+          "key": 147,
+          "values": [
+            "Horace"
+          ]
+        },
+        {
+          "key": 148,
+          "values": [
+            "Wilhelmina"
+          ]
+        },
+        {
+          "key": 149,
+          "values": [
+            "Cicero"
+          ]
+        },
+        {
+          "key": 150,
+          "values": [
+            "Ada"
+          ]
+        },
+        {
+          "key": 151,
+          "values": [
+            "Aloysius"
+          ]
+        },
+        {
+          "key": 152,
+          "values": [
+            "Creedence"
+          ]
+        },
+        {
+          "key": 153,
+          "values": [
+            "Lula"
+          ]
+        },
+        {
+          "key": 154,
+          "values": [
+            "Percival"
+          ]
+        },
+        {
+          "key": 155,
+          "values": [
+            "Phineas"
+          ]
+        },
+        {
+          "key": 156,
+          "values": [
+            "Leonidas"
+          ]
+        },
+        {
+          "key": 157,
+          "values": [
+            "Calamity"
+          ]
+        },
+        {
+          "key": 158,
+          "values": [
+            "Bathsheba"
+          ]
+        },
+        {
+          "key": 159,
+          "values": [
+            "Arabella"
+          ]
+        },
+        {
+          "key": 160,
+          "values": [
+            "Jemima"
+          ]
+        },
+        {
+          "key": 161,
+          "values": [
+            "Rufus"
+          ]
+        },
+        {
+          "key": 162,
+          "values": [
+            "Etta"
+          ]
+        },
+        {
+          "key": 163,
+          "values": [
+            "Edgar"
+          ]
+        },
+        {
+          "key": 164,
+          "values": [
+            "Hattie"
+          ]
+        },
+        {
+          "key": 165,
+          "values": [
+            "Pomeroy"
+          ]
+        },
+        {
+          "key": 166,
+          "values": [
+            "Jeremiah"
+          ]
+        },
+        {
+          "key": 167,
+          "values": [
+            "Florence"
+          ]
+        },
+        {
+          "key": 168,
+          "values": [
+            "Penelope"
+          ]
+        },
+        {
+          "key": 169,
+          "values": [
+            "Asa"
+          ]
+        },
+        {
+          "key": 170,
+          "values": [
+            "Lucretia"
+          ]
+        },
+        {
+          "key": 171,
+          "values": [
+            "Solomon"
+          ]
+        },
+        {
+          "key": 172,
+          "values": [
+            "Josiah"
+          ]
+        },
+        {
+          "key": 173,
+          "values": [
+            "Goldie"
+          ]
+        },
+        {
+          "key": 174,
+          "values": [
+            "Inez"
+          ]
+        },
+        {
+          "key": 175,
+          "values": [
+            "Beauregard"
+          ]
+        },
+        {
+          "key": 176,
+          "values": [
+            "Worth"
+          ]
+        },
+        {
+          "key": 177,
+          "values": [
+            "Edith"
+          ]
+        },
+        {
+          "key": 178,
+          "values": [
+            "Pleasant"
+          ]
+        },
+        {
+          "key": 179,
+          "values": [
+            "Sadie"
+          ]
+        },
+        {
+          "key": 180,
+          "values": [
+            "Remedy"
+          ]
+        },
+        {
+          "key": 181,
+          "values": [
+            "Fern"
+          ]
+        },
+        {
+          "key": 182,
+          "values": [
+            "Calpurnia"
+          ]
+        },
+        {
+          "key": 183,
+          "values": [
+            "Bertram"
+          ]
+        },
+        {
+          "key": 184,
+          "values": [
+            "Grover"
+          ]
+        },
+        {
+          "key": 185,
+          "values": [
+            "Cora"
+          ]
+        },
+        {
+          "key": 186,
+          "values": [
+            "Gertrude"
+          ]
+        },
+        {
+          "key": 187,
+          "values": [
+            "Mabel"
+          ]
+        },
+        {
+          "key": 188,
+          "values": [
+            "Lemuel"
+          ]
+        },
+        {
+          "key": 189,
+          "values": [
+            "Nehemiah"
+          ]
+        },
+        {
+          "key": 190,
+          "values": [
+            "Artemus"
+          ]
+        },
+        {
+          "key": 191,
+          "values": [
+            "Agatha"
+          ]
+        },
+        {
+          "key": 192,
+          "values": [
+            "Althea"
+          ]
+        },
+        {
+          "key": 193,
+          "values": [
+            "Abner"
+          ]
+        },
+        {
+          "key": 194,
+          "values": [
+            "Basil"
+          ]
+        },
+        {
+          "key": 195,
+          "values": [
+            "Job"
+          ]
+        },
+        {
+          "key": 196,
+          "values": [
+            "Lavinia"
+          ]
+        },
+        {
+          "key": 197,
+          "values": [
+            "Harriet"
+          ]
+        },
+        {
+          "key": 198,
+          "values": [
+            "Cordelia"
+          ]
+        },
+        {
+          "key": 199,
+          "values": [
+            "Clem"
+          ]
+        },
+        {
+          "key": 200,
+          "values": [
+            "Mourning"
           ]
         }
       ],
-      "source": "manuscript/content/tables/womens-first-names.md",
-      "sourceSha256": "8afeb8ab1c81b4d5125539d8678b096837e853c0dabfd1814b8fdefd85dde6a5"
+      "source": "manuscript/content/tables/first-names.md",
+      "sourceSha256": "98f4dfbc45a0e34cb3dbb8f8cc316db1d59bf49b4632cbbf06b769d1e641fa6c"
     },
     "good": {
       "columns": 1,

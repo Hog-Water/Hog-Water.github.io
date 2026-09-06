@@ -8,8 +8,7 @@ const hasContent = (value) => value && typeof value === "object" ? Object.values
 const hasStateContent = (state) => hasContent(state.character) || state.events.length > 0 || state.unresolved.length > 0;
 
 export const creationTableDefinitions = Object.freeze([
-  { id: "first_name_men", label: "Men's first names", target: "field-first-name", operation: "firstName", args: ["first_name_men"] },
-  { id: "first_name_women", label: "Women's first names", target: "field-first-name", operation: "firstName", args: ["first_name_women"] },
+  { id: "first_name", label: "First names", target: "field-first-name", operation: "firstName" },
   { id: "last_name", label: "Last names", target: "field-last-name", operation: "lastName" },
   { id: "background", label: "Background", target: "field-background", operation: "background" },
   { id: "wrong", label: "What's Wrong With You?", target: "field-wrong", operation: "wrong" },

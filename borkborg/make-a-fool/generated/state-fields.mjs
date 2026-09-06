@@ -1,4 +1,4 @@
-// Generated from state.0.0.2.schema.json. Do not edit.
+// Generated from state.0.0.3.schema.json. Do not edit.
 export const fieldPaths = Object.freeze({
   "identity.name.firstName": [
     "identity",

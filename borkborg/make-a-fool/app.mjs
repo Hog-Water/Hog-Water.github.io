@@ -71,7 +71,7 @@ for (const slot of [1, 2]) {
 }
 
 const operationMap = {
-  firstName: [() => model.generator.operations.firstName, ["identity.name.firstName"], () => [document.querySelector("#first-name-table").value]],
+  firstName: [() => model.generator.operations.firstName, ["identity.name.firstName"]],
   lastName: [() => model.generator.operations.lastName, ["identity.name.lastName"]],
   stoutness: [() => model.generator.operations.ability, ["abilities.stoutness", "health.hp.maximum"], () => ["stoutness"]],
   alacrity: [() => model.generator.operations.ability, ["abilities.alacrity"], () => ["alacrity"]],
@@ -201,7 +201,7 @@ function renderCreationTables() {
     article.className = "creation-table";
     article.id = `table-${definition.id}`;
     const heading = document.createElement("summary");
-    heading.textContent = `${definition.label} (${sourceTable.die})`;
+    heading.textContent = `${definition.label} (${sourceTable.die === "d10/d20" ? "d10 block / d20 entry" : sourceTable.die})`;
     const provenance = document.createElement("p");
     provenance.className = "table-source";
     provenance.textContent = `Source: ${sourceTable.source}`;
@@ -221,7 +221,7 @@ function renderCreationTables() {
       tr.id = `result-${definition.id}-${row.key}`;
       const key = document.createElement("th");
       key.scope = "row";
-      key.textContent = row.key;
+      key.textContent = definition.id === "first_name" ? `${Math.floor((row.key - 1) / 20) + 1} / ${(row.key - 1) % 20 + 1}` : row.key;
       tr.append(key, ...row.values.map((value) => {
         const cell = document.createElement("td");
         cell.textContent = value;

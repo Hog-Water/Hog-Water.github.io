@@ -2,7 +2,7 @@
 import { validateDocument, validateCharacter, validateEvent, validateOperation } from "./generated/state-validator.mjs";
 
 export const PORTABLE_FORMAT = "bork-borg.make-a-fool.state";
-export const PORTABLE_VERSION = "0.0.2";
+export const PORTABLE_VERSION = "0.0.3";
 export const LEGACY_FORMAT = "bork-borg.make-a-fool.state.v1";
 
 export class StateValidationError extends Error {
@@ -68,7 +68,7 @@ export function validateState(value) {
   if (errors.length) return { valid: false, errors };
   try {
     const version = recognizeStateVersion(value);
-    if (version !== PORTABLE_VERSION) return { valid: false, errors: [{ path: "/format", message: "legacy 0.0.1 requires explicit migration" }] };
+    if (version !== PORTABLE_VERSION) return { valid: false, errors: [{ path: "/format", message: "legacy 0.0.1 is unsupported by this release" }] };
   } catch (error) { return { valid: false, errors: error.errors }; }
   errors.push(...schemaErrors(validateDocument, value));
   const ids = new Set();

@@ -4,7 +4,7 @@ import { assertState, applyEvent, PORTABLE_FORMAT, PORTABLE_VERSION } from "./st
 import { flatWrites, readField, writesField } from "./field-adapter.mjs";
 
 export const STATE_FORMAT = PORTABLE_FORMAT;
-export const CATALOG_FORMAT = "bork-borg.make-a-fool.catalog.v1";
+export const CATALOG_FORMAT = "bork-borg.make-a-fool.catalog.v2";
 
 const SOURCES = {
   abilities: "manuscript/content/make-a-fool/content/abilities.md",
@@ -65,13 +65,22 @@ export function createGenerator({ catalog, catalogHash, random = Math.random }) 
   const byTable = Object.fromEntries(Object.entries(catalog.tables).map(([name, table]) => [name, new Map(table.results.map((row) => [row.key, row]))]));
   let sequence = 0;
 
-  const die = (sides) => Math.floor(random() * sides) + 1;
+  const die = (sides) => {
+    const draw = random();
+    if (!Number.isFinite(draw) || draw < 0 || draw >= 1) throw new GenerationError("random draw must be finite and in [0, 1)");
+    return Math.floor(draw * sides) + 1;
+  };
   const forcedRoll = (notation, result) => {
     if (!Number.isInteger(result)) throw new GenerationError("forced result must be an integer");
-    const dice = notation === "d66" ? [Math.floor(result / 10), result % 10] : [result];
+    const dice = notation === "d66" ? [Math.floor(result / 10), result % 10]
+      : notation === "d10/d20" ? [Math.floor((result - 1) / 20) + 1, (result - 1) % 20 + 1] : [result];
     return { notation, dice, result };
   };
   const roll = (notation) => {
+    if (notation === "d10/d20") {
+      const dice = [die(10), die(20)];
+      return { notation, dice, result: (dice[0] - 1) * 20 + dice[1] };
+    }
     if (notation === "d66") {
       const dice = [die(6), die(6)];
       return { notation, dice, result: dice[0] * 10 + dice[1] };
@@ -226,8 +235,8 @@ export function createGenerator({ catalog, catalogHash, random = Math.random }) 
   }
 
   const operations = {
-    firstName(state, table = "first_name_men", options = {}) {
-      if (!["first_name_men", "first_name_women"].includes(table)) throw new GenerationError("invalid first-name table");
+    firstName(state, options = {}) {
+      const table = "first_name";
       const previous = eventWriting(state, "identity.name.firstName");
       const context = begin(state, table);
       const outcome = tableResult(table, options.key);
@@ -439,7 +448,7 @@ export function createGenerator({ catalog, catalogHash, random = Math.random }) 
 
   function generateFull(options = {}) {
     let state = emptyState(catalogHash);
-    state = operations.firstName(state, options.firstNameTable ?? (die(2) === 1 ? "first_name_men" : "first_name_women"), options.firstName ?? {});
+    state = operations.firstName(state, options.firstName ?? {});
     state = operations.lastName(state, options.lastName ?? {});
     for (const ability of ["stoutness", "alacrity", "savvy", "fortune"]) state = operations.ability(state, ability, options.abilities?.[ability] ?? {});
     state = operations.hp(state, { ...(options.hp ?? {}), initializeCurrent: true });
