@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>BORK BORG creation tables</title>
+  <link rel="stylesheet" href="tables.css">
+</head>
+<body>
+  <header class="masthead"><div class="masthead-content">
+    <p class="eyebrow">BORK BORG / MAKE A FOOL</p>
+    <h1>Creation tables</h1>
+    <p>Read-only source-derived references for character creation.</p>
+    <label class="theme-picker">Theme<select id="theme-choice"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></label>
+    <p id="theme-feedback" role="status" hidden></p>
+  </div></header>
+  <main>
+    <p id="sheet-return" class="sheet-return">If you came from your sheet, close this tab or switch back to keep your place. <a href="../make-a-fool/" target="_blank" rel="noopener">Otherwise, open MAKE A FOOL in a new tab.</a></p>
+    <section class="search-panel" aria-label="Search creation tables">
+      <label for="table-search">Search tables</label>
+      <div class="search-actions"><input id="table-search" type="search" autocomplete="off" placeholder="Table, result, or source text"><button id="clear-search" type="button" disabled>Clear</button></div>
+      <p id="search-status" role="status"></p>
+    </section>
+    <nav aria-label="Creation table index"><h2>Table index</h2><ol id="table-index"></ol></nav>
+    <p id="no-results" hidden>No tables or entries match that search. Clear the search and try another word.</p>
+    <section id="tables" aria-label="Creation tables"></section>
+  </main>
+  <script type="module" src="tables.mjs"></script>
+  <script type="module" src="../make-a-fool/theme.mjs"></script>
+</body>
+</html>

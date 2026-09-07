@@ -1,0 +1,57 @@
+.maf-menu-button {
+  position: fixed;
+  z-index: 40;
+  top: max(.65rem, env(safe-area-inset-top));
+  right: max(calc(.65rem + env(safe-area-inset-right)), calc(max(1rem, (100vw - 72rem) / 2) + 1.1rem + 2px));
+  width: 3rem;
+  padding: .25rem;
+  font-size: 1.65rem;
+  line-height: 1;
+  background: var(--menu-fill, #FFC000);
+  color: var(--menu-ink, #000);
+  border: 2px solid var(--menu-ink, #000);
+  min-width: 3rem;
+  min-height: 3rem;
+  box-shadow: 0 0 12px rgb(0 0 0 / .45);
+  opacity: 1;
+  transition: opacity .15s ease;
+}
+.maf-menu-button.maf-menu-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.maf-navigation {
+  position: fixed;
+  inset: 0 0 0 auto;
+  margin: 0;
+  width: min(26rem, 100%);
+  max-width: 100%;
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) 1rem;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--ink);
+}
+.maf-navigation::backdrop { background: rgb(0 0 0 / .55); }
+.maf-navigation header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.maf-navigation.maf-navigation-menu-mounted header { padding-right: 8rem; }
+.maf-navigation h2 { margin: 0; }
+.maf-navigation nav, .maf-navigation .navigation-actions { display: grid; gap: .1rem; margin: .6rem 0; }
+.maf-navigation a { display: flex; align-items: center; min-height: 2.75rem; padding: .25rem .4rem; overflow-wrap: anywhere; }
+.maf-navigation button { min-height: 2.75rem; white-space: normal; }
+.maf-navigation :focus-visible, .maf-menu-button:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.maf-navigation .navigation-help { margin-top: 1.2rem; line-height: 1.5; }
+.maf-navigation[open] { animation: none; }
+.maf-navigation-target { scroll-margin-top: calc(4.5rem + env(safe-area-inset-top)); }
+@media print {
+  .maf-menu-button, .maf-navigation { display: none !important; }
+}
+
+.maf-menu-button:hover:not(:disabled) { background: var(--menu-fill, #FFC000); color: var(--menu-ink, #000); }
+@media (prefers-reduced-motion: reduce) { .maf-menu-button { transition: none; } }
+@media (min-width: 80rem) and (max-width: 122rem) {
+  .maf-navigation.maf-navigation-menu-mounted header { padding-top: 3rem; }
+}

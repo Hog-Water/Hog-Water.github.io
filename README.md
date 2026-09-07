@@ -7,8 +7,9 @@ Do not edit these generated application files here.
 ## Current deployment
 
 - [MAKE A FOOL](https://hog-water.github.io/borkborg/make-a-fool/) - browser character builder and live sheet.
+- [Creation tables](https://hog-water.github.io/borkborg/tables/) - read-only searchable references.
 - `BorkBorg/` - compatibility HTML redirect and retained public schema identifiers.
-- `borkborg/` - reserved parent directory for future BORK BORG web tools.
+- Other `borkborg/` files remain reserved for sibling tools.
 
 Application, portable-state, and catalog versions are separate values in
 `borkborg/make-a-fool/deployment.json`, alongside the accepted source commit.

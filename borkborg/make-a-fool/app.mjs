@@ -1,6 +1,9 @@
 import { createLocalRecovery, FOOL_STORAGE_KEY } from "./persistence.mjs";
 import { downloadFoolMarkdown, downloadFoolJSON, downloadRawBackup, createJSONImportSession } from "./file-io.mjs";
-import { readField } from "./field-adapter.mjs";
+import { readField, writesField } from "./field-adapter.mjs";
+import { createNavigation } from "./navigation.mjs";
+import { createReferencePreview } from "./reference-preview.mjs";
+import { getReference } from "./reference-catalog.mjs";
 import { catalogSha256 } from "./engine.mjs";
 import { createAppModel, creationTableDefinitions, directTableArguments, populatedWarrantyTargets } from "./app-model.mjs";
 
@@ -18,8 +21,45 @@ const choices = document.querySelector("#choices");
 const status = document.querySelector("#status");
 const serialized = document.querySelector("#serialized");
 const possessions = document.querySelector("#possessions");
+document.querySelector("#field-weapon .wear").setAttribute("aria-label", "Weapon wear");
 const tables = document.querySelector("#tables");
 let fieldEditError = null;
+const invalidDrafts = new Map();
+const fieldControl = (field) => [...sheet.querySelectorAll("[data-field]")].find((control) => control.dataset.field === field);
+const fieldLabel = (control) => control?.dataset.fieldLabel || control?.labels?.[0]?.firstChild?.textContent?.trim() || control?.getAttribute("aria-label") || "field";
+function showDraftStatus() {
+  document.querySelector("#draft-status").hidden = invalidDrafts.size === 0;
+  if (!invalidDrafts.size) { showStorageStatus(); return; }
+  const [field, draft] = invalidDrafts.entries().next().value;
+  document.querySelector("#draft-message").textContent = `${fieldLabel(fieldControl(field))}: ${draft.message} This draft is not saved. Correct it or explicitly discard it.${invalidDrafts.size > 1 ? ` Other invalid drafts: ${invalidDrafts.size - 1}.` : ""}`;
+}
+function recordDraft(control, error) {
+  const message = /^(abilities\.|health\.hp\.)/.test(control.dataset.field)
+    ? "Enter a whole number, or leave the field empty." : "Enter a valid value for this field.";
+  invalidDrafts.set(control.dataset.field, { rawValue: control.value, error, message });
+  control.setAttribute("aria-invalid", "true");
+  const descriptions = new Set((control.getAttribute("aria-describedby") ?? "").split(/\s+/).filter(Boolean));
+  descriptions.add("draft-message");
+  control.setAttribute("aria-describedby", [...descriptions].join(" "));
+  showDraftStatus();
+  showStorageStatus();
+}
+function clearDraft(control) {
+  invalidDrafts.delete(control.dataset.field);
+  control.removeAttribute("aria-invalid");
+  const descriptions = (control.getAttribute("aria-describedby") ?? "").split(/\s+/).filter((id) => id && id !== "draft-message");
+  if (descriptions.length) control.setAttribute("aria-describedby", descriptions.join(" "));
+  else control.removeAttribute("aria-describedby");
+  showDraftStatus();
+}
+function guardInvalid(action) {
+  if (!invalidDrafts.size) return;
+  showDraftStatus();
+  const control = fieldControl(invalidDrafts.keys().next().value);
+  control.focus({ preventScroll: true });
+  control.scrollIntoView({ block: "center" });
+  throw new Error(`Correct or discard the invalid ${fieldLabel(control)} draft before ${action}.`);
+}
 const importFile = document.querySelector("#import-file");
 const importDialog = document.querySelector("#import-dialog");
 const importStatus = document.querySelector("#import-status");
@@ -33,13 +73,15 @@ if (local.status === "supported") model.restore(local.state);
 // A fresh blank sheet is not itself a save or an instruction to replace data.
 let lastObservedState = model.serialize();
 function showStorageStatus(result = localRecovery.status()) {
-  storageStatus.textContent = result.message;
+  storageStatus.textContent = invalidDrafts.size
+    ? `Current changes are in this tab only while an invalid draft is present. Last save status: ${result.message}` : result.message;
   recoveryPanel.hidden = !localRecovery.isProtected();
   if (!recoveryPanel.hidden) recoveryStatus.textContent = result.message;
   document.querySelector("#raw-backup").disabled = localRecovery.rawBackup() === null;
   document.querySelector("#reset-local").disabled = localRecovery.rawBackup() === null;
 }
 function saveCurrent({ force = false } = {}) {
+  if (invalidDrafts.size) return;
   const text = model.serialize();
   if (force || text !== lastObservedState) {
     lastObservedState = text;
@@ -67,7 +109,7 @@ document.querySelector("#reset-local").addEventListener("click", () => {
 });
 
 for (const slot of [1, 2]) {
-  possessions.insertAdjacentHTML("beforeend", `<article class="possession" data-possession="${slot}"><div class="section-title"><h3>Possession ${slot}</h3><button data-roll="possession${slot}" type="button">Roll / reroll</button></div><span class="badge" data-warranty="${slot}" hidden>UNDER WARRANTY</span><label>Name<input data-field="possessions.${slot}.name"></label><label>Behavior<textarea data-field="possessions.${slot}.behavior"></textarea></label><fieldset class="wear"><legend>Wear</legend>${[1, 2, 3].map((wear) => `<label><input type="checkbox" data-field="possessions.${slot}.wear.${wear}"> ${wear}</label>`).join("")}</fieldset></article>`);
+  possessions.insertAdjacentHTML("beforeend", `<article class="possession" data-possession="${slot}"><div class="section-title"><h3>Possession ${slot}</h3><button data-roll="possession${slot}" type="button" aria-label="Roll possession ${slot}">ROLL</button></div><span class="badge" data-warranty="${slot}" hidden>UNDER WARRANTY</span><label>Name<input data-field="possessions.${slot}.name"></label><label>Behavior<textarea data-field="possessions.${slot}.behavior"></textarea></label><fieldset class="wear" aria-label="Possession ${slot} wear"><legend>WEAR</legend>${[1, 2, 3].map((wear) => `<label><input type="checkbox" data-field="possessions.${slot}.wear.${wear}"> ${wear}</label>`).join("")}</fieldset></article>`);
 }
 
 const operationMap = {
@@ -162,7 +204,8 @@ sheet.addEventListener("input", (event) => {
     if (corrected) status.textContent = "Corrected edit applied. Check browser saving status above.";
   } catch (error) {
     fieldEditError = error;
-    status.textContent = `This edit is not valid yet and has not been saved. ${error.message}`;
+    recordDraft(control, error);
+    status.textContent = `This edit is not saved. ${invalidDrafts.get(control.dataset.field).message}`;
   }
   if (control.matches("textarea")) fitSheetText();
 });
@@ -176,7 +219,8 @@ function render({ forceSheet = false } = {}) {
   const active = model.current();
   for (const control of sheet.querySelectorAll("[data-field]")) {
     const value = readField(active.character, control.dataset.field);
-    if (control.type === "checkbox") control.checked = value === true;
+    if (invalidDrafts.has(control.dataset.field)) control.value = invalidDrafts.get(control.dataset.field).rawValue;
+    else if (control.type === "checkbox") control.checked = value === true;
     else if (forceSheet || document.activeElement !== control) control.value = value ?? "";
   }
   for (const slot of [1, 2]) document.querySelector(`[data-warranty="${slot}"]`).hidden = readField(active.character, `possessions.${slot}.warranty`) !== true;
@@ -188,6 +232,9 @@ function render({ forceSheet = false } = {}) {
     ? `Character sheet ready. ${active.unresolved.length} outstanding detail${active.unresolved.length === 1 ? "" : "s"} can be finished at any time.`
     : "Character sheet ready.";
   if (!model.catalogMatches()) status.textContent += " Historical catalog: manual edits and backup remain available; catalog rolls require a newly generated Fool.";
+  showDraftStatus();
+  updateEntryReferences();
+  document.querySelector("#start-fool").hidden = Object.keys(active.character).length > 0 || localRecovery.isProtected();
   fitSheetText();
 }
 
@@ -255,6 +302,138 @@ function renderCreationTables() {
 
 renderCreationTables();
 
+const entryReferences = [];
+function sourceReference({ tableId, field, resultKey = null }) {
+  if (!model.catalogMatches()) return null;
+  if (!field) return getReference(catalog, { tableId, resultKey });
+  if (invalidDrafts.has(field)) return null;
+  const event = model.current().events.findLast((item) => writesField(item, field));
+  if (!event || event.kind === "manual" || event.source?.table !== tableId
+      || event.source.path !== catalog.tables[tableId]?.source) return null;
+  const reference = getReference(catalog, { tableId, resultKey: event.source.key });
+  return reference ? { ...reference, field, ...(tableId === "possession" ? { slot: Number(field.split(".")[1]) } : {}) } : null;
+}
+let selectionSlot = 1;
+const referencePreview = createReferencePreview({ lookup: sourceReference, onChoose: ({ reference }) => {
+  try {
+    guardInvalid("choosing a table result");
+    if (!model.catalogMatches()) throw new Error("This Fool uses a different catalog. Current tables are read-only references; keep your character edits and JSON backup.");
+    const definition = creationTableDefinitions.find(({ id }) => id === reference.tableId);
+    const [operation, fields, args] = operationRequest(definition, reference.resultKey, reference.slot ?? selectionSlot);
+    referencePreview.close();
+    model.runOperation(operation, fields, ...args);
+    render();
+    const target = reference.field ? fieldControl(reference.field) : document.getElementById(definition.target);
+    if (!target.matches("input, textarea, button, [tabindex]")) target.tabIndex = -1;
+    target.focus({ preventScroll: true });
+  } catch (error) { status.textContent = error.message; }
+} });
+const drawer = document.querySelector("#navigation-drawer");
+const navigation = createNavigation({ menuButton: document.querySelector("#menu-button"), drawer,
+  sectionTargets: new Map([...drawer.querySelectorAll("[data-nav-section]")].map((link) => [link.dataset.navSection, document.getElementById(link.dataset.navSection)])) });
+document.querySelector("#menu-button").addEventListener("click", () => referencePreview.close());
+drawer.addEventListener("click", (event) => {
+  if (event.target.closest("#make-fool, #download-json, #download-markdown, #import-json")) navigation.close();
+}, true);
+document.addEventListener("click", (event) => {
+  const destructive = event.target.closest("#make-fool, #start-fool, #download-json, #download-markdown, #import-json, #import-replace, #reset-local, [data-roll], [data-select-table], .reference-choose, #choices button");
+  const referenceLink = event.target.closest('a[href^="/borkborg/tables/"]');
+  if (!destructive && !referenceLink) return;
+  if (invalidDrafts.size) {
+    event.preventDefault(); event.stopImmediatePropagation();
+    navigation.close({ restoreFocus: false }); referencePreview.close();
+    try { guardInvalid("this action"); } catch (error) { status.textContent = error.message; }
+  } else if (destructive) referencePreview.close();
+}, true);
+document.querySelector("#start-fool").addEventListener("click", () => document.querySelector("#make-fool").click());
+document.querySelector("#discard-draft").addEventListener("click", () => {
+  if (!invalidDrafts.size || !globalThis.confirm("Discard this invalid draft and restore the last valid value?")) return;
+  const control = fieldControl(invalidDrafts.keys().next().value);
+  clearDraft(control);
+  control.value = readField(model.current().character, control.dataset.field) ?? "";
+  render(); control.focus();
+});
+
+// Existing headings provide reference access; native labels remain attached to inputs.
+const labelledReferences = new Set();
+function labelReference(label, reference) {
+  const control = label.querySelector("[data-field]");
+  const name = label.firstChild.textContent.trim();
+  control.dataset.fieldLabel = name;
+  const labelText = document.createElement("span"); labelText.textContent = name;
+  label.firstChild.replaceWith(labelText);
+  const wrapper = document.createElement("div"); wrapper.className = "field-reference-group";
+  label.before(wrapper); wrapper.append(label);
+  const trigger = document.createElement("button"); trigger.type = "button";
+  trigger.className = "reference-trigger reference-label-heading"; trigger.textContent = name;
+  label.before(trigger); labelText.className = "reference-label-text";
+  referencePreview.bind(trigger, reference); labelledReferences.add(label);
+  return { trigger, labelText };
+}
+for (const oldLink of sheet.querySelectorAll('a.table-link[href^="#table-"]')) {
+  const tableId = oldLink.hash.slice("#table-".length);
+  const definition = creationTableDefinitions.find(({ id }) => id === tableId);
+  const target = document.getElementById(definition.target);
+  let trigger;
+  let label = oldLink.closest("label") ?? (target.matches("label") ? target : null);
+  if (tableId === "repair" || tableId === "repair_appearance") {
+    label = fieldControl(tableId === "repair" ? "weapon.repair_history" : "weapon.repair_appearance").closest("label");
+  }
+  if (label) {
+    ({ trigger } = labelReference(label, { tableId }));
+  } else {
+    const heading = target.querySelector("h2, h3") ?? document.createElement("h3");
+    if (!heading.isConnected) { heading.textContent = definition.label; oldLink.before(heading); }
+    trigger = document.createElement("button"); trigger.type = "button"; trigger.className = "reference-trigger";
+    trigger.textContent = heading.textContent; heading.replaceChildren(trigger);
+    referencePreview.bind(trigger, { tableId });
+  }
+  trigger.dataset.referenceTable = tableId;
+  trigger.setAttribute("aria-label", `Preview ${definition.label} table`);
+  oldLink.remove();
+  if (tableId === "possession") {
+    const slotLabel = document.createElement("label"); slotLabel.className = "reference-slot";
+    slotLabel.textContent = "Choose for possession";
+    const select = document.createElement("select");
+    for (const slot of [1, 2]) { const option = document.createElement("option"); option.value = slot; option.textContent = `Possession ${slot}`; select.append(option); }
+    select.addEventListener("change", () => { selectionSlot = Number(select.value); });
+    slotLabel.append(select); target.querySelector(".section-title").append(slotLabel);
+  }
+}
+const entryFields = {
+  background: ["background.name"], weapon: ["weapon.type"], defect: ["weapon.defects.1", "weapon.defects.2"],
+  possession: ["possessions.1.name", "possessions.2.name"],
+};
+for (const [tableId, fields] of Object.entries(entryFields)) for (const field of fields) {
+  const label = fieldControl(field).closest("label");
+  if (labelledReferences.has(label)) continue;
+  const { trigger, labelText } = labelReference(label, { tableId, field });
+  trigger.dataset.referenceField = field;
+  trigger.setAttribute("aria-label", `Preview ${trigger.textContent} details`);
+  entryReferences.push({ trigger, labelText, tableId, field });
+}
+function updateEntryReferences() {
+  for (const item of entryReferences) {
+    const reference = sourceReference(item);
+    item.trigger.hidden = !reference;
+    item.labelText.className = reference ? "reference-label-text" : "";
+  }
+}
+sheet.addEventListener("input", () => { referencePreview.close(); updateEntryReferences(); });
+function openFragmentReference() {
+  const hash = location.hash.slice(1);
+  const result = /^result-([a-z_]+)-(\d+)$/.exec(hash);
+  const table = /^table-([a-z_]+)$/.exec(hash);
+  const tableId = result?.[1] ?? table?.[1];
+  if (!tableId) return;
+  const trigger = document.querySelector(`[data-reference-table="${tableId}"]`);
+  if (trigger && getReference(catalog, { tableId, resultKey: result ? Number(result[2]) : null })) {
+    referencePreview.open({ tableId, resultKey: result ? Number(result[2]) : null }, trigger, { pin: true });
+  }
+}
+window.addEventListener("hashchange", openFragmentReference);
+requestAnimationFrame(openFragmentReference);
+
 // Reference DOM is created once. Character renders leave each disclosure intact.
 function navigateToReference(target) {
   let ancestor = target;
@@ -277,17 +456,10 @@ document.addEventListener("click", (event) => {
   navigateToReference(target);
 });
 
-// Print retains the creation references that were visible before screen collapse.
-// Restore every individual screen choice when preview or printing finishes.
-let referencesBeforePrint = null;
+// Printing is sheet-only. Closing overlays does not alter fields or disclosures.
 globalThis.addEventListener("beforeprint", () => {
-  if (referencesBeforePrint) return;
-  referencesBeforePrint = [...document.querySelectorAll("#creation-tables, #tables details")].map((section) => [section, section.open]);
-  for (const [section] of referencesBeforePrint) section.open = true;
-});
-globalThis.addEventListener("afterprint", () => {
-  for (const [section, open] of referencesBeforePrint ?? []) section.open = open;
-  referencesBeforePrint = null;
+  referencePreview.close();
+  navigation.close({ restoreFocus: false });
 });
 
 document.querySelector("#make-fool").addEventListener("click", () => {
@@ -304,14 +476,11 @@ function commitControl(control, { coalesce = false } = {}) {
   if (controlValue !== displayed && value !== current) model.manualEdit(control.dataset.field, value, { coalesce });
   if (!coalesce) model.endManualEdit();
   fieldEditError = null;
+  clearDraft(control);
 }
 
 function commitFocusedEdit(action) {
-  if (fieldEditError) {
-    const error = fieldEditError;
-    fieldEditError = null;
-    throw new Error(`${error.message} The previous value was kept. Review it and try ${action} again.`);
-  }
+  guardInvalid(action);
   const focused = document.activeElement;
   if (focused?.matches("[data-field]") && sheet.contains(focused)) commitControl(focused);
 }
@@ -395,7 +564,7 @@ importDialog.addEventListener("close", () => {
     clearImportReview();
     status.textContent = "Import canceled. Your current Fool is unchanged.";
   }
-  document.querySelector("#import-json").focus();
+  document.querySelector("#menu-button").focus();
 });
 
 document.querySelector("#import-backup").addEventListener("click", () => {
@@ -433,9 +602,7 @@ sheet.addEventListener("change", (event) => {
   try { commitControl(control); render(); }
   catch (error) {
     fieldEditError = error;
-    const current = readField(model.current().character, control.dataset.field);
-    if (control.type === "checkbox") control.checked = current === true;
-    else control.value = current ?? "";
+    recordDraft(control, error);
     status.textContent = error.message;
   }
 });

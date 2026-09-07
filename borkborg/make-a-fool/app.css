@@ -1,6 +1,8 @@
 :root {
   color-scheme: light;
   font-family: ui-sans-serif, system-ui, sans-serif;
+  --menu-fill: #FFC000;
+  --menu-ink: #000;
   --page: #eee9dd;
   --ink: #191919;
   --surface: #fff;
@@ -28,6 +30,34 @@
   --palette-amber: #FFC000;
 }
 * { box-sizing: border-box; }
+html { scroll-padding-top: calc(4.5rem + env(safe-area-inset-top)); }
+body > .masthead { padding-right: 8rem; }
+.save-status { font-size: .85rem; line-height: 1.4; }
+.draft-error { border-color: var(--error); }
+[aria-invalid="true"] { border: 2px solid var(--error); }
+.reference-trigger {
+  padding: 0; min-height: 1.5rem; max-width: 100%;
+  color: var(--link); border: 0; background: transparent;
+  text-align: left; text-decoration: underline dotted; text-underline-offset: .2em;
+  overflow-wrap: anywhere; white-space: normal; font: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+.reference-label-heading { min-height: 0; font-size: .78rem; font-weight: 800; letter-spacing: .04em; line-height: normal; }
+.reference-trigger[hidden] { display: none; }
+.reference-label-text { position: absolute; clip: rect(0 0 0 0); width: 1px; height: 1px; overflow: hidden; }
+.field-reference-group > label { margin-top: 0; }
+#sheet label + p, #sheet .field-reference-group + p { margin-top: 1rem; }
+.reference-table-scroll { max-width: 100%; overflow-x: auto; }
+.reference-table-scroll:focus-visible { outline: 3px solid var(--focus); outline-offset: -3px; }
+.reference-scroll-help { font-size: .85rem; line-height: 1.4; }
+.reference-table table { width: 100%; table-layout: auto; border-collapse: collapse; }
+.reference-table thead th { white-space: nowrap; }
+.reference-table .reference-die { width: 1%; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.reference-slot { max-width: 14rem; }
+.field-reference-group { display: grid; align-content: start; gap: 1rem; min-width: 0; }
+.print-references { display: none; }
+.navigation-files .section-title, .navigation-files .actions { display: grid; gap: .65rem; }
+.maf-navigation .masthead-actions { display: grid; margin: 1rem 0; }
 body { margin: 0; background: var(--page); color: var(--ink); }
 a { color: var(--link); }
 .masthead-actions { display: flex; align-items: end; flex-wrap: wrap; gap: .8rem; }
@@ -49,6 +79,7 @@ input[type="checkbox"] { accent-color: var(--accent); }
 dialog { background: var(--surface); color: var(--ink); border: 2px solid var(--border); }
 button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 .primary { padding-inline: 1.4rem; border-color: var(--accent-ink); background: var(--accent); color: var(--accent-ink); font-size: 1.05rem; }
+#start-fool { margin: 0 0 1rem; }
 .quiet { border-color: transparent; background: transparent; }
 .status { margin: 0 0 1rem; padding: .65rem .85rem; border-left: .35rem solid var(--focus); background: var(--surface); }
 .candidate { margin-bottom: 1rem; padding: 1rem; border: 3px solid var(--focus); background: var(--surface); }
@@ -64,18 +95,25 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
 .section-title { flex-wrap: wrap; }
 .section-title > *, .actions > * { min-width: 0; }
 .section-title button, .actions button { flex-shrink: 0; }
-.grid { display: grid; gap: .75rem; }
+.grid { display: grid; column-gap: .75rem; row-gap: 1rem; }
 .grid.two { grid-template-columns: minmax(0, 1fr) auto; }
 .grid.equal-two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.background-field { grid-template-columns: minmax(0, 1fr); }
 .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .abilities { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto; }
 .resources, .weapon { grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr)); }
-label { display: grid; align-content: start; gap: .25rem; min-width: 0; font-size: .78rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+label { display: grid; align-content: start; gap: 1rem; min-width: 0; font-size: .78rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
 input, textarea, select { width: 100%; min-height: 2.6rem; padding: .5rem; border: 1px solid var(--border-soft); border-radius: .2rem; background: var(--field); color: var(--ink); font: 1rem/1.35 ui-sans-serif, system-ui, sans-serif; text-transform: none; letter-spacing: normal; }
 textarea { min-height: 5rem; resize: vertical; }
 .reckon { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .9rem; }
 .reckon-item { min-width: 0; padding: .8rem; border: 1px solid var(--border-soft); background: var(--surface-alt); }
-.reckon-actions { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; margin-top: .55rem; }
+.reckon-actions { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; margin-top: 1rem; }
+.companion-reckon { display: grid; grid-template-columns: minmax(0, 1fr); row-gap: 1rem; }
+.companion-reckon .companion-fields { display: contents; }
+.companion-name-control { grid-row: 1; }
+.companion-reckon > .reckon-actions { grid-row: 2; margin-top: 0; }
+.companion-reckon .companion-fields > p, .companion-reckon .field-reference-group { grid-column: 1; }
+.companion-reckon .companion-fields > p { margin: 0; }
 .reminder { display: block; margin: .15rem 0 .7rem; color: var(--reminder); font-size: .7rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
 .wear { display: flex; gap: 1rem; margin: 1rem 0; border: 0; padding: 0; }
 .wear label { display: flex; align-items: center; gap: .3rem; }
@@ -85,7 +123,7 @@ textarea { min-height: 5rem; resize: vertical; }
 .repair-toolbar > .actions { width: 100%; }
 .repair-toolbar button, .field-toolbar button { margin-left: auto; }
 .possessions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
-.possession { min-width: 0; display: grid; align-content: start; gap: .75rem; padding: .8rem; border: 1px solid var(--border-soft); }
+.possession { min-width: 0; display: grid; align-content: start; gap: 1rem; padding: .8rem; border: 1px solid var(--border-soft); }
 .badge { justify-self: start; display: inline-block; margin-bottom: .5rem; padding: .22rem .45rem; background: var(--badge); color: var(--badge-ink); font-size: .72rem; font-weight: 900; letter-spacing: .08em; }
 .serialization { margin-top: 1rem; padding: 1rem; background: var(--surface); }
 .table-link { align-self: center; color: var(--link); font-size: .8rem; font-weight: 800; }
@@ -103,19 +141,39 @@ textarea { min-height: 5rem; resize: vertical; }
 .table-source { overflow-wrap: anywhere; color: var(--muted); font-family: ui-monospace, monospace; font-size: .72rem; }
 .serialization textarea { min-height: 16rem; font-family: ui-monospace, monospace; font-size: .78rem; }
 /* Field groups share an inset and keep controls beside their own result. */
-.identity .grid > button, .abilities > button { align-self: start; margin-top: 1.2rem; }
+/* Roll controls align with the input row even when a reference heading wraps it. */
+.identity .grid > button, .abilities > button { align-self: end; margin-top: 0; }
+.identity .field-reference-group { align-content: end; }
+.identity .field-reference-group > label { margin-top: 0; }
 #field-background textarea { min-height: 8rem; }
 .reckon-item textarea { min-height: 8rem; }
 #field-repair textarea, .possession textarea { min-height: 8rem; }
 .supplies .section-title { margin-bottom: 1.1rem; }
 .weapon label { align-content: start; }
 .possession .section-title, .possession .wear { margin: 0; }
-.notes > label + label { margin-top: 1rem; }
+#sheet > section > label + label, #sheet > section > p + label, #sheet > section > p + .field-reference-group,
+.reckon-item:not(.companion-reckon) > div > p + label, .reckon-item:not(.companion-reckon) > div > p + .field-reference-group { margin-top: 1rem; }
 .keepsake textarea { display: block; min-height: 6rem; }
 textarea { display: block; max-width: 100%; }
+@media (min-width: 45rem) {
+  .supplies, #field-weapon { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 1rem; row-gap: 1rem; }
+  .supplies .section-title, #field-weapon > .section-title { display: contents; }
+  .supplies .section-title h2, #field-weapon > .section-title h2 { grid-column: 1; grid-row: 1; }
+  .supplies .section-title > button, #field-weapon > .section-title > button { grid-column: 2; grid-row: 1 / span 2; align-self: end; }
+  .supplies > .resources, #field-weapon > .weapon { grid-column: 1; grid-row: 2; }
+  #field-weapon > .wear, #field-weapon > .field-toolbar, #field-weapon > .repair-toolbar, #field-weapon > .grid.equal-two { grid-column: 1 / -1; }
+}
 @media (min-width: 68rem) {
-  .reckon-item { display: grid; grid-template-columns: minmax(0, 1fr) 9rem; gap: .8rem; }
-  .reckon-actions { align-content: start; align-items: start; flex-direction: column; margin-top: 1.2rem; }
+  .reckon-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: max-content max-content; column-gap: .8rem; row-gap: 1rem; align-content: start; }
+  .reckon-item > .field-reference-group { display: contents; }
+  .reckon-item > .field-reference-group > .reference-trigger { grid-column: 1; grid-row: 1; }
+  .reckon-item > .field-reference-group > label { grid-column: 1; grid-row: 2; }
+  .reckon-actions { grid-column: 2; grid-row: 2; align-self: start; align-content: start; align-items: start; flex-direction: column; margin-top: 0; }
+  .reckon-actions > button { order: -1; }
+  .companion-reckon .companion-name-control { display: grid; grid-column: 1; grid-row: 1 / span 2; grid-template-rows: subgrid; }
+  .companion-reckon .companion-name-control > span { grid-row: 1; }
+  .companion-reckon .companion-name-control > textarea { grid-row: 2; }
+  .companion-reckon .companion-fields > p, .companion-reckon .field-reference-group { grid-column: 1; }
 }
 [hidden] { display: none !important; }
 .import-dialog { width: min(36rem, calc(100% - 2rem)); max-height: calc(100dvh - 2rem); overflow: auto; color: var(--ink); }
@@ -179,7 +237,7 @@ textarea { display: block; max-width: 100%; }
   .wide { grid-column: auto; }
   .grid.three, .grid.equal-two, .abilities, .possessions, .reckon { grid-template-columns: 1fr; }
   .grid.two { grid-template-columns: 1fr; }
-  .identity .grid > button, .abilities > button { justify-self: start; margin-top: 0; }
+  .identity .grid > button, .abilities > button { justify-self: end; margin-top: 0; }
   .abilities > span:empty { display: none; }
   #field-repair textarea, .possession textarea { min-height: 10rem; }
   .resources, .weapon { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -190,6 +248,9 @@ textarea { display: block; max-width: 100%; }
 }
 
 @media print {
+  .print-references { display: none !important; }
+  .reference-slot, #start-fool, #discard-draft { display: none !important; }
+  .reference-trigger { color: #000; text-decoration: none; pointer-events: none; }
   :root, :root[data-theme] {
     color-scheme: light;
     --page: #fff;
@@ -220,3 +281,5 @@ textarea { display: block; max-width: 100%; }
   .card { box-shadow: none; }
   .badge { border: 1px solid var(--border); }
 }
+
+:root[data-theme="dark"] { --menu-fill: #FF0080; --menu-ink: #fff; }

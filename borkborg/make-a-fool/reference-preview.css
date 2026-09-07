@@ -1,0 +1,86 @@
+.reference-preview {
+  background: var(--surface, #f4ead2);
+  border: 2px solid var(--ink, #17130d);
+  box-shadow: 0 0 12px rgb(0 0 0 / .45);
+  box-sizing: border-box;
+  color: var(--ink, #17130d);
+  max-height: var(--reference-preview-max-height, calc(100vh - 1rem));
+  overflow: auto;
+  padding: 0.75rem;
+  opacity: 1;
+  position: fixed;
+  transition: opacity .15s ease;
+  width: var(--reference-preview-width, min(36rem, calc(100vw - 1rem)));
+  z-index: 30;
+}
+.reference-preview-opening, .reference-preview-closing { pointer-events: none; }
+.reference-preview-opening, .reference-preview-closing { opacity: 0; }
+
+.reference-preview--desktop {
+  left: var(--reference-preview-left, 0.5rem);
+  top: var(--reference-preview-top, 0.5rem);
+}
+
+.reference-preview--bottom {
+  border-bottom: 0;
+  bottom: 0;
+  box-shadow: 0 0 12px rgb(0 0 0 / .45);
+  left: 0;
+  max-height: min(70vh, calc(100vh - 1rem));
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+  right: 0;
+  width: 100%;
+}
+
+.reference-preview-controls {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.5rem;
+  position: sticky;
+  top: -0.75rem;
+  z-index: 1;
+}
+
+.reference-preview-close {
+  background: var(--surface, #f4ead2);
+  border: 2px solid currentColor;
+  color: inherit;
+  font: inherit;
+  padding: 0.3rem 0.5rem;
+}
+
+.reference-preview-instruction {
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.reference-preview :is(a, button):focus-visible {
+  outline: 3px solid var(--focus, #9f00cc);
+  outline-offset: 2px;
+}
+
+.reference-preview .reference-table-scroll { max-width: 100%; overflow-x: auto; }
+
+.reference-scroll-help { font-size: .85rem; line-height: 1.4; }
+.reference-preview td:has(> .reference-choose) { position: sticky; left: 0; background: var(--surface); }
+.reference-preview .reference-choose { width: 7rem; min-height: 2.75rem; white-space: normal; }
+.reference-preview .reference-table-scroll:focus-visible { outline: 3px solid var(--focus); outline-offset: -3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reference-preview {
+    scroll-behavior: auto;
+    transition: none;
+  }
+}
+
+@media print {
+  .reference-preview {
+    display: none;
+  }
+}
