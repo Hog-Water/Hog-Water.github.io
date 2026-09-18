@@ -3,6 +3,7 @@ import { downloadFoolMarkdown, downloadFoolJSON, downloadRawBackup, createJSONIm
 import { readField, writesField } from "./field-adapter.mjs";
 import { createNavigation } from "./navigation.mjs";
 import { createReferencePreview } from "./reference-preview.mjs";
+import { createPlayEditMode } from "./play-edit-mode.mjs";
 import { getReference } from "./reference-catalog.mjs";
 import { catalogSha256 } from "./engine.mjs";
 import { createAppModel, creationTableDefinitions, directTableArguments, populatedWarrantyTargets } from "./app-model.mjs";
@@ -64,6 +65,8 @@ const importFile = document.querySelector("#import-file");
 const importDialog = document.querySelector("#import-dialog");
 const importStatus = document.querySelector("#import-status");
 let importToken = null;
+const playEditControls = document.querySelector("#play-edit-controls");
+let presentationMode;
 const localRecovery = createLocalRecovery();
 const recoveryPanel = document.querySelector("#local-recovery");
 const recoveryStatus = document.querySelector("#recovery-status");
@@ -236,7 +239,10 @@ function render({ forceSheet = false } = {}) {
   updateEntryReferences();
   document.querySelector("#start-fool").hidden = Object.keys(active.character).length > 0 || localRecovery.isProtected();
   fitSheetText();
+  presentationMode?.sync();
 }
+
+presentationMode = createPlayEditMode({ sheet, controls: playEditControls, beforeChange: () => guardInvalid("changing presentation"), onError: (error) => { status.textContent = error.message; }, isPlayable: () => Object.keys(model.current().character).length > 0 && !localRecovery.isProtected() });
 
 function operationRequest(definition, key, slot) {
   const name = definition.operation;
@@ -336,6 +342,11 @@ drawer.addEventListener("click", (event) => {
   if (event.target.closest("#make-fool, #download-json, #download-markdown, #import-json")) navigation.close();
 }, true);
 document.addEventListener("click", (event) => {
+  if (presentationMode?.mode === "play" && event.target.closest(".reference-choose, [data-select-table]")) {
+    event.preventDefault(); event.stopImmediatePropagation();
+    status.textContent = "Switch to Edit before choosing a replacement.";
+    return;
+  }
   const destructive = event.target.closest("#make-fool, #start-fool, #download-json, #download-markdown, #import-json, #import-replace, #reset-local, [data-roll], [data-select-table], .reference-choose, #choices button");
   const referenceLink = event.target.closest('a[href^="/borkborg/tables/"]');
   if (!destructive && !referenceLink) return;

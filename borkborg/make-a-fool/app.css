@@ -283,3 +283,16 @@ textarea { display: block; max-width: 100%; }
 }
 
 :root[data-theme="dark"] { --menu-fill: #FF0080; --menu-ink: #fff; }
+.play-edit-controls { display: flex; gap: .5rem; margin: 0 0 1rem; }
+.play-edit-controls [aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+#sheet[data-presentation-mode="play"] .abilities { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+#sheet[data-presentation-mode="play"] .abilities > span:empty { display: none; }
+#sheet[data-presentation-mode="play"] [data-roll],
+#sheet[data-presentation-mode="play"] [data-select-table],
+#sheet[data-presentation-mode="play"] .reference-choose { display: none !important; }
+:root[data-presentation-mode="play"] .reference-preview .reference-choose { display: none !important; }
+.play-edit-hint { display: none; }
+#sheet[data-presentation-mode="play"] #choice-panel .play-edit-hint { display: block; }
+#sheet[data-presentation-mode="play"] #choice-panel #choices,
+#sheet[data-presentation-mode="play"] .reference-slot { display: none; }
+#sheet [data-play-locked] { background: transparent; border-color: transparent; cursor: default; }
